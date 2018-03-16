@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+类名 -->
+<mapper namespace="xmu.yunzhieducation.mapper.SchoolMapper">
+    <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
+    <insert id="insertSchool" parameterType="xmu.yunzhieducation.entity.School" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO school
+        (id,homepage,name,province,city,picture)
+        VALUES(#{id},#{homepage},#{name},#{province},#{city},#{picture})
+    </insert>
+
+    <update id="updateSchool">
+        UPDATE school
+        <set>
+            homepage=#{School.homepage},
+            name=#{School.name},
+            province=#{School.province},
+            city=#{School.city},
+            picture=#{School.picture},
+        </set>
+        WHERE id=#{school_id}
+    </update>
+
+    <insert id="insertSchoolInfo" parameterType="xmu.yunzhieducation.entity.School_information" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO school_information
+        (school_id,content,type,course_id)
+        VALUES (#{school_id},#{content},#{type},#{course_id})
+    </insert>
+
+    <delete id="deleteSchoolInfo">
+        DELETE FROM school_information WHERE id=#{id}
+    </delete>
+
+    <update id="updateSchoolInfo">
+        UPDATE school_information
+        <set>
+            content=#{info},
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteTeacher">
+        DELETE  FROM user WHERE id=#{teacher_id}
+    </delete>
+
+    <insert id="insertClass" parameterType="xmu.yunzhieducation.entity.Class1" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO class1
+        (course_id,stu_num,class_name)
+        VALUES(#{Class.course_id},#{Class.stu_num},#{Class.class_name})
+    </insert>
+
+    <delete id="deleteClass">
+        DELETE FROM class1 WHERE id=#{class_id}
+    </delete>
+
+    <update id="updateClassInfo">
+        UPDATE class1
+        <set>
+            course_id=Class1.course_id,
+            stu_num=Class1.stu_num,
+            class_name=Class1.class_name,
+        </set>
+        WHERE id=#{Class.id}
+    </update>
+
+    <select id="ListTeacherBySchoolId" resultType="xmu.yunzhieducation.entity.User" >
+        SELECT name,sex,introductiom
+        FROM user
+        WHERE school_id=#{school_id} AND type=1
+    </select>
+
+    <select id="listAllSchools" resultType="xmu.yunzhieducation.entity.School">
+        SELECT id,homepage,name,province,city,picture
+        FROM school
+    </select>
+
+    <select id="listAllCourses"resultType="xmu.yunzhieducation.entity.Course">
+        SELECT name,introduction,knowledge_point,class_num
+        FROM course
+    </select>
+
+</mapper>
