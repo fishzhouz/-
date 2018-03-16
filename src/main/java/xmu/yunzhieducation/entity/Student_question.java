@@ -7,7 +7,7 @@ public class Student_question {
     private BigInteger user_id;
     private BigInteger question_id;
     private char own_answer;
-    private Integer is_true;
+    private Integer is_true;//1代表对，0代表错
     private BigInteger course_id;
 
     public BigInteger getId() {
