@@ -9,4 +9,35 @@
         VALUES(#{id},#{account},#{password},#{identified},#{name},#{school_id},#{number},#{sex},#{introduction})
     </insert>
 
+    <select id="Login" resultMap="xmu.yunzhieducation.entity.User">
+        SELECT account,password
+        FROM user
+        WHERE account=#{account}
+    </select>
+
+    <update id="updateUserInfo">
+        UPDATE user
+        <set>
+            password=#{User.password},
+            name=#{User.name},
+            school_id=#{User.school_id},
+            introduction=#{User.introduction},
+            sex=#{User.sex},
+            number=#{User.number},
+        </set>
+        WHERE account=#{User.account}
+    </update>
+
+    <select id="ListAllMessages" resultMap="Message">
+        SELECT user_id,type,content,time,is_read,topic_id
+        FROM message
+        WHERE id=#{user_id}
+    </select>
+
+    <update id="updateMessage">
+        UPDATE message
+        <set>is_read=#{index}</set>>
+        WHERE id=#{message_id}
+    </update>
+
 </mapper>
