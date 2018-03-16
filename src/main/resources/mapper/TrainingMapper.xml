@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+类名 -->
+<mapper namespace="xmu.yunzhieducation.mapper.TrainingMapper">
+
+
+
+    <insert id="insertTraining" parameterType="xmu.yunzhieducation.entity.Trainging" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO Training
+        (traing_introduction,start_time,end_time,student_num,course_id)
+        VALUES(#{Trainging.traing_introduction},#{Trainging.start_time},#{Trainging.end_time},#{Trainging.student_num},#{Trainging.course_id})
+    </insert>
+
+
+
+
+    <select id="listTrainingByCourseId" resultType="xmu.yunzhieducation.entity.Trainging">
+        SELECT
+        id,
+        traing_introduction,
+        start_time,
+        end_time,
+        student_num,
+        course_id
+        FROM
+        training
+        WHERE
+        course_id = #{courseId}
+    </select>
+
+
+
+    <select id="listTrainingByTrainingId" resultType="xmu.yunzhieducation.entity.Trainging">
+        SELECT
+        id,
+        traing_introduction,
+        start_time,
+        end_time,
+        student_num,
+        course_id
+        FROM
+        training
+        WHERE
+        id = #{trainingId}
+    </select>
+
+
+
+
+    <insert id="insertStudentTraining" parameterType="xmu.yunzhieducation.entity.Student_training" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student_training
+        (student_id,teacher_id,report,score)
+        VALUES(#{studentTraining.student_id},#{studentTraining.teacher_id},#{studentTraining.report},#{studentTraining.score})
+    </insert>
+
+
+
+
+    <update id="updateStudentTrainingReportByStudentIdAndTrainingId">
+        UPDATE studeent_training
+        <set>report=#{studentTraining.report}</set>
+        WHERE
+        student_id=#{studentTraining.student_id}
+        AND
+        training_id=#{studentTraining.training_id}
+    </update>
+
+
+
+
+
+    <update id="updateStudentTrainingScoreByStudentIdAndTrainingId">
+        UPDATE studeent_training
+        <set>score=#{studentTraining.score}</set>
+        WHERE
+        student_id=#{studentTraining.student_id}
+        AND
+        training_id=#{studentTraining.training_id}
+    </update>
+
+
+
+
+
+    <select id="listStudentTrainingByStudentIdAndTeacherId" resultType="xmu.yunzhieducation.entity.Student_training">
+    SELECT
+    id,
+    student_id,
+    teacher_id,
+    report,
+    score
+    FROM
+    student_training
+    WHERE
+    student_id=studentId
+    AND
+    teacher_id=teacherId
+</select>
+
+
+
+
+
+
+    <select id="listStudentTrainingByTeacherId" resultType="xmu.yunzhieducation.entity.Student_training">
+        SELECT
+        id,
+        student_id,
+        teacher_id,
+        report,
+        score
+        FROM
+        student_training
+        WHERE
+        teacher_id=teacherId
+    </select>
+
+</mapper>

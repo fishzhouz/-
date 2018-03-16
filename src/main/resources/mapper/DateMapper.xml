@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+类名 -->
+<mapper namespace="xmu.yunzhieducation.mapper.DateMapper">
+    <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
+    <select id="listClassStudentByClassId" resultType="xmu.yunzhieducation.entity.Class_student">
+        SELECT
+        id,
+        class_id,
+        student_id,
+        grade
+        FROM
+        class_student
+        WHERE
+        class_id=#{classId}
+    </select>
+
+
+
+
+    <select id="listClassStudentByClassIdAndStudentId" resultType="xmu.yunzhieducation.entity.Class_student">
+        SELECT
+        id,
+        class_id,
+        student_id,
+        grade
+        FROM
+        class_student
+        WHERE
+        class_id=#{classId}
+        AND
+        student_id=#{studentId}
+    </select>
+
+
+
+
+    <select id="listPeriodByClassId" resultType="xmu.yunzhieducation.entity.Period">
+        SELECT
+        id,
+        class_id,
+        ppt,
+        knowledge_point,
+        video
+        FROM
+        period
+        WHERE
+        class_id=#{classId}
+    </select>
+
+
+
+
+
+    <select id="listStudentPeriodByPeriodIdAndStudentId" resultType="xmu.yunzhieducation.entity.Student_period">
+        SELECT
+        id,
+        studnt_id,
+        period_id,
+        is_click
+        FROM
+        period
+        WHERE
+        studnt_id=#{studntId}
+        AND
+        period_id=#{periodId}
+    </select>
+
+
+
+
+    <update id="updateAbilityFileByCourseIdAndStudentId">
+        UPDATE ability_file
+        <set>commen=#{abilityFile.commen}</set>
+        <set>time=#{abilityFile.time}</set>
+        WHERE
+        course_id=#{ability.course_id}
+        AND
+        student_id=#{ability.student_id}
+    </update>
+
+
+
+
+
+    <select id="listAbilityFileByCourseIdAndStudentId" resultType="xmu.yunzhieducation.entity.Ablity_file">
+        SELECT
+        id,
+        time,
+        commen,
+        course_id,
+        studnt_id
+        FROM
+        ability_file
+        WHERE
+        studnt_id=#{studntId}
+        AND
+        course_id=#{courseId}
+    </select>
+
+</mapper>
