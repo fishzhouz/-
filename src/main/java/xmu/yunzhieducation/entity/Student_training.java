@@ -5,7 +5,7 @@ import java.math.BigInteger;
 public class Student_training {
     private BigInteger id;
     private BigInteger student_id;
-    private BigInteger teacher_id;
+    private BigInteger training_id;
     private String report;
     private Integer score;
 
@@ -25,12 +25,12 @@ public class Student_training {
         this.student_id = student_id;
     }
 
-    public BigInteger getTeacher_id() {
-        return teacher_id;
+    public BigInteger gettraining_id() {
+        return training_id;
     }
 
-    public void setTeacher_id(BigInteger teacher_id) {
-        this.teacher_id = teacher_id;
+    public void settraining_id(BigInteger training_id) {
+        this.training_id = training_id;
     }
 
     public String getReport() {
@@ -54,7 +54,7 @@ public class Student_training {
         return "Student_training{" +
                 "id=" + id +
                 ", student_id=" + student_id +
-                ", teacher_id=" + teacher_id +
+                ", training_id=" + training_id +
                 ", report='" + report + '\'' +
                 ", score=" + score +
                 '}';

@@ -39,9 +39,9 @@ public interface TrainingMapper {
 
 
     /*根据学生id和实训id找到学生在实训里的具体情况，可查看自己的报告和自己的实训成绩*/
-    Student_training listStudentTrainingByStudentIdAndTeacherId(@Param("studentId")BigInteger stuentId,@Param("teacherId")Boolean teacherId);
+    Student_training listStudentTrainingByStudentIdAndTrainingId(@Param("studentId")BigInteger stuentId,@Param("trainingId")BigInteger trainingId);
 
 
     /*根据实训id找到实训下的所有学生的报告和成绩*/
-    Student_training listStudentTrainingByTeacherId(@Param("teacherId")BigInteger teacherId);
+    Student_training listStudentTrainingByTrainingId(@Param("trainingId")BigInteger trainingId);
 }

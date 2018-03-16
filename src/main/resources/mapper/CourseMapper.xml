@@ -6,8 +6,8 @@
     <!--新建课程，向course表插入-->
     <insert id="creatCourse" parameterType="xmu.yunzhieducation.entity.Course" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO course
-        (id,name,introduction,class_num,teaching_progress,knowledge_point,teacher_id,picture)
-        VALUES(#{id},#{name},#{introduction},#{class_num},#{teaching_progress},#{knowledge_point},#{teacher_id},#{picture})
+        (id,name,introduction,teaching_progress,knowledge_point,teacher_id,picture)
+        VALUES(#{id},#{name},#{introduction},#{teaching_progress},#{knowledge_point},#{teacher_id},#{picture})
     </insert>
     <!--学生选课，向class_student表插入数据-->
     <insert id="chooseCourseByStudentID" parameterType="xmu.yunzhieducation.entity.Class_student" useGeneratedKeys="true" keyProperty="id">
@@ -28,7 +28,7 @@
     <!--查询课程信息-->
     <select id="selectCourseinfoByCourseID" resultType="xmu.yunzhieducation.entity.Course">
         SELECT
-        (id,name,introduction,class_num,teaching_progress,knowledge_point,teacher_id,picture)
+        (id,name,introduction,teaching_progress,knowledge_point,teacher_id,picture)
         FROM course
         WHERE id=#{course_id}
     </select>
@@ -38,7 +38,6 @@
         <set>
             name=#{name},
             introduction=#{introduction},
-            class_num=#{class_num},
             teaching_progress=#{teaching_progress},
             knowledge_point=#{knowledge_point},
             teacher_id=#{teacher_id},
@@ -55,9 +54,7 @@
     </select>
     <!--根据班级ID查询课程ID-->
     <select id="selectCourseIDByClassID" resultType="xmu.yunzhieducation.entity.Class1">
-        SELECT
-        id,course_id,student_num,class_name
-        FROM class
+        SELECT * FROM class
         WHERE id=#{class_id}
     </select>
     <!--根据老师ID查找课程-->

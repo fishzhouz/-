@@ -6,7 +6,6 @@ public class Course {
     private BigInteger id;
     private String name;
     private String introduction;
-    private Integer class_num;
     private String teaching_progress;
     private String knowledge_point;
     private BigInteger teacher_id;
@@ -34,14 +33,6 @@ public class Course {
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
-    }
-
-    public Integer getClass_num() {
-        return class_num;
-    }
-
-    public void setClass_num(Integer class_num) {
-        this.class_num = class_num;
     }
 
     public String getTeaching_progress() {
@@ -82,7 +73,6 @@ public class Course {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", introduction='" + introduction + '\'' +
-                ", class_num=" + class_num +
                 ", teaching_progress='" + teaching_progress + '\'' +
                 ", knowledge_point='" + knowledge_point + '\'' +
                 ", teacher_id=" + teacher_id +

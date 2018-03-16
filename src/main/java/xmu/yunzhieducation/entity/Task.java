@@ -11,6 +11,7 @@ public class Task {
     private String information;
     private String name;
     private Integer type;
+    private String word_file;
 
     public BigInteger getId() {
         return id;
@@ -68,6 +69,14 @@ public class Task {
         this.type = type;
     }
 
+    public String getWord_file() {
+        return word_file;
+    }
+
+    public void setWord_file(String word_file) {
+        this.word_file = word_file;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
@@ -78,6 +87,7 @@ public class Task {
                 ", information='" + information + '\'' +
                 ", name='" + name + '\'' +
                 ", type=" + type +
+                ", word_file='" + word_file + '\'' +
                 '}';
     }
 }

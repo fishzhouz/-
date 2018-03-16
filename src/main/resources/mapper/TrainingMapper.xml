@@ -49,7 +49,7 @@
 
     <insert id="insertStudentTraining" parameterType="xmu.yunzhieducation.entity.Student_training" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO student_training
-        (student_id,teacher_id,report,score)
+        (student_id,training_id,report,score)
         VALUES(#{studentTraining.student_id},#{studentTraining.teacher_id},#{studentTraining.report},#{studentTraining.score})
     </insert>
 
@@ -82,7 +82,7 @@
 
 
 
-    <select id="listStudentTrainingByStudentIdAndTeacherId" resultType="xmu.yunzhieducation.entity.Student_training">
+    <select id="listStudentTrainingByStudentIdAndTrainingId" resultType="xmu.yunzhieducation.entity.Student_training">
     SELECT
     id,
     student_id,
@@ -94,7 +94,7 @@
     WHERE
     student_id=studentId
     AND
-    teacher_id=teacherId
+    training_id=trainingId
 </select>
 
 
@@ -102,7 +102,7 @@
 
 
 
-    <select id="listStudentTrainingByTeacherId" resultType="xmu.yunzhieducation.entity.Student_training">
+    <select id="listStudentTrainingByTrainingId" resultType="xmu.yunzhieducation.entity.Student_training">
         SELECT
         id,
         student_id,
@@ -112,7 +112,7 @@
         FROM
         student_training
         WHERE
-        teacher_id=teacherId
+        training_id=trainingId
     </select>
 
 </mapper>

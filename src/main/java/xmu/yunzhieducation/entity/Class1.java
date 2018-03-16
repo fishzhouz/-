@@ -1,12 +1,15 @@
 package xmu.yunzhieducation.entity;
 
 import java.math.BigInteger;
+import java.util.Date;
 
 public class Class1 {
     private BigInteger id;
     private BigInteger course_id;
     private Integer student_num;
     private String class_name;
+    private Date start_time;
+    private Date end_time;
 
     public BigInteger getId() {
         return id;
@@ -40,6 +43,22 @@ public class Class1 {
         this.class_name = class_name;
     }
 
+    public Date getStart_time() {
+        return start_time;
+    }
+
+    public void setStart_time(Date start_time) {
+        this.start_time = start_time;
+    }
+
+    public Date getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(Date end_time) {
+        this.end_time = end_time;
+    }
+
     @Override
     public String toString() {
         return "Class1{" +
@@ -47,6 +66,8 @@ public class Class1 {
                 ", course_id=" + course_id +
                 ", student_num=" + student_num +
                 ", class_name='" + class_name + '\'' +
+                ", start_time=" + start_time +
+                ", end_time=" + end_time +
                 '}';
     }
 }
