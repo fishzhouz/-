@@ -1,7 +1,9 @@
 package xmu.yunzhieducation.mapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import xmu.yunzhieducation.entity.Class1;
+import xmu.yunzhieducation.entity.Class_student;
 import xmu.yunzhieducation.entity.Course;
 
 import java.math.BigInteger;
@@ -22,19 +24,19 @@ public interface CourseMapper {
     /**
      * 学生选课
      */
-    void chooseCourseByStudentID(BigInteger student_id, BigInteger class_id);
+    void chooseCourseByStudentID(Class_student class_student);
     /**
      * 删除课程
      */
-    void deleteCourseByCourseID(BigInteger course_id);
+    void deleteCourseByCourseID(@Param("course_id") BigInteger course_id);
     /**
-     * 根据课程ID退课
+     * 根据班级ID及学生ID退课
      */
-    void dropCourseByCourseID(BigInteger course_id);
+    void dropCourseByClassID(@Param("class_id") BigInteger class_id);
     /**
      * 根据课程ID查看课程信息
      */
-    Course selectCourseinfoByCourseID(BigInteger course_id);
+    Course selectCourseinfoByCourseID(@Param("course_id") BigInteger course_id);
     /**
      * 根据课程ID修改课程信息
      */
@@ -42,14 +44,14 @@ public interface CourseMapper {
     /**
      * 根据学生ID查找班级
      */
-    List<Class1> selectClassByStudentID(BigInteger user_id);
+    List<Class_student> selectClassstudentByStudentID(@Param("user_id") BigInteger user_id);
     /**
-     * 根据班级ID查找课程
+     * 根据班级ID查找课程id
      */
-    List<Course> selectCourseByClassID(BigInteger class_id);
+    List<Class1> selectCourseIDByClassID(@Param("class_id") BigInteger class_id);
     /**
      * 根据老师ID查找课程
      */
-    List<Course> selectCourseByTeacherID(BigInteger teacher_id);
+    List<Course> selectCourseByTeacherID(@Param("teacher_id") BigInteger teacher_id);
 
 }

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+类名 -->
+<mapper namespace="xmu.yunzhieducation.mapper.CourseMapper">
+    <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
+    <!--新建课程，向course表插入-->
+    <insert id="creatCourse" parameterType="xmu.yunzhieducation.entity.Course" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO course
+        (id,name,introduction,class_num,teaching_progress,knowledge_point,teacher_id,picture)
+        VALUES(#{id},#{name},#{introduction},#{class_num},#{teaching_progress},#{knowledge_point},#{teacher_id},#{picture})
+    </insert>
+    <!--学生选课，向class_student表插入数据-->
+    <insert id="chooseCourseByStudentID" parameterType="xmu.yunzhieducation.entity.Class_student" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO class_student
+        {id,class_id,student_id}
+        VALUES (#{id},#{class_id},#{student_id})
+    </insert>
+     <!--删除课程-->
+    <delete id="deleteCourseByCourseID">
+        DELETE FROM course
+        WHERE id=#{course_id}
+    </delete>
+    <!--退课-->
+    <delete id="dropCourseByClassID">
+        DELETE FROM class_student
+        WHERE class_id=#{class_id} and student_id=#{student_id}
+    </delete>
+    <!--查询课程信息-->
+    <select id="selectCourseinfoByCourseID" resultType="xmu.yunzhieducation.entity.Course">
+        SELECT
+        (id,name,introduction,class_num,teaching_progress,knowledge_point,teacher_id,picture)
+        FROM course
+        WHERE id=#{course_id}
+    </select>
+    <!--更新课程信息-->
+    <update id="updateCourseinfoByCourseID" parameterType="xmu.yunzhieducation.entity.Course">
+        UPDATE course
+        <set>
+            name=#{name},
+            introduction=#{introduction},
+            class_num=#{class_num},
+            teaching_progress=#{teaching_progress},
+            knowledge_point=#{knowledge_point},
+            teacher_id=#{teacher_id},
+            picture=#{picture},
+        </set>
+        WHERE id=#{id}
+    </update>
+    <!--根据学生ID查询班级-->
+    <select id="selectClassstudentByStudentID" resultType="xmu.yunzhieducation.entity.Class_student">
+        SELECT
+        id,class_id,student_id,grade
+        FROM class_student
+        WHERE student_id=#{user_id}
+    </select>
+    <!--根据班级ID查询课程ID-->
+    <select id="selectCourseIDByClassID" resultType="xmu.yunzhieducation.entity.Class1">
+        SELECT
+        id,course_id,student_num,class_name
+        FROM class
+        WHERE id=#{class_id}
+    </select>
+    <!--根据老师ID查找课程-->
+    <select id="selectCourseByTeacherID" resultType="xmu.yunzhieducation.entity.Course">
+        SELECT *
+        FROM course
+        WHERE id=#{teacher_id}
+    </select>
+</mapper>

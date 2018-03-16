@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+类名 -->
+<mapper namespace="xmu.yunzhieducation.mapper.PeriodMapper">
+    <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
+    <!--新建一个课时-->
+    <insert id="creatPeriod" parameterType="xmu.yunzhieducation.entity.Period" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO period
+        (id,class_id,ppt,knowledge_point,video)
+        VALUES (#{id},#{class_id},#{ppt},#{knowledge_point},#{video})
+    </insert>
+    <!--根据课时ID删除课时-->
+    <delete id="deletePeriodByPeriodID">
+        DELETE FROM period
+        WHERE id=#{period_id}
+    </delete>
+    <!--根据班级ID选择课时-->
+    <select id="selectPeriodByClassID" resultType="xmu.yunzhieducation.entity.Period">
+        SELECT * FROM period
+        WHERE class_id=#{class_id}
+    </select>
+    <!--根据学生ID和课时ID选择学生课时-->
+    <select id="selectStudentPeriodByStudentIDPeriodID" resultType="xmu.yunzhieducation.entity.Class_student">
+        SELECT * FROM student_period
+        WHERE student_id=#{student_id} AND period_id=#{period_id}
+    </select>
+    <!--根据学生ID和课时ID修改is_click-->
+    <update id="updateStudentPeriodisclick">
+        UPDATE student_period
+        <set>
+            is_click=1,
+        </set>
+        WHERE student_id=#{student_id} AND period_id=#{period_id}
+    </update>
+    <!--当学生选择课程时，插入学生课时记录-->
+    <insert id="insertStudentPeriod" parameterType="xmu.yunzhieducation.entity.Student_period">
+        INSERT INTO student_period
+        (id,student_id,period_id,is_click)
+        VALUES (#{id},#{student_id},#{period_id},#{is_click})
+    </insert>
+    <!--学生退课时删除学生课时记录-->
+    <delete id="deleteStudentPeriodByStudentIDPeriodID">
+        DELETE FROM student_period
+        WHERE student_id=#{student_id} AND period_id=#{period_id}
+    </delete>
+    <!--根据课时ID查看课时信息-->
+    <select id="selectPeriodByPeriodID" resultType="xmu.yunzhieducation.entity.Period">
+        SELECT * FROM period
+        WHERE id=#{period_id}
+    </select>
+</mapper>

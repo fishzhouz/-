@@ -1,10 +1,13 @@
 package xmu.yunzhieducation.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import xmu.yunzhieducation.entity.Period;
+import xmu.yunzhieducation.entity.Student_period;
 
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Period Mapper
@@ -21,5 +24,29 @@ public interface PeriodMapper {
     /**
      * 删除一个课时
      */
-    void deletePeriodByPeriodID(BigInteger period_id);
+    void deletePeriodByPeriodID(@Param("period_id") BigInteger period_id);
+    /**
+     * 根据班级ID选择课时
+     */
+    List<Period> selectPeriodByClassID(@Param("class_id") BigInteger class_id);
+    /**
+     * 根据学生ID和课时ID选择
+     */
+    List<Student_period> selectStudentPeriodByStudentIDPeriodID(@Param("student_id") BigInteger student_id, @Param("period_id") BigInteger period_id);
+    /**
+     * 修改is_click
+     */
+    void updateStudentPeriodisclick(@Param("student_id") BigInteger student_id, @Param("period_id") BigInteger period_id);
+    /**
+     * 插入学生课时记录
+     */
+    void insertStudentPeriod(Student_period student_period);
+    /**
+     * 学生退课时,根据课时ID删除学生课时记录
+     */
+    void deleteStudentPeriodByStudentIDPeriodID(@Param("student_id") BigInteger student_id, @Param("period_id") BigInteger period_id);
+    /**
+     * 根据课时ID选择课时信息
+     */
+    Period selectPeriodByPeriodID(@Param("period_id") BigInteger period_id);
 }
