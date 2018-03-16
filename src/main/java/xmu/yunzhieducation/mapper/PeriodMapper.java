@@ -1,7 +1,6 @@
 package xmu.yunzhieducation.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import xmu.yunzhieducation.entity.Period;
 
@@ -22,5 +21,5 @@ public interface PeriodMapper {
     /**
      * 删除一个课时
      */
-    void deletePeriodByPeriodID(@Param("period_id") BigInteger period_id);
+    void deletePeriodByPeriodID(BigInteger period_id);
 }
