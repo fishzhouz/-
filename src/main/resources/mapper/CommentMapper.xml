@@ -3,5 +3,72 @@
 <!--命名空间应该是对应接口的包名+类名 -->
 <mapper namespace="xmu.yunzhieducation.mapper.CommentMapper">
     <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
+    <insert id="insertTopicByID" parameterType="xmu.yunzhieducation.entity.Topic" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO topic
+        (id,belonging_id,time,type,user_id,content)
+        VALUES(#{id},#{belonging_id},#{time},#{type},#{user_id},#{content})
+    </insert>
 
+    <delete id="deleteTopicByID">
+        DELETE FROM topic
+        WHERE id=#{topic_id}
+    </delete>
+
+    <insert id="insertCommentByID" parameterType="xmu.yunzhieducation.entity.Comment" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO comment
+        (id,topic_id,content,time,user_id)
+        VALUES(#{id},#{topic_id},#{content},#{time},#{user_id})
+    </insert>
+
+    <delete id="deleteCommentByID">
+        DELETE FROM comment
+        WHERE id=#{comment_id}
+    </delete>
+
+    <select id="selectTopicBybelongingID"  resultMap="topicResultMap">
+        SELECT *
+        From topic
+        WHERE belonging_id= #{belonging_id} and type=#{type}
+    </select>
+
+    <select id="selectTopicByuserID"  resultMap="topicResultMap">
+        SELECT *
+        From topic
+        WHERE user_id= #{user_id}
+    </select>
+    <resultMap id="topicResultMap" type="xmu.yunzhieducation.entity.Topic">
+        <id property="id" column="id"/>
+        <result property="belonging_id" column="belonging_id"/>
+        <result property="time" column="time"/>
+        <result property="type" column="type"/>
+        <result property="user_id" column="user_id"/>
+        <result property="content" column="content"/>
+    </resultMap>
+
+    <select id="selectCommentBytopicID"  resultMap="commentResultMap">
+        SELECT *
+        From comment
+        WHERE topic_id= #{topic_id}
+    </select>
+    <select id="selectCommentByuserID"  resultMap="commentResultMap">
+        SELECT *
+        From comment
+        WHERE user_id= #{user_id}
+    </select>
+    <resultMap id="commentResultMap" type="xmu.yunzhieducation.entity.Comment">
+        <id property="id" column="id"/>
+        <result property="time" column="time"/>
+        <result property="topic_id" column="topic_id"/>
+        <result property="user_id" column="user_id"/>
+        <result property="content" column="content"/>
+    </resultMap>
+
+    <select id="selectTopicBycommentID"  resultMap="topicidResultMap">
+        SELECT topic_id
+        From comment
+        WHERE id= #{comment_id}
+    </select>
+    <resultMap id="topicidResultMap" type="BigInteger">
+        <result property="topic_id" column="topic_id"/>
+    </resultMap>
 </mapper>
