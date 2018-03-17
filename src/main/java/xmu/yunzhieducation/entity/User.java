@@ -7,7 +7,7 @@ public class User {
     private BigInteger id;
     private String account;
     private String password;
-    private Integer identified;//1代表老师，2代表学生，3代表教务管理员
+    private Integer identification;//1代表老师，2代表学生，3代表教务管理员
     private String name;
     private BigInteger school_id;//School school
     private String number;
@@ -39,11 +39,11 @@ public class User {
     }
 
     public Integer getIdentified() {
-        return identified;
+        return identification;
     }
 
     public void setIdentified(Integer identified) {
-        this.identified = identified;
+        this.identification = identified;
     }
 
     public String getName() {
@@ -92,7 +92,7 @@ public class User {
                 "id=" + id +
                 ", account='" + account + '\'' +
                 ", password='" + password + '\'' +
-                ", identified=" + identified +
+                ", identification=" + identification +
                 ", name='" + name + '\'' +
                 ", school_id=" + school_id +
                 ", number='" + number + '\'' +

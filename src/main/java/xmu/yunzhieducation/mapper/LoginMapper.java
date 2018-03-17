@@ -25,11 +25,11 @@ public interface LoginMapper {
     /**
      *登陆用户
      */
-    boolean  Login(@Param("account") String account,@Param("password") String password);
+    User  Login(@Param("account") String account,@Param("password") String password);
     /**
      *修改个人信息，包括密码
      */
-    boolean  updateUserInfo(User user);
+    void  updateUserInfo(User user);
     /**
      *查看消息列表
      */
@@ -37,5 +37,13 @@ public interface LoginMapper {
     /**
      *点击消息修改状态
      */
-    boolean updateMessage(@Param("message_id") BigInteger message_id,@Param("index") int index);
+    void updateMessage(@Param("message_id") BigInteger message_id);
+    /**
+     * 当课程不存在时或话题被回复时增加消息
+     */
+    void insertMessage(Message message);
+    /**
+     * 用户可以删除已读消息
+     */
+    void deleteMessageByID(@Param("message_id") BigInteger message_id);
 }
