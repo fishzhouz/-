@@ -10,7 +10,7 @@ public class Task {
     private BigInteger period_id;
     private String information;
     private String name;
-    private Integer type;
+    private String type;
     private String word_file;
 
     public BigInteger getId() {
@@ -61,11 +61,11 @@ public class Task {
         this.name = name;
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 

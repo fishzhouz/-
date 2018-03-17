@@ -16,4 +16,116 @@
         <result property="is_true" column="is_true"/>
         <result property="course_id" column="course_id"/>
     </resultMap>
+
+    <insert id="insertTaskByID" parameterType="xmu.yunzhieducation.entity.Task" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO task
+        (id,start_time,end_time,period_id,information,name,type,word_file)
+        VALUES(#{id},#{start_time},#{end_time},#{period_id},#{information},#{name},#{type},#{word_file})
+    </insert>
+
+    <delete id="deleteTaskBytaskID">
+        DELETE FROM task
+        WHERE id=#{task_id}
+    </delete>
+
+    <select id="selectTaskByperiodID"  resultMap="taskResultMap">
+        SELECT *
+        From task
+        WHERE period_id= #{period_id}
+    </select>
+    <resultMap id="taskResultMap" type="xmu.yunzhieducation.entity.Task">
+        <id property="id" column="id"/>
+        <result property="start_time" column="start_time"/>
+        <result property="end_time" column="end_time"/>
+        <result property="period_id" column="period_id"/>
+        <result property="information" column="information"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="word_file" column="word_file"/>
+    </resultMap>
+
+    <insert id="insertQuestionBytaskID" parameterType="xmu.yunzhieducation.entity.Question" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO question
+        (id,heading,A,B,C,D,answer,task_id)
+        VALUES(#{id},#{heading},#{A},#{B},#{C},#{D},#{answer},#{task_id})
+    </insert>
+
+    <select id="selectQuestionBytaskID"  resultMap="questionResultMap">
+        SELECT *
+        From question
+        WHERE task_id= #{task_id}
+    </select>
+    <resultMap id="questionResultMap" type="xmu.yunzhieducation.entity.Question">
+        <id property="id" column="id"/>
+        <result property="heading" column="heading"/>
+        <result property="A" column="A"/>
+        <result property="B" column="B"/>
+        <result property="C" column="C"/>
+        <result property="D" column="D"/>
+        <result property="answer" column="answer"/>
+        <result property="task_id" column="task_id"/>
+    </resultMap>
+
+    <delete id="deleteQuestionByquestionID">
+        DELETE FROM question
+        WHERE id=#{question_id}
+    </delete>
+
+    <select id="selectStudenttaskByID"  resultMap="studenttaskResultMap">
+        SELECT *
+        From student_task
+        WHERE student_id= #{student_id} and task_id=#{task_id}
+    </select>
+    <resultMap id="studenttaskResultMap" type="xmu.yunzhieducation.entity.Student_task">
+        <id property="id" column="id"/>
+        <result property="student_id" column="student_id"/>
+        <result property="task_id" column="task_id"/>
+        <result property="grade" column="grade"/>
+    </resultMap>
+
+    <insert id="insertStudenttaskByID" parameterType="xmu.yunzhieducation.entity.Student_task" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student_task
+        (id,student_id,task_id,grade)
+        VALUES(#{id},#{student_id},#{task_id},#{grade})
+    </insert>
+
+    <delete id="deleteStudenttaskBystudentID">
+        DELETE FROM student_task
+        WHERE student_id=#{student_id}
+    </delete>
+
+    <delete id="deleteStudenttaskBytaskID">
+        DELETE FROM student_task
+        WHERE task_id=#{task_id}
+    </delete>
+
+    <insert id="insertStudentquestionBycourseID" parameterType="xmu.yunzhieducation.entity.Student_question" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student_question
+        (id,user_id,question_id,own_answer,is_true,course_id)
+        VALUES(#{id},#{user_id},#{question_id},#{own_answer},#{is_true},#{course_id})
+    </insert>
+
+    <select id="selectStudentquestionByquestionID"  resultMap="studentquestionResultMap">
+        SELECT *
+        From student_question
+        WHERE question_id= #{question_id} and user_id=#{user_id}
+    </select>
+    <resultMap id="studentquestionResultMap" type="xmu.yunzhieducation.entity.Student_question">
+        <id property="id" column="id"/>
+        <result property="user_id" column="user_id"/>
+        <result property="question_id" column="question_id"/>
+        <result property="own_answer" column="own_answer"/>
+        <result property="is_true" column="is_true"/>
+        <result property="course_id" column="course_id"/>
+    </resultMap>
+
+    <delete id="deleteStudentquestionByuserID">
+        DELETE FROM student_question
+        WHERE user_id=#{user_id}
+    </delete>
+
+    <delete id="deleteStudentquestionByquestionID">
+        DELETE FROM student_question
+        WHERE question_id=#{question_id}
+    </delete>
 </mapper>

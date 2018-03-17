@@ -46,6 +46,14 @@ public interface TaskMapper {
      */
     void insertStudenttaskByID(Student_task student_task);
     /**
+     * 根据学生ID删除Student_task表
+     */
+    void deleteStudenttaskBystudentID(@Param("student_id") BigInteger student_id);
+    /**
+     * 根据任务ID删除Student_task表
+     */
+    void deleteStudenttaskBytaskID(@Param("task_id") BigInteger task_id);
+    /**
      * 把课程题目插入学生题库中
      */
     void insertStudentquestionBycourseID(Student_question student_question);
@@ -56,5 +64,13 @@ public interface TaskMapper {
     /**
      * 查看学生具体某道题的情况
      */
-    Student_question selectStudentquestionID(@Param("user_id") BigInteger user_id,@Param("question_id") BigInteger question_id);
+    Student_question selectStudentquestionByquestionID(@Param("user_id") BigInteger user_id,@Param("question_id") BigInteger question_id);
+    /**
+     * 根据学生ID删除Student_question表
+     */
+    void deleteStudentquestionByuserID(@Param("user_id") BigInteger user_id);
+    /**
+     * 根据题目ID删除Student_question表
+     */
+    void deleteStudentquestionByquestionID(@Param("question_id") BigInteger question_id);
 }
