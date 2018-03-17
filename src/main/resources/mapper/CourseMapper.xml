@@ -12,7 +12,7 @@
     <!--学生选课，向class_student表插入数据-->
     <insert id="chooseCourseByStudentID" parameterType="xmu.yunzhieducation.entity.Class_student" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO class_student
-        {id,class_id,student_id}
+        (id,class_id,student_id)
         VALUES (#{id},#{class_id},#{student_id})
     </insert>
      <!--删除课程-->
@@ -26,12 +26,20 @@
         WHERE class_id=#{class_id} and student_id=#{student_id}
     </delete>
     <!--查询课程信息-->
-    <select id="selectCourseinfoByCourseID" resultType="xmu.yunzhieducation.entity.Course">
-        SELECT
-        (id,name,introduction,teaching_progress,knowledge_point,teacher_id,picture)
+    <select id="selectCourseinfoByCourseID" resultMap="courseResultMap">
+        SELECT *
         FROM course
         WHERE id=#{course_id}
     </select>
+    <resultMap id="courseResultMap" type="xmu.yunzhieducation.entity.Course">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="introduction" column="introduction"/>
+        <result property="teaching_progress" column="teaching_progress"/>
+        <result property="knowledge_point" column="knowledge_point"/>
+        <result property="teacher_id" column="teacher_id"/>
+        <result property="picture" column="picture"/>
+    </resultMap>
     <!--更新课程信息-->
     <update id="updateCourseinfoByCourseID" parameterType="xmu.yunzhieducation.entity.Course">
         UPDATE course
@@ -46,21 +54,39 @@
         WHERE id=#{id}
     </update>
     <!--根据学生ID查询班级-->
-    <select id="selectClassstudentByStudentID" resultType="xmu.yunzhieducation.entity.Class_student">
+    <select id="selectClassstudentByStudentID" resultMap="classstudentResultMap">
         SELECT
         id,class_id,student_id,grade
         FROM class_student
         WHERE student_id=#{user_id}
     </select>
+    <resultMap id="classstudentResultMap" type="xmu.yunzhieducation.entity.Class_student">
+        <id property="id" column="id"/>
+        <result property="class_id" column="class_id"/>
+        <result property="student_id" column="student_id"/>
+        <result property="grade" column="grade"/>
+    </resultMap>
     <!--根据班级ID查询课程ID-->
-    <select id="selectCourseIDByClassID" resultType="xmu.yunzhieducation.entity.Class1">
+    <select id="selectCourseIDByClassID" resultMap="class1ResultMap">
         SELECT * FROM class
         WHERE id=#{class_id}
     </select>
+    <select id="selectClassByCourseID" resultMap="class1ResultMap">
+        SELECT * FROM class
+        WHERE course_id=#{course_id}
+    </select>
+    <resultMap id="class1ResultMap" type="xmu.yunzhieducation.entity.Class1">
+        <id property="id" column="id"/>
+        <result property="course_id" column="course_id"/>
+        <result property="student_num" column="student_num"/>
+        <result property="class_name" column="class_name"/>
+        <result property="start_time" column="start_time"/>
+        <result property="end_time" column="end_time"/>
+    </resultMap>
     <!--根据老师ID查找课程-->
-    <select id="selectCourseByTeacherID" resultType="xmu.yunzhieducation.entity.Course">
+    <select id="selectCourseByTeacherID" resultMap="courseResultMap">
         SELECT *
         FROM course
-        WHERE id=#{teacher_id}
+        WHERE teacher_id=#{teacher_id}
     </select>
 </mapper>

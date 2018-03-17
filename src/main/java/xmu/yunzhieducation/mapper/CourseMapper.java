@@ -32,7 +32,7 @@ public interface CourseMapper {
     /**
      * 根据班级ID及学生ID退课
      */
-    void dropCourseByClassID(@Param("class_id") BigInteger class_id);
+    void dropCourseByClassID(@Param("class_id") BigInteger class_id,@Param("student_id") BigInteger student_id);
     /**
      * 根据课程ID查看课程信息
      */
@@ -48,7 +48,11 @@ public interface CourseMapper {
     /**
      * 根据班级ID查找课程id
      */
-    List<Class1> selectCourseIDByClassID(@Param("class_id") BigInteger class_id);
+    Class1 selectCourseIDByClassID(@Param("class_id") BigInteger class_id);
+    /**
+     * 根据课程ID查找班级
+     */
+    List<Class1> selectClassByCourseID(@Param("course_id") BigInteger course_id);
     /**
      * 根据老师ID查找课程
      */
