@@ -74,7 +74,7 @@
         FROM school
     </select>
 
-    <select id="listAllCourses"resultType="xmu.yunzhieducation.entity.Course">
+    <select id="listAllCourses" resultType="xmu.yunzhieducation.entity.Course">
         SELECT name,introduction,knowledge_point,class_num
         FROM course
     </select>
