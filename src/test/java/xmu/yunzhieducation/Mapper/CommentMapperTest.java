@@ -21,7 +21,6 @@ public class CommentMapperTest {
     @Test
     public void testInsertTopicByID() {
         Topic t = new Topic();
-        t.setId(new BigInteger("4"));
         t.setBelonging_id(new BigInteger("1"));
         t.setTime(new Date(118, 3, 4, 12, 34, 56));
         t.setType(0);
@@ -40,7 +39,6 @@ public class CommentMapperTest {
     public void testInsertCommentByID()
     {
         Comment c=new Comment();
-        c.setId(new BigInteger("4"));
         c.setContent("茶餐厅");
         c.setTime(new Date(118,3,4,12,35,56));
         c.setTopic_id(new BigInteger("1"));

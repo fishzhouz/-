@@ -19,8 +19,8 @@
 
     <insert id="insertTaskByID" parameterType="xmu.yunzhieducation.entity.Task" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO task
-        (id,start_time,end_time,period_id,information,name,type,word_file)
-        VALUES(#{id},#{start_time},#{end_time},#{period_id},#{information},#{name},#{type},#{word_file})
+        (start_time,end_time,period_id,information,name,type,word_file)
+        VALUES(#{start_time},#{end_time},#{period_id},#{information},#{name},#{type},#{word_file})
     </insert>
 
     <delete id="deleteTaskBytaskID">
@@ -46,8 +46,8 @@
 
     <insert id="insertQuestionBytaskID" parameterType="xmu.yunzhieducation.entity.Question" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO question
-        (id,heading,A,B,C,D,answer,task_id)
-        VALUES(#{id},#{heading},#{A},#{B},#{C},#{D},#{answer},#{task_id})
+        (heading,A,B,C,D,answer,task_id)
+        VALUES(#{heading},#{A},#{B},#{C},#{D},#{answer},#{task_id})
     </insert>
 
     <select id="selectQuestionBytaskID"  resultMap="questionResultMap">
@@ -85,8 +85,8 @@
 
     <insert id="insertStudenttaskByID" parameterType="xmu.yunzhieducation.entity.Student_task" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO student_task
-        (id,student_id,task_id,grade)
-        VALUES(#{id},#{student_id},#{task_id},#{grade})
+        (student_id,task_id,grade)
+        VALUES(#{student_id},#{task_id},#{grade})
     </insert>
 
     <delete id="deleteStudenttaskBystudentID">
@@ -101,8 +101,8 @@
 
     <insert id="insertStudentquestionBycourseID" parameterType="xmu.yunzhieducation.entity.Student_question" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO student_question
-        (id,user_id,question_id,own_answer,is_true,course_id)
-        VALUES(#{id},#{user_id},#{question_id},#{own_answer},#{is_true},#{course_id})
+        (user_id,question_id,own_answer,is_true,course_id)
+        VALUES(#{user_id},#{question_id},#{own_answer},#{is_true},#{course_id})
     </insert>
 
     <select id="selectStudentquestionByquestionID"  resultMap="studentquestionResultMap">

@@ -5,8 +5,8 @@
     <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
     <insert id="insertTopicByID" parameterType="xmu.yunzhieducation.entity.Topic" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO topic
-        (id,belonging_id,time,type,user_id,content)
-        VALUES(#{id},#{belonging_id},#{time},#{type},#{user_id},#{content})
+        (belonging_id,time,type,user_id,content)
+        VALUES(#{belonging_id},#{time},#{type},#{user_id},#{content})
     </insert>
 
     <delete id="deleteTopicByID">
@@ -16,8 +16,8 @@
 
     <insert id="insertCommentByID" parameterType="xmu.yunzhieducation.entity.Comment" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO comment
-        (id,topic_id,content,time,user_id)
-        VALUES(#{id},#{topic_id},#{content},#{time},#{user_id})
+        (topic_id,content,time,user_id)
+        VALUES(#{topic_id},#{content},#{time},#{user_id})
     </insert>
 
     <delete id="deleteCommentByID">

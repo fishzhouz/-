@@ -5,8 +5,8 @@
     <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
     <insert id="insertUser" parameterType="xmu.yunzhieducation.entity.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user
-        (id,account,password,identified,name,school_id,number,sex,introduction)
-        VALUES(#{id},#{account},#{password},#{identified},#{name},#{school_id},#{number},#{sex},#{introduction})
+        (account,password,identified,name,school_id,number,sex,introduction)
+        VALUES(#{account},#{password},#{identified},#{name},#{school_id},#{number},#{sex},#{introduction})
     </insert>
 
     <select id="Login" resultMap="userResultMap">
@@ -63,8 +63,8 @@
 
     <insert id="insertMessage" parameterType="xmu.yunzhieducation.entity.Message" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO message
-        (id,user_id,type,content,time,is_read,topic_id)
-        VALUES(#{id},#{user_id},#{type},#{content},#{time},#{is_read},#{topic_id})
+        (user_id,type,content,time,is_read,topic_id)
+        VALUES(#{user_id},#{type},#{content},#{time},#{is_read},#{topic_id})
     </insert>
 
     <delete id="deleteMessageByID">

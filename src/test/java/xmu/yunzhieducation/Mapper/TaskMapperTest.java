@@ -36,7 +36,6 @@ public class TaskMapperTest {
     public void testInsertTaskByID()
     {
         Task t=new Task();
-        t.setPeriod_id(new BigInteger("5"));
         t.setStart_time(new Date(2018,3,17));
         t.setEnd_time(new Date(2018,3,24));
         t.setPeriod_id(new BigInteger("4"));
@@ -66,7 +65,6 @@ public class TaskMapperTest {
     public void testInsertQuestionBytaskID()
     {
         Question q=new Question();
-        q.setId(new BigInteger("6"));
         q.setHeading("nba夺冠次数最多的球队是？");
         q.setA("凯尔特人");
         q.setB("湖人");
@@ -103,7 +101,6 @@ public class TaskMapperTest {
     public void testInsertStudenttaskByID()
     {
         Student_task student_task=new Student_task();
-        student_task.setId(new BigInteger("9"));
         student_task.setStudent_id(new BigInteger("9"));
         student_task.setTask_id(new BigInteger("3"));
         student_task.setGrade(98);
@@ -120,7 +117,6 @@ public class TaskMapperTest {
     public void testInsertStudentquestionBycourseID()
     {
         Student_question s=new Student_question();
-        s.setId(new BigInteger("6"));
         s.setUser_id(new BigInteger("4"));
         s.setQuestion_id(new BigInteger("1"));
         s.setOwn_answer('D');

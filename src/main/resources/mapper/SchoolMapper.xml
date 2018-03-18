@@ -9,16 +9,16 @@
         VALUES(#{id},#{homepage},#{name},#{province},#{city},#{picture})
     </insert>
 
-    <update id="updateSchool">
+    <update id="updateSchool" parameterType="xmu.yunzhieducation.entity.School">
         UPDATE school
         <set>
-            homepage=#{School.homepage},
-            name=#{School.name},
-            province=#{School.province},
-            city=#{School.city},
-            picture=#{School.picture},
+            homepage=#{homepage},
+            name=#{name},
+            province=#{province},
+            city=#{city},
+            picture=#{picture},
         </set>
-        WHERE id=#{school_id}
+        WHERE id=#{id}
     </update>
 
     <insert id="insertSchoolInfo" parameterType="xmu.yunzhieducation.entity.School_information" keyProperty="id" useGeneratedKeys="true">
@@ -44,39 +44,83 @@
     </delete>
 
     <insert id="insertClass" parameterType="xmu.yunzhieducation.entity.Class1" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO class1
-        (course_id,stu_num,class_name)
-        VALUES(#{Class.course_id},#{Class.stu_num},#{Class.class_name})
+        INSERT INTO class
+        (course_id,student_num,class_name,start_time,end_time)
+        VALUES(#{course_id},#{student_num},#{class_name},#{start_time},#{end_time})
     </insert>
 
     <delete id="deleteClass">
-        DELETE FROM class1 WHERE id=#{class_id}
+        DELETE FROM class WHERE id=#{class_id}
     </delete>
 
-    <update id="updateClassInfo">
-        UPDATE class1
+    <update id="updateClassInfo" parameterType="xmu.yunzhieducation.entity.Class1">
+        UPDATE class
         <set>
-            course_id=Class1.course_id,
-            stu_num=Class1.stu_num,
-            class_name=Class1.class_name,
+            student_num=#{student_num},
+            class_name=#{class_name},
+            start_time=#{start_time},
+            end_time=#{end_time},
         </set>
-        WHERE id=#{Class.id}
+        WHERE id=#{id}
     </update>
 
-    <select id="ListTeacherBySchoolId" resultType="xmu.yunzhieducation.entity.User" >
-        SELECT name,sex,introductiom
+    <select id="listTeacherBySchoolId" resultMap="userResultMap" >
+        SELECT *
         FROM user
-        WHERE school_id=#{school_id} AND type=1
+        WHERE school_id=#{school_id} AND identification=1
     </select>
+    <resultMap id="userResultMap" type="xmu.yunzhieducation.entity.User">
+        <id property="id" column="id"/>
+        <result property="account" column="account"/>
+        <result property="password" column="password"/>
+        <result property="identification" column="identification"/>
+        <result property="name" column="name"/>
+        <result property="number" column="number"/>
+        <result property="school_id" column="school_id"/>
+        <result property="sex" column="sex"/>
+        <result property="introduction" column="introduction"/>
+    </resultMap>
 
     <select id="listAllSchools" resultType="xmu.yunzhieducation.entity.School">
         SELECT id,homepage,name,province,city,picture
         FROM school
     </select>
 
-    <select id="listAllCourses" resultType="xmu.yunzhieducation.entity.Course">
-        SELECT name,introduction,knowledge_point,class_num
+    <select id="listAllCourses" resultMap="courseResultMap">
+        SELECT *
         FROM course
     </select>
+    <resultMap id="courseResultMap" type="xmu.yunzhieducation.entity.Course">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="introduction" column="introduction"/>
+        <result property="teaching_progress" column="teaching_progress"/>
+        <result property="knowledge_point" column="knowledge_point"/>
+        <result property="teacher_id" column="teacher_id"/>
+        <result property="picture" column="picture"/>
+    </resultMap>
 
+    <select id="selectSchoolById" resultType="xmu.yunzhieducation.entity.School">
+        SELECT *
+        FROM school
+        WHERE id=#{id}
+    </select>
+
+    <select id="selectInfoByschoolID" resultMap="schoolinformationResultMap">
+        SELECT *
+        FROM school_information
+        WHERE school_id=#{school_id} and type=0
+    </select>
+    <select id="selectCourseImgByschoolID" resultMap="schoolinformationResultMap">
+        SELECT *
+        FROM school_information
+        WHERE school_id=#{school_id} and type=1
+    </select>
+    <resultMap id="schoolinformationResultMap" type="xmu.yunzhieducation.entity.School_information">
+        <id property="id" column="id"/>
+        <result property="school_id" column="school_id"/>
+        <result property="content" column="content"/>
+        <result property="type" column="type"/>
+        <result property="course_id" column="course_id"/>
+    </resultMap>
 </mapper>

@@ -61,7 +61,6 @@ public class LoginMapperTest {
     public void testInsertMessage()
     {
         Message m=new Message();
-        m.setId(new BigInteger("4"));
         m.setUser_id(new BigInteger("3"));
         m.setType(0);
         m.setContent("你的话题被回复啦");

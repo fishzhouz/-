@@ -23,7 +23,6 @@ public class LoginServiceTest {
         try
         {
             User u=new User();
-            u.setId(new BigInteger("1"));
             u.setAccount("abc");
             u.setPassword("123");
             u.setIdentified(0);

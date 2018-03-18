@@ -22,7 +22,6 @@ public class CourseMapperTest {
     public void testCreateCourse()
     {
         Course c=new Course();
-        c.setId(new BigInteger("3"));
         c.setName("线性代数");
         c.setTeacher_id(new BigInteger("2"));
         c.setIntroduction("数学");
@@ -36,7 +35,6 @@ public class CourseMapperTest {
     public void testChoosecourseByStudentID()
     {
         Class_student c=new Class_student();
-        c.setId(new BigInteger("9"));
         c.setClass_id(new BigInteger("2"));
         c.setStudent_id(new BigInteger("3"));
         courseMapper.chooseCourseByStudentID(c);
