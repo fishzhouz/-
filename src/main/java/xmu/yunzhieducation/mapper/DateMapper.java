@@ -25,11 +25,11 @@ public interface DateMapper {
 
 
     /*根据periodId和studentId找到学生在某个课时下的具体表现，已经判断学生是否有参与该课时的学习*/
-    Student_period listStudentPeriodByPeriodIdAndStudentId(@Param("periodId")BigInteger periodId,@Param("studntId")BigInteger studentId);
+    Student_period listStudentPeriodByPeriodIdAndStudentId(@Param("periodId")BigInteger periodId,@Param("studentId")BigInteger studentId);
 
 
     /*根据courseId和userId上传个人能力档案*/
-    Boolean updateAbilityFileByCourseIdAndStudentId(Ablity_file ablityFile);
+    void insertAbilityFileByCourseIdAndStudentId(Ablity_file ablityFile);
 
 
     /*根据courseId和userId查看个人能力档案*/

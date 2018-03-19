@@ -3,7 +3,7 @@
 <!--命名空间应该是对应接口的包名+类名 -->
 <mapper namespace="xmu.yunzhieducation.mapper.DateMapper">
     <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
-    <select id="listClassStudentByClassId" resultType="xmu.yunzhieducation.entity.Class_student">
+    <select id="listClassStudentByClassId" resultMap="classstudentResultMap">
         SELECT
         id,
         class_id,
@@ -14,11 +14,16 @@
         WHERE
         class_id=#{classId}
     </select>
+    <resultMap id="classstudentResultMap" type="xmu.yunzhieducation.entity.Class_student">
+        <id property="id" column="id"/>
+        <result property="class_id" column="class_id"/>
+        <result property="student_id" column="student_id"/>
+        <result property="grade" column="grade"/>
+    </resultMap>
 
 
 
-
-    <select id="listClassStudentByClassIdAndStudentId" resultType="xmu.yunzhieducation.entity.Class_student">
+    <select id="listClassStudentByClassIdAndStudentId" resultMap="classstudentResultMap">
         SELECT
         id,
         class_id,
@@ -35,67 +40,57 @@
 
 
 
-    <select id="listPeriodByClassId" resultType="xmu.yunzhieducation.entity.Period">
-        SELECT
-        id,
-        class_id,
-        ppt,
-        knowledge_point,
-        video
+    <select id="listPeriodByClassId" resultMap="periodResultMap">
+        SELECT *
         FROM
         period
         WHERE
         class_id=#{classId}
     </select>
+    <resultMap id="periodResultMap" type="xmu.yunzhieducation.entity.Period">
+        <id property="id" column="id"/>
+        <result property="class_id" column="class_id"/>
+        <result property="ppt" column="ppt"/>
+        <result property="knowledge_point" column="knowledge_point"/>
+        <result property="video" column="video"/>
+    </resultMap>
 
 
 
 
-
-    <select id="listStudentPeriodByPeriodIdAndStudentId" resultType="xmu.yunzhieducation.entity.Student_period">
-        SELECT
-        id,
-        studnt_id,
-        period_id,
-        is_click
-        FROM
-        period
+    <select id="listStudentPeriodByPeriodIdAndStudentId" resultMap="studentperiodResultMap">
+        SELECT *
+        FROM student_period
         WHERE
-        studnt_id=#{studntId}
-        AND
-        period_id=#{periodId}
+        student_id=#{studentId} AND period_id=#{periodId}
     </select>
+    <resultMap id="studentperiodResultMap" type="xmu.yunzhieducation.entity.Student_period">
+        <id property="id" column="id"/>
+        <result property="student_id" column="student_id"/>
+        <result property="period_id" column="period_id"/>
+        <result property="is_click" column="is_click"/>
+    </resultMap>
+
+    <insert id="insertAbilityFileByCourseIdAndStudentId" parameterType="xmu.yunzhieducation.entity.Ablity_file" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ability_file
+        (time,comment,course_id,student_id)
+        VALUES(#{time},#{comment},#{course_id},#{student_id})
+    </insert>
 
 
-
-
-    <update id="updateAbilityFileByCourseIdAndStudentId">
-        UPDATE ability_file
-        <set>commen=#{abilityFile.commen}</set>
-        <set>time=#{abilityFile.time}</set>
+    <select id="listAbilityFileByCourseIdAndStudentId" resultMap="ablityfileResultMap">
+        SELECT *
+        FROM ability_file
         WHERE
-        course_id=#{ability.course_id}
-        AND
-        student_id=#{ability.student_id}
-    </update>
-
-
-
-
-
-    <select id="listAbilityFileByCourseIdAndStudentId" resultType="xmu.yunzhieducation.entity.Ablity_file">
-        SELECT
-        id,
-        time,
-        commen,
-        course_id,
-        studnt_id
-        FROM
-        ability_file
-        WHERE
-        studnt_id=#{studntId}
-        AND
-        course_id=#{courseId}
+        student_id=#{studentId} AND course_id=#{courseId}
     </select>
+    <resultMap id="ablityfileResultMap" type="xmu.yunzhieducation.entity.Ablity_file">
+        <id property="id" column="id"/>
+        <result property="time" column="time"/>
+        <result property="comment" column="comment"/>
+        <result property="course_id" column="course_id"/>
+        <result property="student_id" column="student_id"/>
+    </resultMap>
+
 
 </mapper>
