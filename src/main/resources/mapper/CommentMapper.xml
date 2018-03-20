@@ -55,6 +55,12 @@
         From comment
         WHERE user_id= #{user_id}
     </select>
+
+    <select id="selectCommentBytopicIDAnduserID" resultMap="commentResultMap">
+        SELECT *
+        FROM comment
+        WHERE topic_id=#{topic_id} and user_id=#{user_id}
+    </select>
     <resultMap id="commentResultMap" type="xmu.yunzhieducation.entity.Comment">
         <id property="id" column="id"/>
         <result property="time" column="time"/>

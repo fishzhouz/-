@@ -20,7 +20,7 @@ public interface PeriodMapper {
     /**
     * 新建一个课时
      */
-    void creatPeriod(Period period);
+    void createPeriod(Period period);
     /**
      * 删除一个课时
      */
@@ -30,9 +30,8 @@ public interface PeriodMapper {
      */
     List<Period> selectPeriodByClassID(@Param("class_id") BigInteger class_id);
     /**
-     * 根据学生ID和课时ID选择
+     * 根据学生ID和课时ID选择,DateMapper中的listStudentPeriodByPeriodIdAndStudentId,有冗余
      */
-    List<Student_period> selectStudentPeriodByStudentIDPeriodID(@Param("student_id") BigInteger student_id, @Param("period_id") BigInteger period_id);
     /**
      * 修改is_click
      */

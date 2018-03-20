@@ -98,4 +98,14 @@ public class CommentMapperTest {
         BigInteger topic=commentMapper.selectTopicBycommentID(new BigInteger("1"));
         System.out.println(topic);
     }
+
+    @Test
+    public void testSelectCommentBytopicIDAnduserID()
+    {
+        List<Comment> mycomments=commentMapper.selectCommentBytopicIDAnduserID(new BigInteger("1"),new BigInteger("5"));
+        for(Comment  c:mycomments)
+        {
+            System.out.println(c);
+        }
+    }
 }

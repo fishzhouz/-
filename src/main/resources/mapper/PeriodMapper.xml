@@ -4,10 +4,10 @@
 <mapper namespace="xmu.yunzhieducation.mapper.PeriodMapper">
     <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
     <!--新建一个课时-->
-    <insert id="creatPeriod" parameterType="xmu.yunzhieducation.entity.Period" keyProperty="id" useGeneratedKeys="true">
+    <insert id="createPeriod" parameterType="xmu.yunzhieducation.entity.Period" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO period
-        (id,class_id,ppt,knowledge_point,video)
-        VALUES (#{id},#{class_id},#{ppt},#{knowledge_point},#{video})
+        (class_id,ppt,knowledge_point,video)
+        VALUES (#{class_id},#{ppt},#{knowledge_point},#{video})
     </insert>
     <!--根据课时ID删除课时-->
     <delete id="deletePeriodByPeriodID">
@@ -15,15 +15,17 @@
         WHERE id=#{period_id}
     </delete>
     <!--根据班级ID选择课时-->
-    <select id="selectPeriodByClassID" resultType="xmu.yunzhieducation.entity.Period">
+    <select id="selectPeriodByClassID" resultMap="periodResultMap">
         SELECT * FROM period
         WHERE class_id=#{class_id}
     </select>
-    <!--根据学生ID和课时ID选择学生课时-->
-    <select id="selectStudentPeriodByStudentIDPeriodID" resultType="xmu.yunzhieducation.entity.Class_student">
-        SELECT * FROM student_period
-        WHERE student_id=#{student_id} AND period_id=#{period_id}
-    </select>
+    <resultMap id="periodResultMap" type="xmu.yunzhieducation.entity.Period">
+        <id property="id" column="id"/>
+        <result property="class_id" column="class_id"/>
+        <result property="ppt" column="ppt"/>
+        <result property="knowledge_point" column="knowledge_point"/>
+        <result property="video" column="video"/>
+    </resultMap>
     <!--根据学生ID和课时ID修改is_click-->
     <update id="updateStudentPeriodisclick">
         UPDATE student_period
@@ -44,7 +46,7 @@
         WHERE student_id=#{student_id} AND period_id=#{period_id}
     </delete>
     <!--根据课时ID查看课时信息-->
-    <select id="selectPeriodByPeriodID" resultType="xmu.yunzhieducation.entity.Period">
+    <select id="selectPeriodByPeriodID" resultMap="periodResultMap">
         SELECT * FROM period
         WHERE id=#{period_id}
     </select>

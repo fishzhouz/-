@@ -47,4 +47,8 @@ public interface CommentMapper {
      * 根据评论找话题id
      */
     BigInteger selectTopicBycommentID(@Param("comment_id") BigInteger comment_id);
+    /**
+     * 寻找当前话题下用户的全部评论
+     */
+    List<Comment> selectCommentBytopicIDAnduserID(@Param("topic_id") BigInteger topic_id,@Param("user_id") BigInteger user_id);
 }
