@@ -107,4 +107,14 @@ public class CourseMapperTest {
             System.out.println(c);
         }
     }
+
+    @Test
+    public void testUpdateClassStudentGradeByID()
+    {
+        Class_student c=new Class_student();
+        c.setClass_id(new BigInteger("2"));
+        c.setStudent_id(new BigInteger("3"));
+        c.setGrade(90);
+        courseMapper.updateClassStudentGradeByID(c);
+    }
 }

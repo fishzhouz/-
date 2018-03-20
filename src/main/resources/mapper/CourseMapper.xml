@@ -89,4 +89,11 @@
         FROM course
         WHERE teacher_id=#{teacher_id}
     </select>
+    <update id="updateClassStudentGradeByID" parameterType="xmu.yunzhieducation.entity.Class_student">
+        UPDATE class_student
+        <set>
+             grade=#{grade},
+        </set>
+        WHERE class_id=#{class_id} and student_id=#{student_id}
+    </update>
 </mapper>

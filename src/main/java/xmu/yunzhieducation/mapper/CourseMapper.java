@@ -57,5 +57,8 @@ public interface CourseMapper {
      * 根据老师ID查找课程
      */
     List<Course> selectCourseByTeacherID(@Param("teacher_id") BigInteger teacher_id);
-
+    /**
+     * 老师给学生某门课程打分
+     */
+    void updateClassStudentGradeByID(Class_student class_student);
 }
