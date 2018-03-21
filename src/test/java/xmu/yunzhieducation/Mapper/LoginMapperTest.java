@@ -75,4 +75,11 @@ public class LoginMapperTest {
     {
         loginMapper.deleteMessageByID(new BigInteger("4"));
     }
+
+    @Test
+    public void testSelectUSerByuserID()
+    {
+        User u=loginMapper.selectUserByuserID(new BigInteger("1"));
+        System.out.println(u);
+    }
 }

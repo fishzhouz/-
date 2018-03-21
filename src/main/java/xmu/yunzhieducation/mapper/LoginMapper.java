@@ -46,4 +46,8 @@ public interface LoginMapper {
      * 用户可以删除已读消息
      */
     void deleteMessageByID(@Param("message_id") BigInteger message_id);
+    /**
+     * 查看用户个人信息
+     */
+    User selectUserByuserID(@Param("id") BigInteger id);
 }
