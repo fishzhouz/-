@@ -2,117 +2,81 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--命名空间应该是对应接口的包名+类名 -->
 <mapper namespace="xmu.yunzhieducation.mapper.TrainingMapper">
-
-
-
     <insert id="insertTraining" parameterType="xmu.yunzhieducation.entity.Trainging" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO Training
         (traing_introduction,start_time,end_time,student_num,course_id)
-        VALUES(#{Trainging.traing_introduction},#{Trainging.start_time},#{Trainging.end_time},#{Trainging.student_num},#{Trainging.course_id})
+        VALUES(#{traing_introduction},#{start_time},#{end_time},#{student_num},#{course_id})
     </insert>
 
+    <update id="updateTraining">
+        UPDATE training
+        <set>
+            student_num=student_num+1,
+        </set>
+        WHERE id=#{traingId}
+    </update>
 
-
-
-    <select id="listTrainingByCourseId" resultType="xmu.yunzhieducation.entity.Trainging">
-        SELECT
-        id,
-        traing_introduction,
-        start_time,
-        end_time,
-        student_num,
-        course_id
-        FROM
-        training
+    <select id="listTrainingByCourseId" resultMap="trainingResultMap">
+        SELECT *
+        FROM training
         WHERE
         course_id = #{courseId}
     </select>
+    <resultMap id="trainingResultMap" type="xmu.yunzhieducation.entity.Trainging">
+        <id property="id" column="id"/>
+        <result property="traing_introduction" column="traing_introduction"/>
+        <result property="start_time" column="start_time"/>
+        <result property="end_time" column="end_time"/>
+        <result property="student_num" column="student_num"/>
+        <result property="course_id" column="course_id"/>
+    </resultMap>
 
-
-
-    <select id="listTrainingByTrainingId" resultType="xmu.yunzhieducation.entity.Trainging">
-        SELECT
-        id,
-        traing_introduction,
-        start_time,
-        end_time,
-        student_num,
-        course_id
-        FROM
-        training
+    <select id="listTrainingByTrainingId" resultMap="trainingResultMap">
+        SELECT *
+        FROM training
         WHERE
         id = #{trainingId}
     </select>
 
-
-
-
     <insert id="insertStudentTraining" parameterType="xmu.yunzhieducation.entity.Student_training" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO student_training
-        (student_id,training_id,report,score)
-        VALUES(#{studentTraining.student_id},#{studentTraining.teacher_id},#{studentTraining.report},#{studentTraining.score})
+        (student_id,training_id,report)
+        VALUES(#{student_id},#{training_id},#{report})
     </insert>
 
-
-
-
-    <update id="updateStudentTrainingReportByStudentIdAndTrainingId">
-        UPDATE studeent_training
-        <set>report=#{studentTraining.report}</set>
+    <update id="updateStudentTrainingScoreByStudentIdAndTrainingId" parameterType="xmu.yunzhieducation.entity.Student_training">
+        UPDATE student_training
+        <set>score=#{score}
+        </set>
         WHERE
-        student_id=#{studentTraining.student_id}
+        student_id=#{student_id}
         AND
-        training_id=#{studentTraining.training_id}
+        training_id=#{training_id}
     </update>
 
-
-
-
-
-    <update id="updateStudentTrainingScoreByStudentIdAndTrainingId">
-        UPDATE studeent_training
-        <set>score=#{studentTraining.score}</set>
-        WHERE
-        student_id=#{studentTraining.student_id}
-        AND
-        training_id=#{studentTraining.training_id}
-    </update>
-
-
-
-
-
-    <select id="listStudentTrainingByStudentIdAndTrainingId" resultType="xmu.yunzhieducation.entity.Student_training">
-    SELECT
-    id,
-    student_id,
-    teacher_id,
-    report,
-    score
+    <select id="listStudentTrainingByStudentIdAndTrainingId" resultMap="studenttrainingResultMap">
+    SELECT *
     FROM
     student_training
     WHERE
-    student_id=studentId
+    student_id=#{studentId}
     AND
-    training_id=trainingId
-</select>
+    training_id=#{trainingId}
+    </select>
+    <resultMap id="studenttrainingResultMap" type="xmu.yunzhieducation.entity.Student_training">
+        <id property="id" column="id"/>
+        <result property="student_id" column="student_id"/>
+        <result property="training_id" column="training_id"/>
+        <result property="report" column="report"/>
+        <result property="score" column="score"/>
+    </resultMap>
 
-
-
-
-
-
-    <select id="listStudentTrainingByTrainingId" resultType="xmu.yunzhieducation.entity.Student_training">
-        SELECT
-        id,
-        student_id,
-        teacher_id,
-        report,
-        score
+    <select id="listStudentTrainingByTrainingId" resultMap="studenttrainingResultMap">
+        SELECT *
         FROM
         student_training
         WHERE
-        training_id=trainingId
+        training_id=#{trainingId}
     </select>
 
 </mapper>
