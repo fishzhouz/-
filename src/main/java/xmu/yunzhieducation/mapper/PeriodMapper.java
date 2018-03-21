@@ -18,13 +18,17 @@ import java.util.List;
 @Component
 public interface PeriodMapper {
     /**
-    * 新建一个课时
+    * 点击新建课时输入名称为新建一个课时
      */
     void createPeriod(Period period);
     /**
      * 删除一个课时
      */
     void deletePeriodByPeriodID(@Param("period_id") BigInteger period_id);
+    /**
+     * 上传课件时更改课时里的ppt和视频
+     */
+    void updatePeriodByPeriodID(Period period);
     /**
      * 根据班级ID选择课时
      */

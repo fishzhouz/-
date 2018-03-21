@@ -22,9 +22,7 @@ public class PeriodMapperTest {
     {
         Period p=new Period();
         p.setClass_id(new BigInteger("1"));
-        p.setPpt("../../1.pptx");
-        p.setVideo("../../1.mp4");
-        p.setKnowledge_point("傅里叶变换");
+        p.setKnowledge_point("RNN");
         periodMapper.createPeriod(p);
     }
 
@@ -32,6 +30,18 @@ public class PeriodMapperTest {
     public void testDeletePeriodByPeriodID()
     {
         periodMapper.deletePeriodByPeriodID(new BigInteger("5"));
+    }
+
+    @Test
+    public void testUpdatePeriodByPeriodID()
+    {
+        Period p=new Period();
+        p.setId(new BigInteger("6"));
+        p.setClass_id(new BigInteger("1"));
+        p.setKnowledge_point("RNN");
+        p.setPpt("../1.pptx");
+        p.setVideo("../1.mp4");
+        periodMapper.updatePeriodByPeriodID(p);
     }
 
     @Test
