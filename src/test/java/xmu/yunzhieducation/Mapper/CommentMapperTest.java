@@ -25,8 +25,8 @@ public class CommentMapperTest {
         t.setTime(new Date(118, 3, 4, 12, 34, 56));
         t.setType(0);
         t.setUser_id(new BigInteger("1"));
-        t.setContent("数据结构考什么呀");
-        System.out.println(t.getTime());
+        t.setHeading("计网考什么呀");
+        t.setContent("如题");
         commentMapper.insertTopicByID(t);
     }
 

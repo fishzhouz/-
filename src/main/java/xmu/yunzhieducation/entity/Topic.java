@@ -9,6 +9,7 @@ public class Topic {
     private Date time;
     private Integer type;//0代表校友圈，1代表课程交流圈，2代表实训交流圈
     private BigInteger user_id;
+    private String heading;
     private String content;
 
     public BigInteger getId() {
@@ -59,6 +60,14 @@ public class Topic {
         this.content = content;
     }
 
+    public String getHeading() {
+        return heading;
+    }
+
+    public void setHeading(String heading) {
+        this.heading = heading;
+    }
+
     @Override
     public String toString() {
         return "Topic{" +
@@ -67,6 +76,7 @@ public class Topic {
                 ", time=" + time +
                 ", type=" + type +
                 ", user_id=" + user_id +
+                ", heading='" + heading + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }

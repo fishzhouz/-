@@ -5,8 +5,8 @@
     <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
     <insert id="insertTopicByID" parameterType="xmu.yunzhieducation.entity.Topic" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO topic
-        (belonging_id,time,type,user_id,content)
-        VALUES(#{belonging_id},#{time},#{type},#{user_id},#{content})
+        (belonging_id,time,type,user_id,heading,content)
+        VALUES(#{belonging_id},#{time},#{type},#{user_id},#{heading},#{content})
     </insert>
 
     <delete id="deleteTopicByID">
