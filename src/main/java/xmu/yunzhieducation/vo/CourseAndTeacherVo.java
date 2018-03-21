@@ -1,11 +1,22 @@
 package xmu.yunzhieducation.vo;
 
+import java.math.BigInteger;
+
 /**
  * 作者陈滨  用于courseservice
  */
 public class CourseAndTeacherVo {
+    private BigInteger course_id;
     private String course_name;
     private String teacher_name;
+
+    public BigInteger getCourse_id() {
+        return course_id;
+    }
+
+    public void setCourse_id(BigInteger course_id) {
+        this.course_id = course_id;
+    }
 
     public String getCourse_name() {
         return course_name;
@@ -26,7 +37,8 @@ public class CourseAndTeacherVo {
     @Override
     public String toString() {
         return "CourseAndTeacherVo{" +
-                "course_name='" + course_name + '\'' +
+                "course_id=" + course_id +
+                ", course_name='" + course_name + '\'' +
                 ", teacher_name='" + teacher_name + '\'' +
                 '}';
     }

@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public interface CourseService {
     /**
-     * 获取学生的全部课程（type0)或老师的全部课程（type1）
+     * 获取学生的全部课程（type0)或老师的全部课程（type1）  传回课程名字和老师名字
      */
      List<CourseAndTeacherVo> getOwnCourse(BigInteger user_id,Integer type);
 }

@@ -31,6 +31,7 @@ public class CourseServiceImpl implements CourseService{
                 CourseAndTeacherVo courseAndTeacherVo=new CourseAndTeacherVo();
                 BigInteger course_id=courseMapper.selectCourseIDByClassID(c.getClass_id()).getCourse_id();
                 Course course=courseMapper.selectCourseinfoByCourseID(course_id);
+                courseAndTeacherVo.setCourse_id(course_id);
                 courseAndTeacherVo.setCourse_name(course.getName());
                 courseAndTeacherVo.setTeacher_name(loginMapper.selectUserByuserID(course.getTeacher_id()).getName());
                 courseAndTeacherVos.add(courseAndTeacherVo);
@@ -43,6 +44,7 @@ public class CourseServiceImpl implements CourseService{
             String name=loginMapper.selectUserByuserID(user_id).getName();
             for(Course c:courses){
                CourseAndTeacherVo courseAndTeacherVo=new CourseAndTeacherVo();
+               courseAndTeacherVo.setCourse_id(c.getId());
                courseAndTeacherVo.setCourse_name(c.getName());
                courseAndTeacherVo.setTeacher_name(name);
                courseAndTeacherVos.add(courseAndTeacherVo);
