@@ -33,6 +33,7 @@ public class CourseServiceImpl implements CourseService{
                 Course course=courseMapper.selectCourseinfoByCourseID(course_id);
                 courseAndTeacherVo.setCourse_id(course_id);
                 courseAndTeacherVo.setCourse_name(course.getName());
+                courseAndTeacherVo.setPicture(course.getPicture());
                 courseAndTeacherVo.setTeacher_name(loginMapper.selectUserByuserID(course.getTeacher_id()).getName());
                 courseAndTeacherVos.add(courseAndTeacherVo);
             }
@@ -46,6 +47,7 @@ public class CourseServiceImpl implements CourseService{
                CourseAndTeacherVo courseAndTeacherVo=new CourseAndTeacherVo();
                courseAndTeacherVo.setCourse_id(c.getId());
                courseAndTeacherVo.setCourse_name(c.getName());
+               courseAndTeacherVo.setPicture(c.getPicture());
                courseAndTeacherVo.setTeacher_name(name);
                courseAndTeacherVos.add(courseAndTeacherVo);
             }
