@@ -39,5 +39,5 @@ public interface DataService {
     /**
      * 获得某个实训下的所有学生的得分
      */
-    public List<Integer> getAllGradeByTrainingID(BigInteger training_id);
+    public List<Student_training> getAllGradeByTrainingID(BigInteger training_id);
 }
