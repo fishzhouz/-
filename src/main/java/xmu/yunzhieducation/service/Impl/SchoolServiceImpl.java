@@ -54,15 +54,10 @@ public class SchoolServiceImpl implements SchoolService{
     }
 
     @Override
-    public List<String> getSchoolPictureBySchoolID(BigInteger school_id){
+    public List<School_information> getSchoolPictureBySchoolID(BigInteger school_id){
         List<School_information> school_informations=schoolMapper.selectCourseImgByschoolID(school_id);//得到轮播图的路径
         if(school_informations.isEmpty()) return null;
-        List<String> strings=new ArrayList<String>();
-        for(School_information school_information:school_informations)
-        {
-            strings.add(school_information.getContent());
-        }
-        return strings;
+        return school_informations;
     }
     /*根据资讯（或轮播图）的ID删除这条资讯（或轮播图）*/
     @Override

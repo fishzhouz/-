@@ -58,7 +58,7 @@ public class LoginServiceImpl implements LoginService {
     public boolean insertUser(User user) {
         List<User> users = loginMapper.listAllUsers();
         for (User us : users) {
-            if (us.getAccount() == user.getAccount())//若账号重复则返回false
+            if (us.getAccount().equals(user.getAccount()))//若账号重复则返回false
                 return false;
         }
         loginMapper.insertUser(user);
