@@ -84,6 +84,18 @@
         WHERE
         student_id=#{studentId} AND course_id=#{courseId}
     </select>
+    <select id="listAbilityFileByStudentId" resultMap="ablityfileResultMap">
+        SELECT *
+        FROM ability_file
+        WHERE
+        student_id=#{studentId}
+    </select>
+    <select id="listAbilityFileByCourseId" resultMap="ablityfileResultMap">
+        SELECT *
+        FROM ability_file
+        WHERE
+        course_id=#{courseId}
+    </select>
     <resultMap id="ablityfileResultMap" type="xmu.yunzhieducation.entity.Ablity_file">
         <id property="id" column="id"/>
         <result property="time" column="time"/>

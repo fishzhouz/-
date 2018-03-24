@@ -34,4 +34,10 @@ public interface DateMapper {
 
     /*根据courseId和userId查看个人能力档案*/
     Ablity_file listAbilityFileByCourseIdAndStudentId(@Param("courseId")BigInteger courseId,@Param("studentId")BigInteger studentId);
+
+    /*根据userId查看个人能力档案*/
+    List<Ablity_file> listAbilityFileByStudentId(@Param("studentId")BigInteger studentId);
+
+    /*根据courseId查看个人能力档案*/
+    List<Ablity_file> listAbilityFileByCourseId(@Param("courseId")BigInteger courseId);
 }

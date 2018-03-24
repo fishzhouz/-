@@ -19,6 +19,10 @@
         FROM user
         WHERE id=#{id}
     </select>
+    <select id="listAllUsers" resultMap="userResultMap">
+        SELECT *
+        FROM user
+    </select>
     <resultMap id="userResultMap" type="xmu.yunzhieducation.entity.User">
         <id property="id" column="id"/>
         <result property="account" column="account"/>

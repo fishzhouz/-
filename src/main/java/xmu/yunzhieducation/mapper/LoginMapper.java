@@ -3,6 +3,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.type.BigIntegerTypeHandler;
 import org.springframework.stereotype.Component;
+import sun.nio.cs.US_ASCII;
 import xmu.yunzhieducation.entity.Message;
 import xmu.yunzhieducation.entity.User;
 
@@ -50,4 +51,8 @@ public interface LoginMapper {
      * 查看用户个人信息
      */
     User selectUserByuserID(@Param("id") BigInteger id);
+    /**
+     * 获取全部的user，目的是注册用户时account不能相同
+     */
+    List<User> listAllUsers();
 }
