@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import xmu.yunzhieducation.service.Impl.CourseServiceImpl;
 import xmu.yunzhieducation.vo.CourseAndTeacherVo;
 
 import java.math.BigInteger;
@@ -14,14 +15,24 @@ import java.util.List;
 @SpringBootTest
 public class CourseServiceTest {
     @Autowired
-    private CourseService courseService;
+    private CourseServiceImpl courseServiceImpl;
 
     @Test
-    public void testGetOwnCourse()
-    {
-        List<CourseAndTeacherVo> courseAndTeacherVos=courseService.getOwnCourse(new BigInteger("3"),0);
-        for(CourseAndTeacherVo c:courseAndTeacherVos){
+    public void testGetOwnCourse() {
+        List<CourseAndTeacherVo> courseAndTeacherVos = courseServiceImpl.getOwnCourse(new BigInteger("2"), 1);
+        for (CourseAndTeacherVo c : courseAndTeacherVos) {
             System.out.println(c);
         }
+    }
+
+    @Test
+    public void testGetCourseInfo() {
+        System.out.println(courseServiceImpl.getCourseInfo(new BigInteger("4"), new BigInteger("2")));
+    }
+
+    @Test
+    public void testChooseCourse()
+    {
+        System.out.println(courseServiceImpl.chooseCourse(new BigInteger("4"),new BigInteger("2")));
     }
 }
