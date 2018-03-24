@@ -96,12 +96,4 @@
         </set>
         WHERE class_id=#{class_id} and student_id=#{student_id}
     </update>
-
-    <update id="updateClass">
-        UPDATE class
-        <set>
-            student_num=student_num+1,
-        </set>
-        WHERE id=#{class_id}
-    </update>
 </mapper>

@@ -7,7 +7,6 @@ import java.math.BigInteger;
  */
 public class CourseAndTeacherVo {
     private BigInteger course_id;
-    private BigInteger class_id;
     private String course_name;
     private String teacher_name;
     private String picture;
@@ -44,19 +43,10 @@ public class CourseAndTeacherVo {
         this.picture = picture;
     }
 
-    public BigInteger getClass_id() {
-        return class_id;
-    }
-
-    public void setClass_id(BigInteger class_id) {
-        this.class_id = class_id;
-    }
-
     @Override
     public String toString() {
         return "CourseAndTeacherVo{" +
                 "course_id=" + course_id +
-                ", class_id=" + class_id +
                 ", course_name='" + course_name + '\'' +
                 ", teacher_name='" + teacher_name + '\'' +
                 ", picture='" + picture + '\'' +
