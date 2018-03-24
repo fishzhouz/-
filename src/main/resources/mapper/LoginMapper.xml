@@ -5,7 +5,7 @@
     <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
     <insert id="insertUser" parameterType="xmu.yunzhieducation.entity.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user
-        (account,password,identified,name,school_id,number,sex,introduction)
+        (account,password,identification,name,school_id,number,sex,introduction)
         VALUES(#{account},#{password},#{identified},#{name},#{school_id},#{number},#{sex},#{introduction})
     </insert>
 
