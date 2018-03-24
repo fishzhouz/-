@@ -61,4 +61,8 @@ public interface CourseMapper {
      * 老师给学生某门课程打分
      */
     void updateClassStudentGradeByID(Class_student class_student);
+    /**
+     * 修改班级人数+1
+     */
+    void updateClass(@Param("class_id") BigInteger class_id);
 }
