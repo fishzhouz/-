@@ -22,7 +22,7 @@ public interface SchoolService {
     /**
      * 根据学校ID获取轮播图(路径）
      */
-    public List<String> getSchoolPictureBySchoolID(BigInteger school_id);
+    public List<School_information> getSchoolPictureBySchoolID(BigInteger school_id);
     /**
      * 根据资讯ID删除资讯
      */
