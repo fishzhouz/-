@@ -1,15 +1,22 @@
 package xmu.yunzhieducation.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+<<<<<<< HEAD
+import org.springframework.data.annotation.QueryAnnotation;
 import org.springframework.stereotype.Service;
+import xmu.yunzhieducation.entity.*;
 import xmu.yunzhieducation.mapper.CourseMapper;
 import xmu.yunzhieducation.mapper.DateMapper;
 import xmu.yunzhieducation.mapper.LoginMapper;
 import xmu.yunzhieducation.mapper.TrainingMapper;
+=======
+import org.springframework.stereotype.Service;
 import xmu.yunzhieducation.entity.Ablity_file;
 import xmu.yunzhieducation.entity.Class_student;
 import xmu.yunzhieducation.entity.User;
+import xmu.yunzhieducation.mapper.CourseMapper;
+import xmu.yunzhieducation.mapper.DateMapper;
+>>>>>>> 811861e0747ebbf7a0c0b923c6674ef0d5eeb3ad
 import xmu.yunzhieducation.service.DataService;
 import xmu.yunzhieducation.vo.ParticipationVo;
 
@@ -89,8 +96,9 @@ public class DataServiceImpl implements DataService{
      */
     @Override
     public ParticipationVo trainingparticipationByTrainingID(BigInteger training_id){
-        ParticipationVo participationVo=new ParticipationVo();
-        return participationVo;
+        Trainging trainging=trainingMapper.listTrainingByTrainingId(training_id);
+        List<Class1> class1s=courseMapper.selectClassByCourseID(trainging.getCourse_id());
+
     }
     /**
      * 获得某个实训下的所有学生的得分
