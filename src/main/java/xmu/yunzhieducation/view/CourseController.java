@@ -2,6 +2,7 @@ package xmu.yunzhieducation.view;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import xmu.yunzhieducation.entity.Class1;
 import xmu.yunzhieducation.service.Impl.CourseServiceImpl;
 import xmu.yunzhieducation.vo.*;
 
@@ -51,6 +52,30 @@ public class CourseController {
     public List<TaskVo> getOwnTask(@PathVariable("class_id") BigInteger class_id)
     {
         return courseServiceImpl.getOwnTask(class_id);
+    }
+
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value="/course/{course_id}/error",method = RequestMethod.GET)
+    @ResponseBody
+    public List<WrongQuestionVo> getOwnWrongQuestion(@PathVariable("course_id") BigInteger course_id,@RequestParam(value="user_id") BigInteger user_id)
+    {
+        return courseServiceImpl.getOwnWrongQuestion(user_id,course_id);
+    }
+
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value="/topic1/{type}/{belonging_id}",method = RequestMethod.GET)
+    @ResponseBody
+    public List<TopicVo> getCircleTopic(@PathVariable("belonging_id") BigInteger belonging_id,@PathVariable("type") Integer type)
+    {
+        return courseServiceImpl.getCircleTopic(belonging_id,type);
+    }
+
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value="/course/{course_id}/class",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Class1> getClass(@PathVariable("course_id") BigInteger course_id,@RequestParam(value="type") Integer type )
+    {
+        return courseServiceImpl.getClass(course_id,type);
     }
     //还未测试
     @ResponseStatus(value= HttpStatus.CREATED)

@@ -8,6 +8,7 @@ import xmu.yunzhieducation.vo.*;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,6 +23,8 @@ public class CourseServiceImpl implements CourseService{
     private DateMapper dateMapper;
     @Autowired
     private TaskMapper taskMapper;
+    @Autowired
+    private CommentMapper commentMapper;
 
     @Override
    public List<CourseAndTeacherVo> getOwnCourse(BigInteger user_id)
@@ -148,5 +151,70 @@ public class CourseServiceImpl implements CourseService{
             }
         }
         return taskVos;
+    }
+
+    @Override
+    public List<WrongQuestionVo> getOwnWrongQuestion(BigInteger user_id,BigInteger course_id)
+    {
+        List<WrongQuestionVo> wrongQuestionVos=new ArrayList<>();
+        List<Student_question> student_questions=taskMapper.selectStudentquestionBycourseID(user_id,course_id);
+        Integer index=1;
+        for(Student_question s:student_questions) {
+            WrongQuestionVo wrongQuestionVo = new WrongQuestionVo();
+            wrongQuestionVo.setWrong_answer(s.getOwn_answer());
+            Question question = taskMapper.selectQuestionByquestionID(s.getQuestion_id());
+            wrongQuestionVo.setHeading(index + ". " + question.getHeading());
+            wrongQuestionVo.setA(question.getA());
+            wrongQuestionVo.setB(question.getB());
+            wrongQuestionVo.setC(question.getC());
+            wrongQuestionVo.setD(question.getD());
+            wrongQuestionVo.setAnswer(question.getAnswer());
+            index+=1;
+            wrongQuestionVos.add(wrongQuestionVo);
+        }
+        return wrongQuestionVos;
+    }
+
+    @Override
+    public List<TopicVo> getCircleTopic(BigInteger belonging_id,Integer type)
+    {
+        List<TopicVo> topicVos=new ArrayList<>();
+        List<Topic> topics=commentMapper.selectTopicBybelongingID(belonging_id, type);
+        BigInteger index=new BigInteger("1");
+        for(Topic t:topics){
+            TopicVo topicVo=new TopicVo();
+            topicVo.setNo(index);
+            index=index.add(new BigInteger("1"));
+            topicVo.setHeading(t.getHeading());
+            topicVo.setContent(t.getContent());
+            topicVo.setTime(t.getTime());
+            List<Comment> comments=commentMapper.selectCommentBytopicID(t.getId());
+            topicVo.setComment_num(new BigInteger((comments.size()+"")));
+            topicVos.add(topicVo);
+        }
+        return topicVos;
+    }
+
+    @Override
+    public List<Class1> getClass(BigInteger course_id,Integer type)
+    {
+        List<Class1> class1s=courseMapper.selectClassByCourseID(course_id);
+        if(type==0)
+        {
+            return class1s;
+        }
+        else if(type==1)
+        {
+            List<Class1> class1List=new ArrayList<>();
+            Date now=new Date();
+            System.out.println(now);
+            for(Class1 c:class1s){
+                if((c.getStart_time().compareTo(now))<0&&(c.getEnd_time().compareTo(now))>0){
+                    class1List.add(c);
+                }
+            }
+            return class1List;
+        }
+        return null;
     }
 }

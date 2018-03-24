@@ -55,6 +55,11 @@
         From question
         WHERE task_id= #{task_id}
     </select>
+    <select id="selectQuestionByquestionID"  resultMap="questionResultMap">
+        SELECT *
+        From question
+        WHERE id= #{question_id}
+    </select>
     <resultMap id="questionResultMap" type="xmu.yunzhieducation.entity.Question">
         <id property="id" column="id"/>
         <result property="heading" column="heading"/>
