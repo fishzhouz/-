@@ -19,7 +19,7 @@ public class CourseServiceTest {
 
     @Test
     public void testGetOwnCourse() {
-        List<CourseAndTeacherVo> courseAndTeacherVos = courseServiceImpl.getOwnCourse(new BigInteger("2"), 1);
+        List<CourseAndTeacherVo> courseAndTeacherVos = courseServiceImpl.getOwnCourse(new BigInteger("2"));
         for (CourseAndTeacherVo c : courseAndTeacherVos) {
             System.out.println(c);
         }
