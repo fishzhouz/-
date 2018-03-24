@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 public class DataServiceImpl implements DataService{
-<<<<<<< HEAD
+
     @Autowired
     private DateMapper dateMapper;
     @Autowired
@@ -34,16 +34,10 @@ public class DataServiceImpl implements DataService{
     private TrainingMapper trainingMapper;
     @Autowired
     private CourseMapper courseMapper;
-=======
-
-    @Autowired
-    private DateMapper dateMapper;
-
-    @Autowired
-    private CourseMapper courseMapper;
 
 
->>>>>>> 811861e0747ebbf7a0c0b923c6674ef0d5eeb3ad
+
+
     /**
      * 查看学生某门课的成绩
      */
@@ -85,9 +79,6 @@ public class DataServiceImpl implements DataService{
 
 
 
-    /**
-     * 老师获取某门课程下某班级的所有学生
-     */
     @Override
     public List<User> getAllStudentByClassID(BigInteger class_id){
         List<Class_student> class_students=dateMapper.listClassStudentByClassId(class_id);//现获取全部的class_student
@@ -103,16 +94,11 @@ public class DataServiceImpl implements DataService{
     /**
      *获取某个实训下的参与度分析（包括应参与人数和已参与人数）
      */
-<<<<<<< HEAD
+    @Override
     public ParticipationVo trainingparticipationByTrainingID(BigInteger training_id){
         Trainging trainging=trainingMapper.listTrainingByTrainingId(training_id);
         List<Class1> class1s=courseMapper.selectClassByCourseID(trainging.getCourse_id());
 
-=======
-    @Override
-    public double trainingparticipationByTrainingID(BigInteger training_id){
-        return 2;
->>>>>>> 811861e0747ebbf7a0c0b923c6674ef0d5eeb3ad
     }
     /**
      * 获得某个实训下的所有学生的得分
@@ -122,4 +108,5 @@ public class DataServiceImpl implements DataService{
         List<Integer> trainingID=new ArrayList<>();
         return trainingID;
     }
+
 }
