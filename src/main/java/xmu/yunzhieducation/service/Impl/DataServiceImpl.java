@@ -1,8 +1,12 @@
 package xmu.yunzhieducation.service.Impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xmu.yunzhieducation.entity.Ablity_file;
+import xmu.yunzhieducation.entity.Class_student;
 import xmu.yunzhieducation.entity.User;
+import xmu.yunzhieducation.mapper.CourseMapper;
+import xmu.yunzhieducation.mapper.DateMapper;
 import xmu.yunzhieducation.service.DataService;
 
 import java.math.BigInteger;
@@ -11,40 +15,54 @@ import java.util.List;
 @Service
 public class DataServiceImpl implements DataService{
 
-    
+    @Autowired
+    private DateMapper dateMapper;
 
+    @Autowired
+    private CourseMapper courseMapper;
 
 
     /**
      * 查看学生某门课的成绩
      */
     @Override
-    public int getGradeByCourseIDStudentID(BigInteger course_id,BigInteger student_id){
-        return 1;
+    public int getGradeByCourseIDStudentID(BigInteger class_id,BigInteger student_id){
+        return dateMapper.listClassStudentByClassIdAndStudentId(class_id,student_id).getGrade();
     }
     /**
-     *老师或学校查看某个学生的能力档案
+     *老师或学校查看某个学生的所有能力档案
      */
     @Override
     public List<Ablity_file> getAbilityfileByStudentID(BigInteger student_id){
-        List<Ablity_file> ablity_files=new ArrayList<>();
-        return ablity_files;
+        return dateMapper.listAbilityFileByStudentId(student_id);
     }
     /**
-     * 学生查看自己的能力档案
+     * 查看课程下所有学生的能力档案
      */
     @Override
-    public List<Ablity_file> getownAbilityfileByStudentID(BigInteger student_id){
-        List<Ablity_file> ablity_files=new ArrayList<>();
-        return ablity_files;
+    public List<Ablity_file> getAbilityfileBycourseID(BigInteger course_id){
+        return dateMapper.listAbilityFileByCourseId(course_id);
+    }
+    /**
+     * 查看课程下某个学生的能力档案
+     */
+    @Override
+    public Ablity_file getAbilityfileBycourseIDAndStudentID(BigInteger course_id,BigInteger student_id){
+        return dateMapper.listAbilityFileByCourseIdAndStudentId(course_id,student_id);
     }
     /**
      * 根据学生ID和课程ID给某学生添加能力评价
      */
     @Override
-    public void insertAbilityfileByStudentID(BigInteger student_id, BigInteger course_id){
+    public void insertAbilityfileByStudentID(Ablity_file ablity_file){
+        dateMapper.insertAbilityFileByCourseIdAndStudentId(ablity_file);
 
     }
+
+
+
+
+
     /**
      * 老师获取某门课程下某班级的所有学生
      */
