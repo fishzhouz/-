@@ -1,6 +1,7 @@
 package xmu.yunzhieducation.service;
 import org.springframework.stereotype.Component;
 import xmu.yunzhieducation.entity.*;
+import xmu.yunzhieducation.vo.ParticipationVo;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -30,7 +31,7 @@ public interface DataService {
     /**
      *获取某个实训下的参与度分析（包括应参与人数和已参与人数）
      */
-    public double trainingparticipationByTrainingID(BigInteger training_id);
+    public ParticipationVo trainingparticipationByTrainingID(BigInteger training_id);
     /**
      * 获得某个实训下的所有学生的得分
      */
