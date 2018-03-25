@@ -71,8 +71,13 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public void updateUser(User user){
-        loginMapper.updateUserInfo(user);
+    public boolean updateUser(User user){
+        User user1=loginMapper.selectUserByuserID(user.getId());
+        if(user.equals(user1)) return false;
+        else {
+            loginMapper.updateUserInfo(user);
+            return true;
+        }
     }
 
     @Override

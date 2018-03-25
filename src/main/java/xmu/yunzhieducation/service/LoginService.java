@@ -37,7 +37,7 @@ public interface LoginService {
     /**
      * 修改用户的信息
      */
-    public void updateUser(User user);
+    public boolean updateUser(User user);
     /**
      *获取当前用户所有message
      */

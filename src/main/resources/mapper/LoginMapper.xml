@@ -6,7 +6,7 @@
     <insert id="insertUser" parameterType="xmu.yunzhieducation.entity.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user
         (account,password,identification,name,school_id,number,sex,introduction)
-        VALUES(#{account},#{password},#{identified},#{name},#{school_id},#{number},#{sex},#{introduction})
+        VALUES(#{account},#{password},#{identification},#{name},#{school_id},#{number},#{sex},#{introduction})
     </insert>
 
     <select id="Login" resultMap="userResultMap">
