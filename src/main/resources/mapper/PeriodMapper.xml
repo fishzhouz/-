@@ -59,4 +59,9 @@
         SELECT * FROM period
         WHERE id=#{period_id}
     </select>
+    <!--老师删除课时时删除学生课时信息-->
+    <delete id="deleteStudentPeriodByPeriodID">
+        DELETE FROM student_period
+        WHERE period_id=#{period_id}
+    </delete>
 </mapper>

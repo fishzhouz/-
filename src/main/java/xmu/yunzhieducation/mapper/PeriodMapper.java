@@ -52,4 +52,8 @@ public interface PeriodMapper {
      * 根据课时ID选择课时信息
      */
     Period selectPeriodByPeriodID(@Param("period_id") BigInteger period_id);
+    /**
+     * 老师删除课时时，删除学生课时信息
+     */
+    void deleteStudentPeriodByPeriodID( @Param("period_id") BigInteger period_id);
 }

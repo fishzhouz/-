@@ -33,6 +33,11 @@
         From task
         WHERE period_id= #{period_id}
     </select>
+    <select id="selectTaskBytaskID"  resultMap="taskResultMap">
+        SELECT *
+        From task
+        WHERE id= #{task_id}
+    </select>
     <resultMap id="taskResultMap" type="xmu.yunzhieducation.entity.Task">
         <id property="id" column="id"/>
         <result property="start_time" column="start_time"/>

@@ -73,6 +73,10 @@ public interface TaskMapper {
      * 根据题目ID删除Student_question表
      */
     void deleteStudentquestionByquestionID(@Param("question_id") BigInteger question_id);
+    /*
+    根据taskid查看task的详细情况
+     */
+    Task selectTaskBytaskID(@Param("task_id") BigInteger task_id);
     /**
      * 根据题目id查看题目
      */
