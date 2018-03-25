@@ -108,9 +108,7 @@ public class TaskController {
     }
 
 
-    /*
-     *未测试
-     */
+
     @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value = "/task/{task_id}/question",method = RequestMethod.POST)
