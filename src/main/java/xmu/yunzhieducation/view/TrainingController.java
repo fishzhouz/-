@@ -47,4 +47,38 @@ public class TrainingController {
         st.settraining_id(training_id);
         return trainingServiceImpl.UploadTrainingReport(st);
     }
+
+
+
+    @ResponseStatus(value=HttpStatus.ACCEPTED)
+    @RequestMapping(value=("training/{training_id}/grade/{student_id}"),method=RequestMethod.POST)
+    @ResponseBody
+    public Boolean uploadTrainingGrade(@PathVariable("training_id") BigInteger training_id
+            ,@PathVariable("student_id") BigInteger student_id
+            ,@RequestParam String grade){
+        Student_training st=new Student_training();
+        st.setScore(Integer.parseInt(grade));
+        st.setStudent_id(student_id);
+        st.settraining_id(training_id);
+        return trainingServiceImpl.UpdateTrainingReport(st);
+    }
+
+
+
+    @ResponseStatus(value=HttpStatus.OK)
+    @RequestMapping(value=("/training/{training_id}/grade"),method=RequestMethod.GET)
+    @ResponseBody
+    //测试完毕
+    public Student_training getStudentTrainingByUserIdTrainingId(@PathVariable("training_id") BigInteger training_id
+            ,@CookieValue BigInteger user_id){
+        return trainingServiceImpl.GetTraingingReport(user_id,training_id);
+    }
+
+
+    @ResponseStatus(value=HttpStatus.ACCEPTED)
+    @RequestMapping(value=("/training"),method=RequestMethod.POST)
+    @ResponseBody
+    public Boolean insterTrainingGrade(@RequestBody Trainging trainging){
+        return trainingServiceImpl.InsertTraining(trainging);
+    }
 }
