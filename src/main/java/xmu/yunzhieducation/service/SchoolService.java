@@ -16,13 +16,9 @@ public interface SchoolService {
      */
     public List<User> getTeacherBySchoolID(BigInteger school_id);
     /**
-     * 根据学校ID获取资讯信息
+     * 根据学校ID获取资讯（轮播图以及公告）
      */
-    public List<String> getSchoolInformationBySchoolID(BigInteger school_id);
-    /**
-     * 根据学校ID获取轮播图(路径）
-     */
-    public List<School_information> getSchoolPictureBySchoolID(BigInteger school_id);
+    public List<School_information> getSchoolInformationBySchoolID(BigInteger school_id);
     /**
      * 根据资讯ID删除资讯
      */
@@ -30,7 +26,7 @@ public interface SchoolService {
     /**
      * 根据学校ID上传资讯
      */
-    public void insertMessageBySchoolID(School_information school_information);
+    public void insertInformationBySchoolID(School_information school_information);
     /**
      * 修改学校信息
      */

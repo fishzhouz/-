@@ -41,7 +41,7 @@ public class SchoolServiceImpl implements SchoolService{
         if(teachers.isEmpty()) return null;
         return teachers;
     }
-
+     /*
     @Override
     public List<String> getSchoolInformationBySchoolID(BigInteger school_id){
         List<School_information> school_informations=schoolMapper.selectInfoByschoolID(school_id);//得到学校的资讯
@@ -52,11 +52,13 @@ public class SchoolServiceImpl implements SchoolService{
         }
         return strings;
     }
-
+    */
     @Override
-    public List<School_information> getSchoolPictureBySchoolID(BigInteger school_id){
-        List<School_information> school_informations=schoolMapper.selectCourseImgByschoolID(school_id);//得到轮播图的路径
+    public List<School_information> getSchoolInformationBySchoolID(BigInteger school_id){
+        List<School_information> school_informations=schoolMapper.selectCourseImgByschoolID(school_id);//得到轮播图
+        List<School_information> school_informations1=schoolMapper.selectInfoByschoolID(school_id);//得到学校的资讯
         if(school_informations.isEmpty()) return null;
+        school_informations.addAll(school_informations1);
         return school_informations;
     }
     /*根据资讯（或轮播图）的ID删除这条资讯（或轮播图）*/
@@ -65,10 +67,13 @@ public class SchoolServiceImpl implements SchoolService{
         schoolMapper.deleteSchoolInfo(infromation_id);
     }
 
+    /*插入学校资讯*/
     @Override
-    public void insertMessageBySchoolID(School_information school_information){
+    public void insertInformationBySchoolID(School_information school_information){
         schoolMapper.insertSchoolInfo(school_information);
     }
+
+    /*更新学校信息*/
     @Override
     public void updateSchoolBySchoolID(School school){
         schoolMapper.updateSchool(school);
