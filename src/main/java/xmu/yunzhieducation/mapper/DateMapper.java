@@ -40,4 +40,6 @@ public interface DateMapper {
 
     /*根据courseId查看个人能力档案*/
     List<Ablity_file> listAbilityFileByCourseId(@Param("courseId")BigInteger courseId);
+    /*根据courseId和student_id删除个人能力档案*/
+    void deleteAbilityFileByCourseIdAndStudentId(@Param("courseId")BigInteger courseId,@Param("studentId")BigInteger studentId);
 }

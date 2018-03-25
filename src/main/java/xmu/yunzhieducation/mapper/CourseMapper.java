@@ -65,4 +65,8 @@ public interface CourseMapper {
      * 修改班级人数+1
      */
     void updateClass(@Param("class_id") BigInteger class_id);
+    /**
+     * 修改班级人数-1
+     */
+    void updateMinClass(@Param("class_id") BigInteger class_id);
 }

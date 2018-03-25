@@ -34,6 +34,10 @@ public interface SchoolMapper {
      */
     void  deleteSchoolInfo(@Param("id") BigInteger id);
     /**
+     *删除学校资讯
+     */
+    void  deleteSchoolInfoByCourseId(@Param("course_id") BigInteger course_id);
+    /**
     *修改学校资讯
      */
     void  updateSchoolInfo(@Param("info") String info,@Param("id") BigInteger id);

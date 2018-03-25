@@ -48,6 +48,10 @@ public interface LoginMapper {
      */
     void deleteMessageByID(@Param("message_id") BigInteger message_id);
     /**
+     * 根据topicId删除消息
+     */
+    void deleteMessageBytopicID(@Param("topic_id") BigInteger topic_id);
+    /**
      * 查看用户个人信息
      */
     User selectUserByuserID(@Param("id") BigInteger id);

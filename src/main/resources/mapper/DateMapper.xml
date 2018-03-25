@@ -104,5 +104,8 @@
         <result property="student_id" column="student_id"/>
     </resultMap>
 
-
+    <delete id="deleteAbilityFileByCourseIdAndStudentId">
+        DELETE FROM ability_file
+        WHERE course_id=#{courseId} and student_id=#{studentId}
+    </delete>
 </mapper>

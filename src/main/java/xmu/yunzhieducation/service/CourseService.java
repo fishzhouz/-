@@ -1,6 +1,7 @@
 package xmu.yunzhieducation.service;
 import org.springframework.stereotype.Component;
 import xmu.yunzhieducation.entity.Class1;
+import xmu.yunzhieducation.entity.Course;
 import xmu.yunzhieducation.vo.*;
 
 import java.math.BigInteger;
@@ -31,7 +32,7 @@ public interface CourseService {
     /**
      * 获取用户当前课程班级下的任务  /course/{class_id}/task GET
      */
-   List<TaskVo> getOwnTask(BigInteger class_id);
+   List<TaskIdAndContentVo> getOwnTask(BigInteger class_id);
     /**
      * 获取用户当前课程下的错题 /course/{course_id}/error GET
      */
@@ -44,4 +45,28 @@ public interface CourseService {
      * 查看课程下的班级 ,type0代表全部的班级，1代表在时间范围内的班级
      */
     List<Class1>  getClass(BigInteger course_id,Integer type);
+    /**
+     * 新建班级    /course/{course_id}/class  POST
+     */
+    boolean insertClass(Class1 class1);
+    /**
+     * 查看班级下的全部学生以及成绩信息   /course/{class_id}/student GET
+     */
+    List<StudentGradeVo> getStudent(BigInteger class_id);
+    /**
+     * 新建课程    /course POST
+     */
+    boolean insertCourse(Course course);
+    /**
+     * 老师给学生打分   /course/{student_id}/{class_id}/grade  PUT
+     */
+    boolean GradeStudent(BigInteger student_id,BigInteger class_id,Integer grade);
+    /**
+     * 学生退课    /course/{class_id}/drop DELETE
+     */
+    boolean dropCourse(BigInteger class_id,BigInteger user_id);
+    /**
+     * 管理员删除课程   /course/{course_id}  DELETE
+     */
+    boolean deleteCourse(BigInteger course_id);
 }

@@ -25,6 +25,10 @@ public class CourseServiceImpl implements CourseService{
     private TaskMapper taskMapper;
     @Autowired
     private CommentMapper commentMapper;
+    @Autowired
+    private SchoolMapper schoolMapper;
+    @Autowired
+    private TrainingMapper trainingMapper;
 
     @Override
    public List<CourseAndTeacherVo> getOwnCourse(BigInteger user_id)
@@ -135,22 +139,22 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public List<TaskVo> getOwnTask(BigInteger class_id)
+    public List<TaskIdAndContentVo> getOwnTask(BigInteger class_id)
     {
-        List<TaskVo> taskVos=new ArrayList<>();
+        List<TaskIdAndContentVo> taskIdAndContentVos =new ArrayList<>();
         List<Period> periods=periodMapper.selectPeriodByClassID(class_id);
         Integer index=1;
         for(Period p:periods){
             List<Task> tasks=taskMapper.selectTaskByperiodID(p.getId());
             for(Task t:tasks){
-                TaskVo taskVo=new TaskVo();
-                taskVo.setTask_id(t.getId());
-                taskVo.setContent("任务"+index+"  "+t.getName());
+                TaskIdAndContentVo taskIdAndContentVo =new TaskIdAndContentVo();
+                taskIdAndContentVo.setTask_id(t.getId());
+                taskIdAndContentVo.setContent("任务"+index+"  "+t.getName());
                 index+=1;
-                taskVos.add(taskVo);
+                taskIdAndContentVos.add(taskIdAndContentVo);
             }
         }
-        return taskVos;
+        return taskIdAndContentVos;
     }
 
     @Override
@@ -216,5 +220,127 @@ public class CourseServiceImpl implements CourseService{
             return class1List;
         }
         return null;
+    }
+
+    @Override
+    public boolean insertClass(Class1 class1)
+    {
+        schoolMapper.insertClass(class1);
+        return true;
+    }
+
+    @Override
+    public List<StudentGradeVo> getStudent(BigInteger class_id)
+    {
+        List<StudentGradeVo> studentGradeVos=new ArrayList<>();
+        List<Class_student> class_students=dateMapper.listClassStudentByClassId(class_id);
+        for(Class_student c:class_students){
+            StudentGradeVo studentGradeVo=new StudentGradeVo();
+            studentGradeVo.setStudent_id(c.getStudent_id());
+            studentGradeVo.setGrade(c.getGrade());
+            studentGradeVo.setName(loginMapper.selectUserByuserID(c.getStudent_id()).getName());
+            studentGradeVos.add(studentGradeVo);
+        }
+        return studentGradeVos;
+    }
+
+    @Override
+    public boolean insertCourse(Course course)
+    {
+        courseMapper.creatCourse(course);
+        return true;
+    }
+
+    @Override
+    public boolean GradeStudent(BigInteger student_id,BigInteger class_id,Integer grade)
+    {
+        Class_student c=new Class_student();
+        c.setClass_id(class_id);
+        c.setStudent_id(student_id);
+        c.setGrade(grade);
+        courseMapper.updateClassStudentGradeByID(c);
+        return true;
+    }
+
+    @Override
+    public boolean dropCourse(BigInteger class_id,BigInteger user_id)
+    {
+        BigInteger course_id=courseMapper.selectCourseIDByClassID(class_id).getCourse_id();
+        //删个人档案
+        dateMapper.deleteAbilityFileByCourseIdAndStudentId(course_id,user_id);
+        //删class_student表，班级表里人数减一、
+        courseMapper.dropCourseByClassID(class_id,user_id);
+        courseMapper.updateMinClass(class_id);
+        //删4个表
+        List<Period> periods=periodMapper.selectPeriodByClassID(class_id);
+        for(Period p:periods){
+            List<Task> tasks=taskMapper.selectTaskByperiodID(p.getId());
+            for(Task t:tasks){
+                List<Question> questions=taskMapper.selectQuestionBytaskID(t.getId());
+                for(Question q:questions){
+                            taskMapper.deleteStudentquestionByID(q.getId(),user_id);
+                }
+                taskMapper.deleteStudenttaskByID(t.getId(),user_id);
+            }
+            periodMapper.deleteStudentPeriodByStudentIDPeriodID(user_id,p.getId());
+        }
+        List<Trainging> traingings=trainingMapper.listTrainingByCourseId(course_id);
+        for(Trainging t:traingings){
+            trainingMapper.deleteStudentTrainingById(t.getId(),user_id);
+            trainingMapper.updateMinTraining(t.getId());
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deleteCourse(BigInteger course_id)
+    {
+        List<Class1> class1s=courseMapper.selectClassByCourseID(course_id);
+        for(Class1 c:class1s){
+            List<Class_student> class_students=dateMapper.listClassStudentByClassId(c.getId());
+            for(Class_student class_student:class_students){
+                dropCourse(c.getId(),class_student.getStudent_id());
+            }
+        }
+        for(Class1 c:class1s){
+            List<Period> periods=periodMapper.selectPeriodByClassID(c.getId());
+            for(Period p:periods){
+                List<Task> tasks=taskMapper.selectTaskByperiodID(p.getId());
+                for(Task t:tasks){
+                    List<Question> questions=taskMapper.selectQuestionBytaskID(t.getId());
+                    for(Question q:questions){
+                        taskMapper.deleteQuestionByquestionID(q.getId());
+                    }
+                    taskMapper.deleteTaskBytaskID(t.getId());
+                }
+                periodMapper.deletePeriodByPeriodID(p.getId());
+            }
+            schoolMapper.deleteClass(c.getId());
+        }
+        List<Topic> topics=commentMapper.selectTopicBybelongingID(course_id,1);
+        for(Topic t:topics){
+            loginMapper.deleteMessageBytopicID(t.getId());
+            List<Comment> comments=commentMapper.selectCommentBytopicID(t.getId());
+            for(Comment c:comments){
+                commentMapper.deleteCommentByID(c.getId());
+            }
+            commentMapper.deleteTopicByID(t.getId());
+        }
+        List<Trainging> traingings=trainingMapper.listTrainingByCourseId(course_id);
+        for(Trainging t:traingings){
+            List<Topic> topicList=commentMapper.selectTopicBybelongingID(t.getId(),2);
+            for(Topic topic:topicList){
+                loginMapper.deleteMessageBytopicID(topic.getId());
+                List<Comment> comments=commentMapper.selectCommentBytopicID(topic.getId());
+                for(Comment c:comments){
+                    commentMapper.deleteCommentByID(c.getId());
+                }
+                commentMapper.deleteTopicByID(topic.getId());
+            }
+            trainingMapper.deleteTrainingById(t.getId());
+        }
+        schoolMapper.deleteSchoolInfoByCourseId(course_id);
+        courseMapper.deleteCourseByCourseID(course_id);
+        return true;
     }
 }

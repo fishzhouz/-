@@ -54,6 +54,11 @@ public interface TaskMapper {
      */
     void deleteStudenttaskBytaskID(@Param("task_id") BigInteger task_id);
     /**
+     * 根据ID删除Student_task表
+     */
+    void deleteStudenttaskByID(@Param("task_id") BigInteger task_id,@Param("student_id") BigInteger student_id);
+
+    /**
      * 把课程题目插入学生题库中
      */
     void insertStudentquestionBycourseID(Student_question student_question);
@@ -73,6 +78,10 @@ public interface TaskMapper {
      * 根据题目ID删除Student_question表
      */
     void deleteStudentquestionByquestionID(@Param("question_id") BigInteger question_id);
+    /**
+     * 根据ID删除Student_question表
+     */
+    void deleteStudentquestionByID(@Param("question_id") BigInteger question_id,@Param("user_id") BigInteger user_id);
     /*
     根据taskid查看task的详细情况
      */

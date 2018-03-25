@@ -30,7 +30,9 @@
     <delete id="deleteSchoolInfo">
         DELETE FROM school_information WHERE id=#{id}
     </delete>
-
+    <delete id="deleteSchoolInfoByCourseId">
+        DELETE FROM school_information WHERE course_id=#{course_id}
+    </delete>
     <update id="updateSchoolInfo">
         UPDATE school_information
         <set>

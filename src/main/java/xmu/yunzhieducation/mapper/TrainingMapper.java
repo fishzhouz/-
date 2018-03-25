@@ -20,6 +20,8 @@ public interface TrainingMapper {
     /*修改实训的学生数量+1*/
     void updateTraining(@Param("traingId") BigInteger traingId);
 
+    /*修改实训的学生数量-1*/
+    void updateMinTraining(@Param("traingId") BigInteger traingId);
 
     /*根据课程id找到课程下的所有实训*/
     List<Trainging> listTrainingByCourseId(@Param("courseId")BigInteger courseId);
@@ -27,6 +29,7 @@ public interface TrainingMapper {
 
     /*根据实训id找到具体的实训*/
     Trainging listTrainingByTrainingId(@Param("trainingId")BigInteger trainingId);
+
 
 
     /*学生上传实训报告，并将记录插入数据库中的学生实训表*/
@@ -43,4 +46,8 @@ public interface TrainingMapper {
 
     /*根据实训id找到实训下的所有学生的报告和成绩*/
     List<Student_training> listStudentTrainingByTrainingId(@Param("trainingId")BigInteger trainingId);
+    /*根据实训id和学生id删除student_training表*/
+    void deleteStudentTrainingById(@Param("trainingId")BigInteger trainingId,@Param("studentId")BigInteger studentId);
+    /*根据实训id删除training表*/
+    void deleteTrainingById(@Param("trainingId")BigInteger trainingId);
 }

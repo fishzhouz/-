@@ -16,6 +16,14 @@
         WHERE id=#{traingId}
     </update>
 
+    <update id="updateMinTraining">
+        UPDATE training
+        <set>
+            student_num=student_num-1,
+        </set>
+        WHERE id=#{traingId}
+    </update>
+
     <select id="listTrainingByCourseId" resultMap="trainingResultMap">
         SELECT *
         FROM training
@@ -79,4 +87,12 @@
         training_id=#{trainingId}
     </select>
 
+    <delete id="deleteStudentTrainingById">
+        DELETE FROM student_training
+        WHERE student_id=#{studentId} and training_id=#{trainingId}
+    </delete>
+    <delete id="deleteTrainingById">
+        DELETE FROM training
+        WHERE id=#{trainingId}
+    </delete>
 </mapper>

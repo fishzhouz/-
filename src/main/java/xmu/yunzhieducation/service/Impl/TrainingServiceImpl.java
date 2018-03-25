@@ -38,6 +38,7 @@ public class TrainingServiceImpl implements TrainingService{
     @Override
     public Boolean UploadTrainingReport(Student_training st) {
         trainingMapper.insertStudentTraining(st);
+        trainingMapper.updateTraining(st.gettraining_id());
             return true;
     }
 

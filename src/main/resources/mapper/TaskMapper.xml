@@ -109,6 +109,11 @@
         WHERE task_id=#{task_id}
     </delete>
 
+    <delete id="deleteStudenttaskByID">
+        DELETE FROM student_task
+        WHERE task_id=#{task_id} and student_id=#{student_id}
+    </delete>
+
     <insert id="insertStudentquestionBycourseID" parameterType="xmu.yunzhieducation.entity.Student_question" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO student_question
         (user_id,question_id,own_answer,is_true,course_id)
@@ -137,5 +142,10 @@
     <delete id="deleteStudentquestionByquestionID">
         DELETE FROM student_question
         WHERE question_id=#{question_id}
+    </delete>
+
+    <delete id="deleteStudentquestionByID">
+        DELETE FROM student_question
+        WHERE question_id=#{question_id} and user_id=#{user_id}
     </delete>
 </mapper>

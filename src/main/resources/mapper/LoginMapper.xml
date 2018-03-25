@@ -80,7 +80,10 @@
         DELETE FROM message
         WHERE id=#{message_id}
     </delete>
-
+    <delete id="deleteMessageBytopicID">
+        DELETE FROM message
+        WHERE topic_id=#{topic_id}
+    </delete>
     <select id="listMessageByTopicId" resultMap="messageResultMap">
         SELECT id,user_id,type,content,time,is_read,topic_id
         FROM message

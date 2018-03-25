@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import xmu.yunzhieducation.entity.Class1;
+import xmu.yunzhieducation.entity.Course;
 import xmu.yunzhieducation.service.Impl.CourseServiceImpl;
 import xmu.yunzhieducation.vo.*;
 
@@ -49,7 +50,7 @@ public class CourseController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/course/{class_id}/task",method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskVo> getOwnTask(@PathVariable("class_id") BigInteger class_id)
+    public List<TaskIdAndContentVo> getOwnTask(@PathVariable("class_id") BigInteger class_id)
     {
         return courseServiceImpl.getOwnTask(class_id);
     }
@@ -77,12 +78,60 @@ public class CourseController {
     {
         return courseServiceImpl.getClass(course_id,type);
     }
-    //还未测试
+
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value="/course/{class_id}/choose",method = RequestMethod.POST)
     @ResponseBody
     public boolean chooseCourse(@PathVariable("class_id") BigInteger class_id,@RequestParam(value="user_id") BigInteger user_id)
     {
         return courseServiceImpl.chooseCourse(user_id, class_id);
+    }
+
+    @ResponseStatus(value= HttpStatus.CREATED)
+    @RequestMapping(value="/course/{course_id}/class",method = RequestMethod.POST)
+    @ResponseBody
+    public boolean insertClass(@PathVariable("course_id") BigInteger course_id,@RequestBody Class1 class1)
+    {
+        return courseServiceImpl.insertClass(class1);
+    }
+
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value="/course/{class_id}/student",method = RequestMethod.GET)
+    @ResponseBody
+    public List<StudentGradeVo> getStudent(@PathVariable("class_id") BigInteger class_id)
+    {
+        return courseServiceImpl.getStudent(class_id);
+    }
+
+    @ResponseStatus(value= HttpStatus.CREATED)
+    @RequestMapping(value="/course",method = RequestMethod.POST)
+    @ResponseBody
+    public boolean insertClass(@RequestBody Course course)
+    {
+        return courseServiceImpl.insertCourse(course);
+    }
+
+    @ResponseStatus(value= HttpStatus.NO_CONTENT)
+    @RequestMapping(value="/course/{student_id}/{class_id}/grade",method = RequestMethod.PUT)
+    @ResponseBody
+    public boolean GradeStudent(@PathVariable("class_id") BigInteger class_id,@PathVariable("student_id") BigInteger student_id,@RequestParam(value="grade") Integer grade)
+    {
+        return courseServiceImpl.GradeStudent(student_id,class_id,grade);
+    }
+
+    @ResponseStatus(value= HttpStatus.NO_CONTENT)
+    @RequestMapping(value="/course/{class_id}/drop",method = RequestMethod.DELETE)
+    @ResponseBody
+    public boolean dropCourse(@PathVariable("class_id") BigInteger class_id,@RequestParam(value="user_id") BigInteger user_id)
+    {
+        return courseServiceImpl.dropCourse(class_id,user_id);
+    }
+
+    @ResponseStatus(value= HttpStatus.NO_CONTENT)
+    @RequestMapping(value="/course/{course_id}",method = RequestMethod.DELETE)
+    @ResponseBody
+    public boolean deleteCourse(@PathVariable("course_id") BigInteger course_id)
+    {
+        return courseServiceImpl.deleteCourse(course_id);
     }
 }
