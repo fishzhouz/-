@@ -5,8 +5,10 @@ import xmu.yunzhieducation.entity.Class_student;
 import xmu.yunzhieducation.entity.Comment;
 import xmu.yunzhieducation.entity.Course;
 import xmu.yunzhieducation.entity.Topic;
+import xmu.yunzhieducation.entity.Message;
 import xmu.yunzhieducation.mapper.CommentMapper;
 
+import xmu.yunzhieducation.mapper.LoginMapper;
 import xmu.yunzhieducation.service.CommentService;
 import xmu.yunzhieducation.service.CourseService;
 import java.math.BigInteger;
@@ -16,6 +18,9 @@ import java.util.*;
 public class CommentServiceImpl implements CommentService{
     @Autowired
     private CommentMapper commentMapper;
+    @Autowired
+    private LoginMapper loginMapper;
+
     @Override
 
     /**
@@ -70,6 +75,15 @@ public class CommentServiceImpl implements CommentService{
     }
 
     /**
+     *查看用户某个话题下的所有评论
+     */
+    public List<Comment> ListAllCommentByTopicIdAndMe(BigInteger user_id,BigInteger topic_id){
+        List<Comment> commentList;
+        commentList=commentMapper.selectCommentBytopicIDAnduserID(user_id, topic_id);
+        return commentList;
+    }
+
+    /**
      * 删除所选评论
      */
     public Boolean DeleteCommentById(BigInteger comment_id){
@@ -85,6 +99,10 @@ public class CommentServiceImpl implements CommentService{
         List<Comment> commentList=commentMapper.selectCommentBytopicID(topic_id);
         for (Comment i:commentList) {
             commentMapper.deleteCommentByID(i.getId());
+        }
+        List<Message> messageList=loginMapper.listMessageByTopicId(topic_id);
+        for(Message msg:messageList){
+            loginMapper.deleteMessageByID(msg.getId());
         }
         commentMapper.deleteTopicByID(topic_id);
         return true;

@@ -44,6 +44,11 @@ public interface CommentService {
     public List<Topic> ListAllTopicByUserId(BigInteger user_id);
 
     /**
+     *查看用户某个话题下的评论
+     */
+    public List<Comment> ListAllCommentByTopicIdAndMe(BigInteger user_id,BigInteger topic_id);
+
+    /**
      * 删除所选评论
      */
     public Boolean DeleteCommentById(BigInteger comment_id);

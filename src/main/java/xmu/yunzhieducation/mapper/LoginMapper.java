@@ -55,4 +55,9 @@ public interface LoginMapper {
      * 获取全部的user，目的是注册用户时account不能相同
      */
     List<User> listAllUsers();
+    /**
+     * 根据topic_id获取
+     */
+    List<Message> listMessageByTopicId(@Param("topic_id")BigInteger topic_id);
+
 }

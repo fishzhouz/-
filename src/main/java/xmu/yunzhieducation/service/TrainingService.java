@@ -11,7 +11,7 @@ public interface TrainingService {
     /**
      * 获取当前用户下的所有实训
      */
-    public List<Trainging> GetTrainingByUserId(BigInteger user_id);
+    public List<Trainging> GetTrainingByCourseId(BigInteger course_id);
 
     /**
      * 查看实训具体内容

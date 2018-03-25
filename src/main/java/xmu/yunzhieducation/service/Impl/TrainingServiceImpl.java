@@ -25,25 +25,8 @@ public class TrainingServiceImpl implements TrainingService{
     private CourseMapper courseMapper;
 
     @Override
-    public List<Trainging> GetTrainingByUserId(BigInteger user_id) {
-        List<Class_student> classList=courseMapper.selectClassstudentByStudentID(user_id);
-        List<BigInteger> class_idlist=null;
-        for (Class_student cs:classList
-                ) {
-            class_idlist.add(cs.getClass_id());
-        }
-        List<Trainging> traingingList=null;
-        for (BigInteger i:class_idlist) {
-            for (BigInteger j:class_idlist
-                    ) {
-                BigInteger k = courseMapper.selectCourseIDByClassID(j).getCourse_id();
-                for (Trainging t:trainingMapper.listTrainingByCourseId(k)
-                        ) {
-                    traingingList.add(t);
-                }
-            }
-        }
-        return traingingList;
+    public List<Trainging> GetTrainingByCourseId(BigInteger course_id) {
+        return trainingMapper.listTrainingByCourseId(course_id);
     }
 
     @Override
@@ -55,10 +38,7 @@ public class TrainingServiceImpl implements TrainingService{
     @Override
     public Boolean UploadTrainingReport(Student_training st) {
         trainingMapper.insertStudentTraining(st);
-        if(trainingMapper.listStudentTrainingByStudentIdAndTrainingId(st.getStudent_id()
-                ,st.gettraining_id()).equals(st))
             return true;
-        else return false;
     }
 
     @Override
@@ -79,8 +59,6 @@ public class TrainingServiceImpl implements TrainingService{
     @Override
     public Boolean InsertTraining(Trainging train) {
         trainingMapper.insertTraining(train);
-        if(trainingMapper.listTrainingByTrainingId(train.getId()).equals(train))
-            return true;
-        else return false;
+        return true;
     }
 }
