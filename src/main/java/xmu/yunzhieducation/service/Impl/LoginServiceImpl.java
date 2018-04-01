@@ -8,6 +8,7 @@ import xmu.yunzhieducation.mapper.LoginMapper;
 import xmu.yunzhieducation.mapper.SchoolMapper;
 import xmu.yunzhieducation.mapper.CourseMapper;
 import xmu.yunzhieducation.service.LoginService;
+import xmu.yunzhieducation.vo.CourseVo;
 
 import javax.jws.soap.SOAPBinding;
 import java.math.BigInteger;
@@ -24,13 +25,22 @@ public class LoginServiceImpl implements LoginService {
     private CourseMapper courseMapper;
     /*获取页面展示的20个ID最大的课程*/
     @Override
-    public List<Course> getAllCourse() {
+    public List<CourseVo> getAllCourse() {
         List<Course> courses=schoolMapper.listAllCourses();
-        List<Course> courses1=new ArrayList<Course>();
+        List<CourseVo> courses1=new ArrayList<CourseVo>();
         if(courses.isEmpty() )return null;
-        for(int i=courses.size()-1,j=0; j<20 && i>=0;j++,i--)//获取20个课程，如果总课程少于20，就全部获取
-            courses1.add(courses.get(i));
-        return courses1;
+        for(Course c:courses){
+            CourseVo courseVo=new CourseVo();
+            courseVo.setCourse_id(c.getId());
+            courseVo.setCourse_name(c.getName());
+            courseVo.setPicture(c.getPicture());
+            courseVo.setTeacher_name(loginMapper.selectUserByuserID(c.getTeacher_id()).getName());
+            courses1.add(courseVo);
+        }
+        List<CourseVo> courseVos=new ArrayList<>();
+        for(int i=courses1.size()-1;i>=0;i--)//获取20个学校，如果总学校少于20，就全部获取
+            courseVos.add(courses1.get(i));
+        return courseVos;
     }
 
     /*获取页面展示的20个ID最大的学校*/

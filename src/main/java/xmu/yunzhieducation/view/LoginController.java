@@ -11,6 +11,7 @@ import xmu.yunzhieducation.entity.Message;
 import xmu.yunzhieducation.entity.School;
 import xmu.yunzhieducation.entity.User;
 import xmu.yunzhieducation.service.Impl.LoginServiceImpl;
+import xmu.yunzhieducation.vo.CourseVo;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -23,7 +24,7 @@ public class LoginController {
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(value = "/login/course",method = RequestMethod.GET)
     @ResponseBody
-    public List<Course> getAllCourse(){
+    public List<CourseVo> getAllCourse(){
         return loginServiceImpl.getAllCourse();
 
     }

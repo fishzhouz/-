@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/style.css" />
+		<title>我的实训</title>
+	</head>
+	<body>
+	<div class="container">
+		<!--顶部标题栏-->
+		<div class="header">
+			<img class="img-logo" src="img/logo.png" />
+			<img class="head" src="img/字体设计.png" />
+		     <a  href="myStudy.html" class="nav1">我的学习</a>
+		        <a href="message.html" class="nav2">消息</a>
+		        <a href="login.html" class="nav3">登录/注册</a>
+            <img id="icon" src="img/头像.png" />     
+		</div>
+		<!--我的学习背景-->
+		<div class="myBg">
+			<img src="img/头像.png" class="myImg" />
+			<h2 class="myh1">学习本无底，前进莫徬徨</h2>
+			<p class="morning">早上好！</p>
+		</div> 
+		<!--导航栏-->
+		<div class="navigation">
+			<button type="button" id="myStudyMytraining" autofocus="autofocus">我的实训</button>
+			<button type="button" id="myStudytrainingCircle">实训交流圈</button>
+		</div>
+		<div id="mystudyTraining2">
+		    <span class="trainingTitle">课程名称</span>
+		    <p class="due-endp">起止时间:</p>
+		    <span class="due-end">2018.01.21-2829.92.20</span>
+		    <p>请在这里选择实训报告</p>
+		    <p>在线编写实训报告：</p>
+		    <textarea  rows="8" cols="10" class="edit" ></textarea>
+		    <button type="submit" id="trainingPut">提交</button>
+	    </div>
+	    <div id="mystudyTraining3">
+	    	<div class="box1">
+				<div class="circle">
+				   <p class="circleNum">1</p>
+				</div>
+					<a href="circle comment.html" class="cicleTitle">帖子名称</a>
+				<div class="cicleContent">
+					<p>帖子内容</p>
+				</div>
+				<div class="date">
+					<p>2018-03-29</p>
+				</div>
+				<a href="circleToComment.html"><img src="img/消息.png" class="img2"></a>
+				<div class="num">
+					<p>2938人</p>
+				</div>
+			</div>
+	    </div>
+		<!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="img/logo.png" />
+			<img class="head" src="img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+			</div>
+			
+	    </div>
+	</div>
+		<script>
+		var btn1 = document.getElementById("myStudyMytraining");  
+        btn1.onclick =function(){  
+            document.getElementById('mystudyTraining2').style.display='block';
+            document.getElementById('mystudyTraining3').style.display='none'; 
+        }  
+        var btn2=document.getElementById("myStudytrainingCircle");
+        btn2.onclick=function(){
+        	 document.getElementById('mystudyTraining2').style.display='none';
+            document.getElementById('mystudyTraining3').style.display='block'; 
+        }
+	</script>
+	</body>
+</html>

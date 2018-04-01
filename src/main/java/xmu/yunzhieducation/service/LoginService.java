@@ -8,6 +8,7 @@ import xmu.yunzhieducation.entity.Message;
 import xmu.yunzhieducation.entity.Course;
 import xmu.yunzhieducation.mapper.LoginMapper;
 import xmu.yunzhieducation.mapper.SchoolMapper;
+import xmu.yunzhieducation.vo.CourseVo;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -17,7 +18,7 @@ public interface LoginService {
     /**
      * 获取平台入口展示的20个课程
      */
-    public List<Course> getAllCourse();
+    public List<CourseVo> getAllCourse();
     /**
      * 获取平台入口展示的20个学校
      */

@@ -1,0 +1,445 @@
+body{
+	margin: 0px;
+	padding: 0px;
+	overflow-x: hidden;
+}
+a{
+	text-decoration: none;
+	color: #000000;
+}
+/*顶部标题栏*/
+.header{
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	height: 60px;
+	background-color:rgb(185,227,217);
+	z-index: 2;
+}
+/*网站logo*/
+.img-logo{
+	width: 40px;
+	height: 20px;
+	position: relative;
+	left: 22px;
+	top: -10px;
+}
+
+/*网站logo字体*/
+.head{
+	position: relative;
+	left: 30px;
+	top: 5px;
+	width:100px;
+	height: 40px;
+}
+
+/*头像*/
+#icon{
+	width: 30px;
+	height: 30px;
+	position: relative;
+	left: 880px;
+	top: -4px;
+}
+
+/*我的学习*/
+.nav1{
+	position: relative;
+	left: 820px;
+	top: -18px;
+	font-size: smaller;
+}
+
+/*消息*/
+.nav2{
+	position: relative;
+	left: 850px;
+	top: -18px;
+	font-size: smaller;
+}
+
+/*登陆*/
+.nav3{
+	position: relative;
+	left: 880px;
+	top: -18px;
+	font-size: smaller;
+	text-decoration: none;
+	color: #000000;
+}
+
+.search{
+	width: 300px;
+	margin: 0px !important;
+}
+
+
+/*搜索框*/
+form {
+    position: relative;
+    left:200px;
+    top: -30px;
+    width: 200px;
+    margin: 0px !important; 
+}
+
+input, button {
+    border: none;
+    outline: none;
+}
+
+input {
+    width: 100%;
+    height: 20px;
+    padding-left: 13px;
+}
+
+button {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.bar1 input {
+    border: 2px solid #7BA7AB;
+    border-radius: 5px;
+    background: #F9F0DA;
+    color: #9E9C9C;
+    
+}
+
+.bar1 button {
+    top: 3px;
+    right: -14px;
+    background: #7BA7AB;
+    border-radius: 0 5px 5px 0;
+}
+
+.bar1 button:before {
+    content: "\f002";
+    font-family: FontAwesome;
+    font-size: 16px;
+    color: #F9F0DA;
+}
+
+/*学校背景图*/
+.schoolBg{
+	width: 800px;
+	height: 150px;
+	background: gray;
+	margin: 0 auto;
+	position: relative;
+	top: 80px;
+}
+/*学校校徽*/
+.schoolBedge{
+	width: 100px;
+	height:100px;
+	position: relative;
+	left: 250px;
+	top: 40px;
+}
+/*学校简介栏*/
+.schoolIntro{
+	width: 580px;
+	height: 50px;
+	position: relative;
+	/*top: 10px;*/
+	left: 450px;
+	font-size: large;
+	line-height: 30px;
+	
+}
+/*分隔符*/
+.hr{
+	width: 95%;
+	height:15px;
+	margin: 15px auto;
+	background: #DBDBDB;
+}
+
+/*页脚*/
+.footer{
+	background:rgb(185,227,217);
+	width:100%;
+	height:200px;
+	margin-top: 20px;
+}
+
+/*公司介绍*/
+.introduction{
+	width: 400px;
+	height: 100px;
+	margin-left: 100px;
+	margin-top: 10px;
+	line-height: 35px;
+}
+
+
+/*帖子面板*/
+.panel1 {
+	width: 800px;
+	height: 750px;
+	background-color: #F0F0F0;
+	margin: 0 auto;
+	border: solid #BBBBBB 1px;
+}
+/*按钮样式*/
+.panel1 button{
+	width: 70px;
+	height: 30px;
+}
+/*按钮点击后效果*/
+.panel1 button:hover,button:focus{
+	background: #B9E3D9;
+	border:1px solid #BBBBBB; 
+	color: #000000;
+}
+.panel1 button:active{
+	background: #B9E3D9;
+	border:1px solid #BBBBBB; 
+	color: #000000;
+}
+/*发帖图片*/
+.img1{
+	width: 34px;
+	height: 30px;
+	position: relative;
+	top: 27px;
+	left: 50px;	
+}
+/*发帖按钮位置*/
+#card{
+	position: relative;
+	left: 50px;
+	top: 20px;
+}
+/*分隔符*/
+.hr1{
+	position: relative;
+	top: 25px;
+}
+/*第一篇帖子*/
+.box1{
+	height: 130px;
+	position: relative;
+	top: 30px;
+}
+/*圆*/
+.circle {
+    width: 80px;
+    height: 80px;
+    background-color: rgb(185,227,217);
+    -webkit-border-radius: 100px;
+    position: relative;
+    top: 10px;
+    left: 20px;
+}
+/*楼层数*/
+.circleNum{
+	position: relative;
+	top: 25px;
+	left: 33px;
+	font-weight: bold;
+	font-size: larger;
+}
+/*帖子名称*/
+.cicleTitle{
+	/*width: 300px;*/
+	height: 30px;
+	position: relative;
+	left: 150px;
+	top: -80px;
+	color: #3F51B5;
+}
+/*帖子内容*/
+.cicleContent{
+	width: 620px;
+	height: 80px;
+	position: relative;
+	top: -85px;
+	left: 150px;
+}
+/*发表日期*/
+.date{
+	width: 100px;
+	height: 20px;
+	position: relative;
+	top: -220px;
+	left: 650px;
+	color: #5E5C5E;
+	font-size: 10px;
+}
+/*评论图片*/
+.img2{
+	width: 15px;
+	height: 15px;
+	position: relative;
+	top: -213px;
+	left: 650px;
+}
+.num{
+	width: 65px;
+	height: 20px;
+	position: relative;
+	top: -242px;
+	left: 675px;
+	font-size: 10px;
+}
+
+
+/*circle commment*************************
+****************************************
+*****************************************/
+.pColor{
+	color: #3F51B5;
+	position: relative;
+	left: 30px;
+	margin: 5px;
+}
+/*全部评论*/
+#allComment{
+	position: relative;
+	left: 30px;
+	top: 20px;
+}
+/*我的评论*/
+#myComment{
+	position: relative;
+	left: 50px;
+	top: 20px;
+}
+/*评论*/
+#Comment{
+	position: relative;
+	left: 550px;
+	top: -10px;
+}
+.date1{
+	width: 100px;
+	height: 20px;
+	position: relative;
+	top: -200px;
+	left: 650px;
+	color: #5E5C5E;
+	font-size: 10px;
+}
+.img21{
+	width: 15px;
+	height: 15px;
+	position: relative;
+	top: -193px;
+	left: 650px;
+}
+.num1{
+	width: 65px;
+	height: 20px;
+	position: relative;
+	top: -222px;
+	left: 675px;
+	font-size: 10px;
+}
+/*circleToComment*****************
+********************************
+*********************************/
+/*帖子面板*/
+.panel2 {
+	width: 800px;
+	height: 450px;
+	background-color: #F0F0F0;
+	margin: 0 auto;
+	border: solid #BBBBBB 1px;
+}
+/*按钮样式*/
+.panel2 button{
+	width: 70px;
+	height: 30px;
+	background: #FFFFFF;
+}
+/*按钮点击后效果*/
+.panel2 button:hover,button:focus{
+	background: #179B77;
+	border:1px solid #BBBBBB; 
+	color: #000000;
+}
+.panel2 button:active{
+	background: #B9E3D9;
+	border:1px solid #BBBBBB; 
+	color: #000000;
+}
+.pColor1{
+	color: #3F51B5;
+	position: relative;
+	left: 30px;
+	margin: 20px;
+}
+/*评论*/
+.mycommentBox{
+	width: 600px;
+	height: 300px;
+	margin: 0 auto;
+	border: #BBBBBB solid 1px; 
+	background-color: #B9E3D9;
+}
+/*头像*/
+.commentImg{
+	width: 50px;
+	height: 60px;
+	position: relative;
+	left: 20px;
+	top: 10px;
+}
+/*用户名*/
+.userName{
+	font-size: large;
+	position: relative;
+	top: -30px;
+	left: 100px;
+	margin: 0px;
+}
+/*评论方框*/
+.commentBox{
+	width: 500px;
+	height: 130px;
+	border:#BBBBBB solid 1px;
+	background: white;
+	position: relative;
+	left: 50px;
+}
+/*发表按钮*/
+#put{
+	position: relative;
+	left: 400px;
+}
+
+/*circleToPut****************
+***************************
+****************************/
+.putTitle{
+	width: 400px;
+	height: 30px;
+	margin: 50px auto;
+	border:#BBBBBB solid 1px;
+	background: white;
+	position: relative;
+	top: 20px;
+	left: -25px;
+}
+/*发表按钮*/
+#Toput{
+	position: relative;
+	left: 500px;
+	top: -20px;
+}
+/*评论方框*/
+.putcommentBox{
+	width: 450px;
+	height: 130px;
+	position: relative;
+	left:50px;
+	border:#BBBBBB solid 1px;
+	background: white;
+	
+}

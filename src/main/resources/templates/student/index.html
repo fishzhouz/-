@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/jquery.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.isotope.min.js"></script>
+	<script src="/js/jquery.inview.min.js"></script>
+	<script src="/js/cookie3.js"></script>
+	<script>
+		window.onload=function(){
+		getCourseList();
+		getSchoolList();
+    }
+	</script>
+	<script>
+		 function login(id)
+{
+   setCookie("courseID",id);
+   window.location.href="/student/classContent";
+}
+	</script>
+	<script>
+		  function getCourseList()
+		   {
+       $.ajax({
+        type:"GET", //请求方式
+        url: "/login/course" ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         str="";
+         sum=0;
+         $.each(data,function(i,item){
+         sum=sum+1;
+			                          });
+		$.each(data,function(i,item){
+         if(i%5==0)
+         {
+         if(i==0)  str=str+"<div class=\"class-row1\">";
+         else   str=str+"<div class=\"class-row\">";
+         }
+         str=str+"<a onclick=\"login("+item.course_id+")\" class=\"class"+(i%5+1)+"\"><img class=\"classPicture\" src="+item.picture+"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></a>";
+	    	if(i==sum-1)
+	    	{
+	    	str=str+"</div>";
+	    	}
+	    	else if(i%5==4)
+	    	{
+	    	str=str+"</div>";
+	    	}
+			                          });
+	     $("#classViewPanel").html(str);
+         },
+         error:function(data){
+         alert("111");
+         }
+         });
+   }
+	</script>
+	<script>
+		  function getSchoolList()
+		   {
+       $.ajax({
+        type:"GET", //请求方式
+        url: "/login/school" ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         str="";
+         sum=0;
+         $.each(data,function(i,item){
+         sum=sum+1;
+			                          });
+		$.each(data,function(i,item){
+         if(i%6==0)
+         {
+         if(i==0)  str=str+"<div class=\"bedgeRow1\">";
+         else   str=str+"<div class=\"bedgeRow2\">";
+         }
+         str=str+"<div class=\"bedge"+(i%6+1)+"\"><img class=\"bedgePic\" src="+item.picture+"></a><span class=\"pCenter\">"+item.name+"</span></div></a>";
+	    	if(i==sum-1)
+	    	{
+	    	str=str+"</div>";
+	    	}
+	    	else if(i%6==5)
+	    	{
+	    	str=str+"</div>";
+	    	}
+			                          });
+	     $("#schoolViewPanel").html(str);
+         },
+         error:function(data){
+         alert("111");
+         }
+         });
+   }
+	</script>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="/css/style.css" />
+		<title>云智教育</title>
+	</head>
+	<body>
+		<!--顶部标题栏-->
+		<div class="header">
+			<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
+		        <a  href="/student/myStudy" class="nav1">我的学习</a>
+		        <a href="/student/message" class="nav2">消息</a>
+		        <a href="/student/login" class="nav3">登录/注册</a>
+            <img id="icon" src="/img/头像.png" />
+		</div>
+		<!--轮播图-->
+		<div class="carousel">
+			
+		</div>
+		<!--课程推荐-->
+		<div class="class-navigation">
+			<span class="allClass">
+				最新课程
+			</span>
+			<button id="moreBtn">更多</button>
+		</div>
+		<!--课程列表第一行-->
+		<div id="classViewPanel">
+	  </div>
+	    <!--院校推荐-->
+		<div class="school-navigation">
+			<span class="allSchool">
+				<p>合作院校</p>
+			</span>
+			<button id="moreBtn1">更多</button>
+		</div>
+		<!--院校推荐图标第一行-->
+		<div id="schoolViewPanel">
+        <!--院校推荐图标第二行-->
+        </div>
+	    <!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+			</div>
+			
+			
+	    </div>
+	    
+	    <script>
+	    	document.getElementById('icon').onclick=function(){
+                window.location.assign('http://127.0.0.1:8020/%E4%BA%91%E6%99%BA%E6%95%99%E8%82%B2/login.html?__hbt=1521282909333');
+            }
+	/*更多按钮 */   	
+	var btn = document.getElementById('moreBtn');
+    var obj = document.getElementById('classViewPanel');
+    var total_height =  obj.scrollHeight;//文章总高度
+    var show_height = 400;//定义原始显示高度
+    if(total_height>show_height){
+    btn.style.display = 'block';
+    btn.onclick = function(){
+    obj.style.height = total_height + 'px';
+    /*btn.style.display = 'none';*/
+    }
+    
+    }
+	    </script>
+
+	</body>
+</html>

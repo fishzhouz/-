@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/style.css" />
+		<title>我的学习</title>
+	</head>
+	<body>
+	<div class="container">
+		<!--顶部标题栏-->
+		<div class="header">
+			<img class="img-logo" src="img/logo.png" />
+			<a href="/student/index"><img class="head" src="img/字体设计.png" /></a>
+		     <a  href="myStudy.html" class="nav1">我的学习</a>
+		        <a href="message.html" class="nav2">消息</a>
+		        <a href="login.html" class="nav3">登录/注册</a>
+            <img id="icon" src="img/头像.png" />     
+		</div>
+		<!--我的学习背景-->
+		<div class="myBg">
+			<img src="img/头像.png" class="myImg" />
+			<h2 class="myh1">学习本无底，前进莫徬徨</h2>
+			<p class="morning">早上好！</p>
+		</div> 
+		<!--导航栏-->
+		<div class="navigation">
+			<button type="button" id="myClass" autofocus="autofocus">我的课程</button>
+			<button type="button" id="myMission">我的任务</button>
+			<button type="button" id="myTraining">我的实训</button>
+			<button type="button" id="myMistake">错题回顾</button>
+			<button type="button" id="myCircle">我的圈子</button>
+			<button type="button" id="myCapacity">能力档案</button>
+		</div>
+	    <!--第一行-->
+		<div class="myPanel">
+			<div id="myStudyClass">
+				<button type="button" id="myStudyAllClass" autofocus="autofocus">全部</button>
+				<button type="button" id="myStudyBeing" >进行中</button>
+				<button type="button" id="myStudyEnd" >已结束</button>
+			<div class="mystudyClasses">
+			<div class="class1">
+	    	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
+	    	<div class="classHeader">
+	    		<a href="classContent.html"><span class="classHeader"></span></a>
+	    	</div>
+	    	<div class="subHeader">
+	    	    <span class="subHeader"></span>
+	    	</div>
+	    	<div class="state">
+	    		<p>进行中</p>
+	    	</div>
+	        </div>
+	        <div class="class1">
+	    	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
+	    	<div class="classHeader">
+	    		<a href="classContent.html"><span class="classHeader"></span></a>
+	    	</div>
+	    	<div class="subHeader">
+	    	    <span class="subHeader"></span>
+	    	</div>
+	    	<div class="state1">
+	    		<p>已结束  90分</p>
+	    	</div>
+	        </div>
+			</div>
+			</div>
+		    <div id="mystudyMission">
+		    	<button type="button" id="myStudyAllMission">全部</button>
+		    	<div class="mystudyMissionP"></div>
+		    	<div class="mystudyMissionP"></div>
+		    </div>
+		    <div id="mystudyTraining">
+		    	<button type="button" id="myStudyAlltraining">全部</button>
+		    	<div class="mystudyMissionP"></div>
+		    	<div class="mystudyMissionP"></div>
+		    </div>
+		   <!-- <div id="mystudyTraining2">
+		    	<button type="button" id="myStudyMytraining">我的实训</button>
+		    	<button type="button" id="myStudytrainingCircle">实训交流圈</button>
+		    </div>	-->
+		    <div id="mystudyMistake">
+		    	<button type="button" id="myStudyAllMistake">全部</button>
+		    	<span class="mystudyMistakeP"></span>
+		    </div>
+		    <div id="mystudyCicle">
+		    	<button type="button" id="myStudytOPIC">话题</button>
+		    	<button type="button" id="myStudycomment">评论</button>
+		    	<span class="mycircletitle"></span>
+		    </div>
+		   <div id="mystudyAbility">
+		   	<div class="ability1">
+		   	<div class="class1">
+	    	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
+	    	<div class="classHeader">
+	    		<a href="classContent.html"><span class="classHeader"></span></a>
+	    	</div>
+	    	<div class="subHeader">
+	    		<span class="subHeader"></span>
+	    	</div>
+	        </div>
+	        <div class="teacher-point">
+	        	<p>老师：</p>
+	        	<span class="teacher-name">asdf</span>
+	        	<p class="teacher-date">时间：</p>
+	        	<span class="point-date">sdj</span>
+	        	<div class="teacher-content">
+	        		
+	        	</div>
+	        </div>
+		   	</div>
+		   </div>
+		</div>
+        
+		<!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="img/logo.png" />
+			<img class="head" src="img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+			</div>
+			
+	    </div>
+	</div>
+		<script>
+		var btn1 = document.getElementById("myClass");  
+        btn1.onclick =function(){  
+            document.getElementById('mystudyMission').style.display='none';
+            document.getElementById('mystudyTraining').style.display='none';
+            document.getElementById('mystudyMistake').style.display='none';
+            document.getElementById('mystudyCicle').style.display='none';
+            document.getElementById('myStudyClass').style.display='block';
+            document.getElementById('mystudyAbility').style.display='none';
+        }  
+        var btn2=document.getElementById("myMission");
+        btn2.onclick=function(){
+        	document.getElementById('myStudyClass').style.display='none';
+        	document.getElementById('mystudyTraining').style.display='none';
+        	document.getElementById('mystudyMistake').style.display='none';
+        	document.getElementById('mystudyCicle').style.display='none';
+        	document.getElementById('mystudyMission').style.display='block';
+        	document.getElementById('mystudyAbility').style.display='none';
+        }
+        var btn3=document.getElementById("myTraining");
+        btn3.onclick=function(){
+        	document.getElementById('myStudyClass').style.display='none';
+        	document.getElementById('mystudyMission').style.display='none';
+        	document.getElementById('mystudyMistake').style.display='none';
+        	document.getElementById('mystudyCicle').style.display='none';
+        	document.getElementById('mystudyTraining').style.display='block';
+        	document.getElementById('mystudyAbility').style.display='none';
+        }
+        var btn4=document.getElementById("myMistake");
+        btn4.onclick=function(){
+        	document.getElementById('myStudyClass').style.display='none';
+        	document.getElementById('mystudyMission').style.display='none';
+        	document.getElementById('mystudyMistake').style.display='block';
+        	document.getElementById('mystudyCicle').style.display='none';
+        	document.getElementById('mystudyTraining').style.display='none';
+        	document.getElementById('mystudyAbility').style.display='none';
+        }
+        var btn5=document.getElementById("myCircle");
+        btn5.onclick=function(){
+        	document.getElementById('myStudyClass').style.display='none';
+        	document.getElementById('mystudyMission').style.display='none';
+        	document.getElementById('mystudyMistake').style.display='none';
+        	document.getElementById('mystudyCicle').style.display='block';
+        	document.getElementById('mystudyTraining').style.display='none';
+        	document.getElementById('mystudyAbility').style.display='none';
+        }
+        var btn6=document.getElementById("myCapacity");
+        btn6.onclick=function(){
+        	document.getElementById('myStudyClass').style.display='none';
+        	document.getElementById('mystudyMission').style.display='none';
+        	document.getElementById('mystudyMistake').style.display='none';
+        	document.getElementById('mystudyCicle').style.display='none';
+        	document.getElementById('mystudyTraining').style.display='none';
+        	document.getElementById('mystudyAbility').style.display='block';
+        }
+	</script>
+	<script>
+		window.onload=function(){
+		 document.getElementById('mystudyMission').style.display='none';
+            document.getElementById('mystudyTraining').style.display='none';
+            document.getElementById('mystudyMistake').style.display='none';
+            document.getElementById('mystudyCicle').style.display='none';
+            document.getElementById('myStudyClass').style.display='block';
+            document.getElementById('mystudyAbility').style.display='none';
+    }
+	</script>
+	</body>
+</html>
