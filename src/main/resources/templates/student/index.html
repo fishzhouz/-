@@ -8,8 +8,14 @@
 	<script src="/js/cookie3.js"></script>
 	<script>
 		window.onload=function(){
+		delCookie("userID");
 		getCourseList();
 		getSchoolList();
+		str="";
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /><img class=\"head\" src=\"/img/字体设计.png\" /><a  onclick=\"joinStudy()\" class=\"nav1\">我的学习</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+        if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">陈滨</a><img id=\"icon\" src=\"/img/头像1.png\" />";
+        $("#header").html(str);
     }
 	</script>
 	<script>
@@ -23,6 +29,22 @@ function goSchool(id)
    setCookie("schoolID",id);
    window.location.href="/student/schoolIndex";
 }
+   function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
 	</script>
 	<script>
 		  function getCourseList()
@@ -109,13 +131,7 @@ function goSchool(id)
 	</head>
 	<body>
 		<!--顶部标题栏-->
-		<div class="header">
-			<img class="img-logo" src="/img/logo.png" />
-			<img class="head" src="/img/字体设计.png" />
-		        <a  href="/student/myStudy" class="nav1">我的学习</a>
-		        <a href="/student/message" class="nav2">消息</a>
-		        <a href="/student/login" class="nav3">登录/注册</a>
-            <img id="icon" src="/img/头像.png" />
+		<div id="header">
 		</div>
 		<!--轮播图-->
 		<div class="carousel">
