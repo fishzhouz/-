@@ -179,7 +179,6 @@ input:focus, textarea:focus {
   outline: 0;
   border-color: cadetblue;
 }
-
 textarea {
   border: 2px solid #a0b3b0;
   resize: vertical;
@@ -245,16 +244,15 @@ textarea {
 
 .sexChoice{
 	height: 25px;
-	margin-top: -20px;
+	margin-bottom: 30px;
 
 }
 .sex1{
-	font-family: "微软雅黑";
-	font-size: 15px;
-	position: relative;
-	left: 30px;
-	top: -7px;
-	width: 150px;
-	height: 25px;
-	border: 1px solid #FFFFFF;
-}
+ 	font-family: "微软雅黑";
+ 	font-size: 15px;
+ 	position: relative;
+ 	width: 300px;
+ 	border: 1px solid #B9E3D9;
+ }
+
+

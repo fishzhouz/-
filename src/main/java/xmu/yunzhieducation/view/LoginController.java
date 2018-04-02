@@ -14,6 +14,7 @@ import xmu.yunzhieducation.service.Impl.LoginServiceImpl;
 import xmu.yunzhieducation.vo.CourseVo;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,6 +35,20 @@ public class LoginController {
     @ResponseBody
     public List<School> getAllSchool(){
         return loginServiceImpl.getAllSchool();
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @RequestMapping(value = "/login/schools",method = RequestMethod.GET)
+    @ResponseBody
+    public List<School> getSchools(@RequestParam(value = "province") String province){
+       List<School> schools=loginServiceImpl.getAllSchool();
+       List<School> schoolList=new ArrayList<>();
+       for(School s:schools){
+           if(s.getProvince().equals(province)){
+               schoolList.add(s);
+           }
+       }
+       return schoolList;
     }
 
     @ResponseStatus(value = HttpStatus.CREATED)
