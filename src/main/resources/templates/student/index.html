@@ -18,6 +18,11 @@
    setCookie("courseID",id);
    window.location.href="/student/classContent";
 }
+function goSchool(id)
+{
+   setCookie("schoolID",id);
+   window.location.href="/student/schoolIndex";
+}
 	</script>
 	<script>
 		  function getCourseList()
@@ -79,7 +84,7 @@
          if(i==0)  str=str+"<div class=\"bedgeRow1\">";
          else   str=str+"<div class=\"bedgeRow2\">";
          }
-         str=str+"<div class=\"bedge"+(i%6+1)+"\"><img class=\"bedgePic\" src="+item.picture+"></a><span class=\"pCenter\">"+item.name+"</span></div></a>";
+         str=str+"<a onclick=\"goSchool("+item.id+")\" class=\"bedge"+(i%6+1)+"\"><img class=\"bedgePic\" src="+item.picture+"><span class=\"pCenter\">"+item.name+"</span></a>";
 	    	if(i==sum-1)
 	    	{
 	    	str=str+"</div>";

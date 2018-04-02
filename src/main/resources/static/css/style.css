@@ -281,7 +281,7 @@ button {
 }
 /*校徽行第一行*/
 .bedgeRow1{
-	width: 860px;
+	width: 1200px;
 	height: 200px;
 	margin: 0 auto;
 }
@@ -338,12 +338,13 @@ button {
 .bedge6{
     height: 100px;  
     margin-top: 30px;
-    float: right;
+    margin-left: 50px;
+    float: left;
 }
 
 /*校徽第二行*/
 .bedgeRow2{
-	width: 860px;
+	width: 1200px;
 	height: 200px;
 	margin: -80px auto;
 }
