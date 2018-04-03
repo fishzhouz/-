@@ -38,11 +38,11 @@ public class User {
         this.password = password;
     }
 
-    public Integer getIdentified() {
+    public Integer getIdentification() {
         return identification;
     }
 
-    public void setIdentified(Integer identified) {
+    public void setIdentification(Integer identified) {
         this.identification = identified;
     }
 

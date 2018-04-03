@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" >
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
 <script>
 		window.onload=function(){
         var provinces=["北京市","天津市","上海市","重庆市","河北省","山西省","辽宁省","吉林省","黑龙江省","江苏省","浙江省","安徽省","福建省","江西省","山东省","河南省","湖北省","湖南省","广东省","海南省","四川省","贵州省","云南省","陕西省","甘肃省","青海省","台湾省","内蒙古自治区","广西壮族自治区","西藏自治区","宁夏回族自治区","新疆维吾尔自治区","香港特别行政区","澳门特别行政区"];
@@ -7,6 +13,7 @@
         var op=new Option(provinces[i],provinces[i]);
         document.getElementById("province").options.add(op);
     }
+    document.getElementById("name").value=getCookie("name");
 }
 function createSchool(){
     var pro=$("#province option:selected").attr("value");
@@ -21,6 +28,53 @@ function createSchool(){
 			                          });
                         }
                     })
+}
+function check()
+{
+var bind={
+"name": $('#name').val() ,
+    "account":getCookie("account"),
+    "password":getCookie("password"),
+    "sex":document.getElementById("sex").selectedIndex,
+    "school_id":getCookie("school_id"),
+    "identification":document.getElementById("identity").selectedIndex+1,
+    "number":$('#number').val(),
+    "introduction":$('#introduction').val()
+    }
+$.ajax({
+        type:"POST", //请求方式
+        url: "/register",
+        contentType :"application/json",
+        data:JSON.stringify(bind),
+        dataType: 'json',   //返回值类型
+         success:function(data){
+         },
+          error:function(data){
+          alert(111);
+         }
+         });
+         delCookie("account");
+         delCookie("password");
+         delCookie("school_id");
+         delCookie("name");
+alert("注册成功!返回登录界面");
+return true;
+}
+function selectSchool()
+{
+var objS = document.getElementById("school");
+var name = objS.options[objS.selectedIndex].value;
+$.ajax({
+                        url: "/login/schools2?name="+name,
+                        type: "GET",
+                        success: function (data) {
+                               setCookie("school_id",data);
+                        }
+                    })
+}
+function setnull()
+{
+document.getElementById("introduction").value=null;
 }
 	</script>
 <head>
@@ -41,21 +95,18 @@ function createSchool(){
     <div class="tab-content">
         <div id="signup">
             <h1>请继续完善个人信息</h1>
-            <form action="/" method="post">
+            <form action="/student/login" method="post" onsubmit="return check();">
                 <!-- 姓名行-->
-                <div class="field-wrap">
-                    <label>
-                        姓名<span class="req">*</span>
-                    </label>
-                    <input type="name" required autocomplete="off" />
+                <div class="field-wrap">姓名：
+                    <input id="name" type="name" required autocomplete="off" />
                 </div>
 
                 <!--  注册之 邮箱-->
                 <!--<div class="field-wrap">-->
                 <div class="sexChoice">性别：
                     <select id="sex" class="sex1">
-                        <option id="female" >女</option>
-                        <option id="male" selected>男</option>   <!--预选设置       -->
+                        <option id="male" selected>男</option>
+                        <option id="female" >女</option><!--预选设置       -->
                     </select>
                 </div>
 
@@ -66,15 +117,15 @@ function createSchool(){
                 </div>
 
                 <div class="sexChoice">学校：
-                    <select class="sex1" id="school">
+                    <select class="sex1" id="school" onchange="selectSchool()">
                         <option value ="请选择学校">请选择学校</option>
                     </select>
                 </div>
 
                 <div class="sexChoice">身份：
                     <select id="identity" class="sex1">
-                        <option id="student" selected>学生</option>
-                        <option id="teacher" >教师</option>
+                        <option id="student" >教师</option>
+                        <option id="teacher" selected>学生</option>
                         <option id="manager" >管理员</option><!--预选设置       -->
                     </select>
                 </div>
@@ -83,10 +134,10 @@ function createSchool(){
                     <label>
                         学工号<span class="req">*</span>
                     </label>
-                    <input type="school_id" required autocomplete="off"/>
+                    <input  id="number" type="school_id" required autocomplete="off"/>
                 </div>
                 <div class="field-wrap">
-                    <textarea rows="5" cols="10" class="introduce">介绍一下自己吧</textarea>
+                    <textarea id="introduction" rows="5" cols="10" class="introduce" onclick="setnull()">介绍一下自己吧</textarea>
                 </div>
                 <button type="submit" class="button button-block"/>确定</button>
 

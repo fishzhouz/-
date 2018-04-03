@@ -6,6 +6,68 @@
 <script src="/js/jquery.isotope.min.js"></script>
 <script src="/js/jquery.inview.min.js"></script>
 <script src="/js/cookie3.js"></script>
+<script>
+        function check(x)
+    {
+   var account=document.getElementById(x).value;
+      $.ajax({
+        type:"GET", //请求方式
+        url: "/login/judge?account="+account ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        if(data==false)  {alert("邮箱已被使用!");  document.getElementById(x).value=null;}
+        }
+        });
+    }
+    function f1()
+    {
+    setCookie("name",$('#name').val());
+    setCookie("account",$('#account').val());
+    setCookie("password",$('#password').val());
+    return true;
+    }
+    function getUser()
+    {
+    var account=document.getElementById("account1").value;
+    var password=document.getElementById("password1").value;
+      $.ajax({
+        type:"POST", //请求方式
+        url:"/login1?account="+account+"&password="+password ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        if(data==false)  {setCookie("judge","no");}
+        else
+        {
+        setCookie("judge","yes");
+              $.ajax({
+        type:"POST", //请求方式
+        url:"/login2?account="+account+"&password="+password ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         setCookie("name",data.name);
+         setCookie("userID",data.id);
+         setCookie("sex",data.sex);
+         setCookie("schoolID",data.school_id);
+         setCookie("identification",data.identification);
+        }
+        });
+        }
+        }
+        });
+    }
+    function f2()
+    {
+    var j=getCookie("judge");
+    if(j=="no")  {alert("用户不存在或密码错误");  return false;}
+    else if(j=="yes")   return true;
+    }
+</script>
 <head>
     <meta charset="UTF-8">
     <title>请先登录</title>
@@ -23,21 +85,46 @@
     <div class="form">
     <!--注册/登录导航-->
     <ul class="tab-group">
-        <li class="tab active"><a href="#signup">注册</a></li>
-        <li class="tab"><a href="#login">登录</a></li>
+        <li class="tab active"><a href="#login">登录</a></li>
+        <li class="tab"><a href="#signup">注册</a></li>
     </ul>
     <!--注册页-->
     <div class="tab-content">
+        <!--登录页-->
+        <div id="login">
+            <h1>云智教育</h1>
+            <form action="/student/index" method="post" id="lo" name="lo" onsubmit="return f2();">
+                <div class="field-wrap">
+                    <label>
+                        账号<span class="req">*</span>
+                    </label>
+                    <input id="account1" type="email" required autocomplete="off"/>
+                </div>
+
+                <div class="field-wrap">
+                    <label>
+                        密码<span class="req">*</span>
+                    </label>
+                    <input id="password1" type="password" required autocomplete="off" onchange="getUser()"/>
+                </div>
+
+                <p class="forgot"><a href="#">忘记密码?</a></p>
+
+                <button type="submit" class="button button-block"/>登录</button>
+
+            </form>
+
+        </div>
         <div id="signup">   
             <h1>免费注册</h1>
-            <form action="/" method="post">
+            <form action="/student/information" method="post" onsubmit="return f1();">
             <!-- 姓名行-->
             <div class="field-wrap">
                 <label>
                                                    姓名/昵称
                     <span class="req">*</span>
                 </label>
-                <input type="text" required autocomplete="off" />
+                <input type="text" id="name" required autocomplete="off" />
             </div>
         
             <!--  注册之 邮箱-->
@@ -45,45 +132,19 @@
                 <label>
                                                      邮箱<span class="req">*</span>
                 </label>
-                <input type="email"required autocomplete="off"/>
+                <input id="account" type="email" required autocomplete="off" onchange="check(this.id)"/>
             </div>
           
             <div class="field-wrap">
                 <label>
                                                     设置密码<span class="req">*</span>
                 </label>
-                <input type="password"required autocomplete="off"/>
+                <input id="password" type="password" required autocomplete="off"/>
             </div>
             <!-- 注册按钮-->
-            <button type="submit" class="button button-block"/>注册</button>
-          
-            </form>
-        </div>
-        
-        <!--登录页-->
-        <div id="login">   
-            <h1>云智教育</h1>
-            <form action="/" method="post">
-            <div class="field-wrap">
-                <label>
-                                                    账号<span class="req">*</span>
-                </label>
-                <input type="email"required autocomplete="off"/>
-            </div>
-          
-            <div class="field-wrap">
-                <label>
-                                                    密码<span class="req">*</span>
-                </label>
-                <input type="password"required autocomplete="off"/>
-            </div>
-          
-            <p class="forgot"><a href="#">忘记密码?</a></p>
-          
-            <button class="button button-block"/>登录</button>
-          
-            </form>
+            <button  class="button button-block"/>继续完善个人信息</button>
 
+            </form>
         </div>
         
     </div><!-- tab-content -->

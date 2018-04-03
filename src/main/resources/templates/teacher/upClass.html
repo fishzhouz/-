@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/classContent.css" />
+		<title>创建任务</title>
+	</head>
+	<body>
+		<!--顶部标题栏-->
+		<div class="header">
+			<img class="img-logo" src="img/logo.png" />
+			<a href="index.html"><img class="head" src="img/字体设计.png" /></a>
+		        <a  href="class.html" class="nav1">我的课程</a>
+		        <a href="message.html" class="nav2">消息</a>
+		        <a href="login.html" class="nav3">登录/注册</a>
+            <img id="icon" src="img/头像.png" /> 
+		</div>
+	    <a href="index.html" class="backIndex">首页</a>
+	    <a href="classContent.html" class="backIndex">> 课程详情</a>	
+	    <!--课程概述-->
+	    <div class="classPic">
+	        <!--课程封面图片-->
+	    	<img src="img/classPic.png" class="Picture"/>
+	    	<!--课程相关介绍-->
+	    	<div class="classIntroduction">
+	    		<p class="title">这里是课程标题</p>
+	    		<p class="author">讲师：某某某</p>
+	    		<p class="introduction">这里是课程简介巴拉巴拉巴拉巴拉巴拉可以写一堆，和下面介绍不同的地方是这个是总的课程介绍</p>
+	    		<span class="class-class">班级1</span>
+	    		<button type="button" id="startclassBtn">新建班级</button>
+	    	</div>
+	    	<!--导航栏-->
+            <div class="classNavigation">
+            	<span class="name">课时名称</span>
+            </div>	    	
+	    </div>
+	    <!--课程详情-->
+	    <div class="secondBox">
+	    	<div id="class">
+	    	<div class="classBox">
+             <p class="secondBoxp">课时列表：</p>
+             <button type="button" id="up">上传新课件</button>
+             <span class="secondBox1">akdjshfbjk</span>
+            </div>
+            <div class="testBox">
+             <p class="secondBoxp">任务列表</p>
+             <button type="button" id="uptest">上传新任务</button>
+             <span class="secondBox1">adsfg</span>
+             </div>
+             </div>
+             <div id="upclass1">
+             	<button type="button" id="up1">上传课件</button>
+             	<p class="upclassP1">请输入课时名称：</p>
+             	<input type="text" class="classname" />
+             	<p class="upclassP">请选择课件类型:</p>
+             	<label class="radioP">
+             	<input type="radio" name="choice" value="文档" />
+             	<span class="a">word文档</span>
+             	<input type="radio" name="choice" value="PPT"/>
+             	<span class="a">PPT</span>
+             	<input type="radio" name="choice" value="视频"/>
+             	<span class="a">视频</span>
+             	</label>
+             	<button type="button" id="chooseFolder">选择文件</button>
+             </div>
+             <div id="uptraing">
+             	<p>请在这里输入任务名称：</p>
+             	<input type="text" />
+             	<p>请在这里输入任务概述：</p>
+             	<textarea rows="5" cols="10"></textarea>
+             	<p>任务开始时间：</p>
+             	<input type="date" />
+             	<p>任务结束时间：</p>
+             	<input type="date" />
+             	<button type="button" id="newtest">在线创建组卷</button>
+             	<button type="button" id="newtest">上传文档</button>
+             </div>
+             <div id="onlineTest">
+             	<button type="button" id="submitTest">提交组卷</button>
+             	<p>请在这里输入题目：</p>
+             	<input type="text" id="subject"/>
+             	<p>选项：</p>
+             	<p>A.</p>
+             	<input type="text" id="optionA" />
+             	<p>B.</p>
+             	<input type="text" id="optionB" />
+             	<p>C.</p>
+             	<input type="text" id="optionC" />
+             	<p>D.</p>
+             	<input type="text" id="optionD" />
+             	<p>正确答案：</p>
+             	<input type="text" id="correctOption" />
+             	<button type="button" id="nextSubject">下一题</button>
+             </div>
+	    </div>
+	    
+	    <!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="img/logo.png" />
+			<img class="head" src="img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+			</div>
+			
+			
+	    </div>
+	<script>
+		document.getElementById('upclass1').style.display='none';
+		document.getElementById('uptraing').style.display='none';
+		document.getElementById('onlineTest').style.display='none';
+		var btn1 = document.getElementById("up");  
+        btn1.onclick =function(){  
+            document.getElementById('class').style.display='none';
+            document.getElementById('uptraing').style.display='none';
+            document.getElementById('upclass1').style.display='block';
+            document.getElementById('onlineTest').style.display='none';
+
+        }  
+        var btn2=document.getElementById("uptest");
+        btn2.onclick=function(){
+        	document.getElementById('class').style.display='none';
+            document.getElementById('uptraing').style.display='block';
+            document.getElementById('upclass1').style.display='none';
+            document.getElementById('onlineTest').style.display='none';
+
+        }
+        var btn4=document.getElementById("newtest");
+        btn4.onclick=function(){
+        	document.getElementById('class').style.display='none';
+            document.getElementById('uptraing').style.display='none';
+            document.getElementById('upclass1').style.display='none';
+            document.getElementById('onlineTest').style.display='block';
+        }
+        var btn3=document.getElementById('startclassBtn');
+        btn3.onclick=function(){
+        	window.open('newClass.html');
+        }
+	</script>
+	</body>
+</html>

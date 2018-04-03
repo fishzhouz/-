@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="css/schoolIndex.css" />
+		<title>数据分析</title>
+	</head>
+	<body>
+		<div class="container">
+		<!--顶部标题栏-->
+		<div class="header">
+			<img class="img-logo1" src="img/logo.png" />
+			<a href="index.html"><img class="head" src="img/字体设计.png" /></a>
+		        <a  href="class.html" class="nav1">我的课程</a>
+		        <a href="message.html" class="nav2">消息</a>
+		        <a href="login.html" class="nav3">登录/注册</a>
+            <img id="icon" src="img/头像.png" /> 
+		</div>
+	
+<div class="TreeWrap">
+		  	<a href="schoolIndex.html" class="ew">院系管理</a>
+<div class="MenuBox" id="Menu_0">
+<div class="titBox"><h3 class="Fst"><a href="javascript:showMenu(0);">门户管理</a></h3></div>
+<div class="txtBox">
+ <ul>
+ <li><a href="Carousel.html">轮播图管理</a></li>
+ <li><a href="news.html">资讯管理</a></li>
+ </ul>
+</div>
+</div><!--MenuBox-->
+<div class="MenuBox2" id="Menu_1">
+<div class="titBox"><h3><a href="javascript:showMenu(1);">系统管理</a></h3></div>
+<div class="txtBox">
+ <ul>
+ <li><a href="#">院系管理</a></li>
+ <li><a href="#">学生管理</a></li>
+ <li><a href="#">班级管理</a></li>
+ </ul>
+</div>
+</div><!--MenuBox-->
+<div class="MenuBox2" id="Menu_2">
+<div class="titBox"><h3><a href="javascript:showMenu(2);">交流监管</a></h3></div>
+<div class="txtBox">
+ <ul>
+ <li><a href="topic.html">话题锁定与删除</a></li>
+ <li><a href="#">全文搜索</a></li>
+ <li><a href="sensitive.html">敏感词设置</a></li>
+ <li><a href="picture.html">图片浏览/删除</a></li>
+ </ul>
+</div>
+</div><!--MenuBox-->
+<div class="MenuBox2" id="Menu_3">
+<div class="titBox"><h3><a href="javascript:showMenu(3);">实训动态</a></h3></div>
+<div class="txtBox">
+ <ul>
+ <li><a href="putTraining.html">发布实训</a></li>
+ <li><a href="trainingData.html">实训数据汇总</a></li>
+ </ul>
+</div>
+</div><!--MenuBox-->
+<div class="MenuBox2" id="Menu_4">
+<div class="titBox"><h3><a href="javascript:showMenu(4);">数据分析</a></h3></div>
+<div class="txtBox">
+ <ul>
+ <li><a href="data.html">数据分析</a></li>
+ </ul>
+</div>
+</div><!--MenuBox-->
+<div class="MenuBox2" id="Menu_5">
+<div class="titBox"><h3><a href="javascript:showMenu(5);">实时数据</a></h3></div>
+<div class="txtBox">
+ <ul>
+ <li><a href="real-time data.html">实时数据</a></li>
+ </ul>
+</div>
+</div><!--MenuBox-->
+</div>   
+	    <div id="newsEdit">
+         <div class="newsContent1">
+	    	<span class="classTitle">
+	    		课程名
+	    	</span>
+	    </div>
+     </div>
+
+	    <!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="img/logo.png" />
+			<img class="head" src="img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+		</div>
+			
+			
+	    </div>
+	    </div>
+	    <script type="text/javascript">
+	    	document.getElementById('icon').onclick=function(){
+                window.location.assign('http://127.0.0.1:8020/%E4%BA%91%E6%99%BA%E6%95%99%E8%82%B2/login.html?__hbt=1521282909333');
+            }
+	 
+function ExChgClsName(Obj,NameA,NameB){
+ var Obj=document.getElementById(Obj)?document.getElementById(Obj):Obj;
+ Obj.className=Obj.className==NameA?NameB:NameA;
+ }
+ function showMenu(iNo){
+ ExChgClsName("Menu_"+iNo,"MenuBox","MenuBox2");
+ } 
+ 
+	    </script>
+	</body>
+</html>

@@ -32,7 +32,7 @@ public class LoginMapperTest {
         u.setId(new BigInteger("7"));
         u.setAccount("鱼粥粥");
         u.setPassword("12580");
-        u.setIdentified(2);
+        u.setIdentification(2);
         u.setName("陈滨");
         u.setNumber("24320152202718");
         u.setSchool_id(new BigInteger("1"));

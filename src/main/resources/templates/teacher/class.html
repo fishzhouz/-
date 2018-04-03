@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/style.css" />
+		<title>我的课程</title>
+	</head>
+	<body>
+	<div class="container">
+		<!--顶部标题栏-->
+		<div class="header">
+			<img class="img-logo" src="img/logo.png" />
+			<a href="index.html"><img class="head" src="img/字体设计.png" /></a>
+		        <a  href="class.html" class="nav1">我的课程</a>
+		        <a href="message.html" class="nav2">消息</a>
+		        <a href="login.html" class="nav3">登录/注册</a>
+            <img id="icon" src="img/头像.png" /> 
+		</div>
+		<!--课程推荐-->
+		<div class="navigation">
+			<span class="allClass">全部课程</span>
+			<span class="latestClass">我的课程</span>
+			<button type="button" id="startClass">新建课程</button>
+		</div>
+		<!--课程列表第一行-->
+		<div id="classViewPanel1">
+		<div class="class-row1">
+	    <div class="class1">
+	    	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
+	    	<div class="classHeader">
+	    		<a href="classContent.html"><span class="classHeader"></span></a>
+	    	</div>
+	    	<div class="subHeader">
+	    		<span class="subHeader"></span>
+	    	</div>
+	    </div>
+	    <div class="class2">
+	    	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
+	    	<div class="classHeader">
+	    		<a href="classContent.html"><span class="classHeader"></span></a>
+	    	</div>
+	    	<div class="subHeader">
+	    		<span class="subHeader"></span>
+	    	</div>
+	    </div>
+	    
+	    <div class="class3">
+	    	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
+	    	<div class="classHeader">
+	    		<a href="classContent.html"><span class="classHeader"></span></a>
+	    	</div>
+	    	<div class="subHeader">
+	    		<span class="subHeader"></span>
+	    	</div>
+	    </div>
+	     
+	    <div class="class4">
+	     	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
+	    	<div class="classHeader">
+	    		<a href="classContent.html"><span class="classHeader"></span></a>
+	    	</div>
+	    	<div class="subHeader">
+	    		<span class="subHeader"></span>
+	    	</div>
+	    </div>
+	    
+	    <div class="class5">
+	     	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
+	    	<div class="classHeader">
+	    		<a href="classContent.html"><span class="classHeader"></span></a>
+	    	</div>
+	    	<div class="subHeader">
+	    		<span class="subHeader"></span>
+	    	</div>
+	    </div>
+	 </div>
+	 </div>
+		 <!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="img/logo.png" />
+			<img class="head" src="img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+			</div>	
+	    </div>
+	</div>
+	<script>
+	    var btn1 = document.getElementById("startClass");  
+        btn1.onclick =function(){  
+            window.open('newLesson.html')
+        }  
+        
+	    </script>
+	</body>
+</html>

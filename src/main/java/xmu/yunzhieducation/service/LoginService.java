@@ -27,10 +27,12 @@ public interface LoginService {
      * 用户登录,密码正确返回1，密码错误返回0
      */
     public boolean login(String account,String password);
+    public User getuser(String account,String password);
     /**
      * 注册用户,account重复时，插入失败，返回false，否则插入成功
      */
     public boolean insertUser(User user);
+    public boolean accountNot(String account);
     /**
      * 获取用户的所有个人信息
      */

@@ -57,20 +57,30 @@ public class LoginServiceImpl implements LoginService {
     /*登录，账号密码成功匹配返回true，否则false*/
     @Override
     public boolean login(String account,String password){
-        if(loginMapper.Login(account,password)!=null)
-            return true;//如果密码正确返回true
+        User u=loginMapper.Login(account,password);
+        if(u==null)
+        return false;
         else
-            return false;//密码错误返回false
+            return true;
+    }
+    @Override
+    public User getuser(String account,String password){
+        return loginMapper.Login(account,password);
+    }
+    /*登录，账号重复返回false，否则true*/
+    @Override
+    public boolean accountNot(String account){
+        List<User> users = loginMapper.listAllUsers();
+        for (User us : users) {
+            if (us.getAccount().equals(account))//若账号重复则返回false
+                return false;
+        }
+        return true;
     }
 
     /*新建用户，把user插入，但是account不能重复*/
     @Override
     public boolean insertUser(User user) {
-        List<User> users = loginMapper.listAllUsers();
-        for (User us : users) {
-            if (us.getAccount().equals(user.getAccount()))//若账号重复则返回false
-                return false;
-        }
         loginMapper.insertUser(user);
         return true;
     }

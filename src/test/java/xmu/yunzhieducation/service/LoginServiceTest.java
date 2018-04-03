@@ -25,7 +25,7 @@ public class LoginServiceTest {
             User u=new User();
             u.setAccount("abc");
             u.setPassword("123");
-            u.setIdentified(0);
+            u.setIdentification(0);
             u.setName("陈滨");
             u.setSchool_id(new BigInteger("2"));
             u.setNumber("24320152202718");

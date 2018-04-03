@@ -51,20 +51,52 @@ public class LoginController {
        return schoolList;
     }
 
+    @ResponseStatus(value = HttpStatus.OK)
+    @RequestMapping(value = "/login/schools2",method = RequestMethod.GET)
+    @ResponseBody
+    public BigInteger getSchools2(@RequestParam(value = "name") String name){
+        List<School> schools=loginServiceImpl.getAllSchool();
+        for(School s:schools){
+            if(s.getName().equals(name)){
+                 return s.getId();
+            }
+        }
+        return null;
+    }
+
     @ResponseStatus(value = HttpStatus.CREATED)
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login1",method = RequestMethod.POST)
     @ResponseBody
     public boolean login(@RequestParam(value = "account")String account, @RequestParam(value = "password") String password)
     {
-        return loginServiceImpl.login(account,password);
+      return loginServiceImpl.login(account,password);
+
+    }
+
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @RequestMapping(value = "/login2",method = RequestMethod.POST)
+    @ResponseBody
+    public User getuser(@RequestParam(value = "account")String account, @RequestParam(value = "password") String password)
+    {
+        return loginServiceImpl.getuser(account,password);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
+    @RequestMapping(value = "/login/judge",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean accountnot(@RequestParam(value = "account")String account)
+    {
+        return loginServiceImpl.accountNot(account);
+    }
+
+    @ResponseStatus(value = HttpStatus.CREATED)
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
     public boolean insertUser(@RequestBody User user){
         return loginServiceImpl.insertUser(user);
     }
+
+
 
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(value = "/me/{user_id}",method = RequestMethod.GET)
