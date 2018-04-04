@@ -11,15 +11,25 @@
 		getCourseList();
 		getSchoolList();
 		str="";
-		str1="你好！  "+getCookie("name");
 		if(getCookie("identification")==1)
-		str2="我的课程";
-		else if(getCookie("identification")==2)
-		str2="我的学习";
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
 		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /><img class=\"head\" src=\"/img/字体设计.png\" /><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
-        if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
-        else        str=str+"<a class=\"nav3\">"+str1+"</a><img id=\"icon\" src=\"/img/头像1.png\" />";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
         $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
     }
 	</script>
 	<script>
@@ -30,7 +40,7 @@
 }
 function goSchool(id)
 {
-   setCookie("schoolID",id);
+   setCookie("schoolID_temp",id);
    window.location.href="/student/schoolIndex";
 }
    function joinStudy()
@@ -84,7 +94,6 @@ function goSchool(id)
 	     $("#classViewPanel").html(str);
          },
          error:function(data){
-         alert("111");
          }
          });
    }

@@ -7,9 +7,9 @@
 <script src="/js/jquery.inview.min.js"></script>
 <script src="/js/cookie3.js"></script>
 <script>
-        function check(x)
+        function check()
     {
-   var account=document.getElementById(x).value;
+   var account=document.getElementById("account").value;
       $.ajax({
         type:"GET", //请求方式
         url: "/login/judge?account="+account ,
@@ -17,7 +17,7 @@
         contentType : "application/json",
         dataType: 'json',   //返回值类型
         success:function(data){
-        if(data==false)  {alert("邮箱已被使用!");  document.getElementById(x).value=null;}
+        if(data==false)  {alert("邮箱已被使用!");  document.getElementById("account").value=null;}
         }
         });
     }
@@ -39,7 +39,7 @@
         contentType : "application/json",
         dataType: 'json',   //返回值类型
         success:function(data){
-        if(data==false)  {setCookie("judge","no");}
+        if(data==false)  {setCookie("judge","no");   alert("用户名不存在或密码错误");}
         else
         {
         setCookie("judge","yes");
@@ -55,6 +55,7 @@
          setCookie("sex",data.sex);
          setCookie("schoolID",data.school_id);
          setCookie("identification",data.identification);
+         alert("用户名密码正确!再次点击登录进入");
         }
         });
         }
@@ -64,8 +65,14 @@
     function f2()
     {
     var j=getCookie("judge");
-    if(j=="no")  {alert("用户不存在或密码错误");  return false;}
-    else if(j=="yes")   return true;
+    if(j=="yes")  {
+    delCookie("judge");
+    return true;}
+    else if(j=="no"){
+     delCookie("judge");  return false;
+    }
+    else
+    { return false;}
     }
 </script>
 <head>
@@ -132,7 +139,7 @@
                 <label>
                                                      邮箱<span class="req">*</span>
                 </label>
-                <input id="account" type="email" required autocomplete="off" onchange="check(this.id)"/>
+                <input id="account" type="email" required autocomplete="off" onchange="check()"/>
             </div>
           
             <div class="field-wrap">
