@@ -90,10 +90,16 @@ a{
 .schoolBg{
 	width: 800px;
 	height: 150px;
-	background: gray;
+	background: white;
 	margin: 0 auto;
 	position: relative;
-	top: 80px;
+}
+.deTitle{
+	font-family: "宋体";
+	font-size: large;
+    position: relative;
+    top: 10px;
+    left: 50px;
 }
 /*学校校徽*/
 .schoolBedge{
@@ -180,24 +186,33 @@ a{
 	float: right;
 }
 #classViewPanel{
-	width:900px;
-    height:450px;
-    overflow-y:hidden;
+	width:1300px;
+	height:350px;
+    overflow-x:hidden;
     margin:0 auto;
+    margin-top:50px;
+    margin-bottom:100px;
+}
+#schoolViewPanel{
+	width:1300px;
+	height:350px;
+    overflow-x:hidden;
+    margin:0 auto;
+    margin-top:50px;
+    margin-bottom:100px;
 }
 /*课程分布*/
 .class-row1{
 	width: 860px;
 	height: 200px;
 	margin: 0 auto;
-	position: relative;
-	top: 50px;
+	margin-top:50px;
 }
 
 /*课程列表*/
 .class1{
 	width: 150px;
-	height: 170px;
+	height: 150px;
 	border:solid 0.5px;
 	float: left;
 }
@@ -216,7 +231,6 @@ a{
 	font-size: 18px;
 	position: relative;
 	margin-left: 20px;
-	border: solid #000000 1px;
 }
 
 /*课程讲师*/
@@ -224,13 +238,12 @@ a{
 	font-size: 14px;
 	margin-left: 20px;
 	margin-top: 10px;
-	border: solid #000000 1px;
 }
 
 
 .class2{
     border:solid 0.5px;
-	height: 170px;
+	height: 150px;
 	width: 150px;
 	float: left;
 	margin-left: 28px;
@@ -238,7 +251,7 @@ a{
 
 .class3{
 	border:solid 0.5px;
-	height: 170px;
+	height: 150px;
 	width: 150px;
 	float: left;
 	margin-left: 28px;
@@ -246,7 +259,7 @@ a{
 
 .class4{
 	width: 150px;  
-    height: 170px;  
+    height: 150px;
     border:solid 0.5px;  
     float: left;
     margin-left: 28px;
@@ -254,7 +267,7 @@ a{
 
 .class5{
 	width: 150px;  
-    height: 170px;  
+    height: 150px;
     border:solid 0.5px;  
     float: right;
 }
@@ -262,7 +275,7 @@ a{
 .class-row2{
 	width: 860px;
 	height: 200px;
-	margin: 40px auto;
+	margin: -20px auto;
 }
 /*讲师推荐导航栏*/
 .teacher-navigation{
@@ -321,8 +334,9 @@ a{
 .pCenter1{
 	position: relative;
 	top: -50px;
-	left: 80px;
-	border: solid #000000 1px;
+	left: 20px;
+	font-size: 20px;
+    line-height: 20px;
 }
 .teacher2{
 	width: 150px;

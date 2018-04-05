@@ -1,31 +1,196 @@
 <!DOCTYPE html>
 <html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+<script>
+        var schoolID=getCookie("schoolID_temp");
+		window.onload=function(){
+		getSchoolInfo(schoolID);
+		getInfo(schoolID);
+		getCourseList(schoolID);
+		getTeacher(schoolID);
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+	</script>
+<script>
+	function getSchoolInfo(id)
+	{
+$.ajax({
+        type:"GET", //请求方式
+        url: "/school/"+id ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        $("#school").html(data.name);
+        str="";
+        str=str+"<p class=\"deTitle\">"+data.city+"</p>";
+        $("#schoolIntro").html(str);
+        document.getElementById("picture").src=data.picture;
+        }
+        });
+	}
+	function getInfo(id)
+	{
+$.ajax({
+        type:"GET", //请求方式
+        url: "/school/"+id+"/information" ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str=" ";
+        str=str+"学校资讯》》》"+"</p>"
+         $.each(data,function(i,item){
+                 str=str+"      ...."+item.content+"</p>"
+			                          });
+        $("#newsContent").html(str);
+        }
+        });
+	}
+	function getCourseList(id)
+	{
+	       $.ajax({
+        type:"GET", //请求方式
+        url: "/school/"+id+"/course" ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         str="";
+         sum=0;
+         $.each(data,function(i,item){
+         sum=sum+1;
+			                          });
+		$.each(data,function(i,item){
+         if(i%5==0)
+         {
+         if(i==0)  str=str+"<div class=\"class-row1\">";
+         else   str=str+"<div class=\"class-row2\">";
+         }
+         str=str+"<a onclick=\"login("+item.course_id+")\" class=\"class"+(i%5+1)+"\"><img class=\"classPicture\" src="+item.picture+"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></a>";
+	    	if(i==sum-1)
+	    	{
+	    	str=str+"</div>";
+	    	}
+	    	else if(i%5==4)
+	    	{
+	    	str=str+"</div>";
+	    	}
+			                          });
+	     $("#classViewPanel").html(str);
+         },
+         error:function(data){
+         }
+         });
+	}
+</script>
+<script>
+	function getTeacher(id)
+	{
+	  $.ajax({
+        type:"GET", //请求方式
+        url: "/school/"+id+"/teacher" ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         str="";
+         sum=0;
+         $.each(data,function(i,item){
+         sum=sum+1;
+			                          });
+		$.each(data,function(i,item){
+         if(i%4==0)
+         {
+         if(i==0)  str=str+"<div class=\"teacherRow1\">";
+         else   str=str+"<div class=\"teacherRow2\">";
+         }
+          str=str+"<a onclick=\"goTeacher("+item.id+")\" class=\"teacher"+(i%4+1)+"\"><img class=\"teacherPic\" src=\"/img/classPic.png\"><span class=\"pCenter1\">"+item.name+"</span></a>";
+	    	if(i==sum-1)
+	    	{
+	    	str=str+"</div>";
+	    	}
+	    	else if(i%4==3)
+	    	{
+	    	str=str+"</div>";
+	    	}
+			                          });
+	     $("#schoolViewPanel").html(str);
+         },
+         error:function(data){
+         }
+         });
+	}
+</script>
+<script>
+		 function login(id)
+{
+   setCookie("courseID",id);
+   window.location.href="/student/classContent";
+}
+		 function goTeacher(id)
+{
+   setCookie("teacherID",id);
+   window.location.href="/student/teacher";
+}
+   function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
 	<head>
 		<meta charset="utf-8" />
-		<link rel="stylesheet" href="css/schoolIndex.css" />
+		<link rel="stylesheet" href="/css/schoolIndex.css" />
 		<title>云智教育</title>
 	</head>
 	<body>
 		<div class="container">
 		<!--顶部标题栏-->
-		<div class="header">
-			<img class="img-logo1" src="img/logo.png" />
-			<img class="head1" src="img/字体设计.png" />
-		        <a  href="myStudy.html" class="nav1">我的学习</a>
-		        <a href="message.html" class="nav2">消息</a>
-		        <a href="login.html" class="nav3">登录/注册</a>
-            <img id="icon" src="img/头像.png" /> 
+		<div id="header">
 		</div>
 		<!--学校背景图-->
-		<div class="schoolBg">
-			
-		</div>
+			<div class="schoolBg" ><img class="schoolBg" src="/img/background.jpg"/></div>
 		<!--学校校徽-->
-		<img class="schoolBedge" src="img/Badge 5.png"/>
-		<a href="Alumni circle.html" class="circleP">校友圈</a>
+		<img class="schoolBedge" id="picture"/><a id="school"></a>
+		<a href="/student/alumniCircle" class="circleP">校友圈</a>
 		<!--学校简介-->
-		<div class="schoolIntro">
-			<p>这里是学校简介巴拉不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不</p>
+		<div class="schoolIntro" id="schoolIntro">
 		</div>
 		<!--分隔符-->
 		<div class="hr">
@@ -33,171 +198,36 @@
 		</div>
 		<!--新闻资讯-->
 		<div class="news">
-			<div class="newsContent">
-				<p>dskkjsklsdfkjgggggfkldkbndsl;nbjfdlsf</p>
+			<div class="newsContent" id="newsContent">
 			</div>
 		</div>
 		<!--课程推荐-->
 		<div class="class-navigation">
 			<span class="allClass">
-				全部课程
+				学校课程
 			</span>
-			<span class="latestClass">
-				最新课程
-			</span>
-			<button id="moreBtn">更多</button>
 		</div>
 		<!--课程列表第一行-->
 		<div id="classViewPanel">
-		<div class="class-row1">
-	    <div class="class1">
-	    	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
-	    	<a href="classContent.html"><span class="classHeader"></span></a>
-	    	<div class="subHeader"></div>
-	    </div>
-	    
-	    <div class="class2">
-	    	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
-	    	<a href="classContent.html"><span class="classHeader"></span></a>
-	    	<div class="subHeader"></div>
-	    </div>
-	    
-	    <div class="class3">
-	     	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
-	    	<a href="classContent.html"><span class="classHeader"></span></a>
-	    	<div class="subHeader"></div>
-	    </div>
-	     
-	    <div class="class4">
-	     	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
-	    	<a href="classContent.html"><span class="classHeader"></span></a>
-	    	<div class="subHeader"></div>
-	    </div>
-	    
-	    <div class="class5">
-	     	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
-	    	<a href="classContent.html"><span class="classHeader"></span></a>
-	    	<div class="subHeader"></div>
-	    </div>
-	 </div>
-	    <!--  课程列表第二行-->
-	    <div class="class-row2">
-	    <!--课程列表-->
-	    <div class="class1">
-	    	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
-	    	<a href="classContent.html"><span class="classHeader"></span></a>
-	    	<div class="subHeader"></div>
-	    </div>
-	    
-	    <div class="class2">
-	    	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
-	    	<a href="classContent.html"><span class="classHeader"></span></a>
-	    	<div class="subHeader"></div>
-	    </div>
-	    
-	    <div class="class3">
-	     	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
-	    	<a href="classContent.html"><span class="classHeader"></span></a>
-	    	<div class="subHeader"></div>
-	    </div>
-	     
-	    <div class="class4">
-	     	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
-	    	<a href="classContent.html"><span class="classHeader"></span></a>
-	    	<div class="subHeader"></div>
-	    </div>
-	    
-	    <div class="class5">
-	     	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
-	    	<a href="classContent.html"><span class="classHeader"></span></a>
-	    	<div class="subHeader"></div>
-	    </div>
-	    
-	  </div>
 	  </div>
 	    <!--院校推荐-->
 		<div class="teacher-navigation">
 			<span class="allTeacher">
-				<p>所有讲师</p>
+				<p>学校讲师</p>
 			</span>
-			<button id="moreBtn1">更多</button>
 		</div>
 		<div id="schoolViewPanel">
-		<!--老师推荐图标第一行-->
-        <div class="teacherRow1">
-		<div class="teacher1">
-			<a href="teacher.html"><img class="teacherPic" src="img/classPic.png"></a>
-			<a href="teacher.html"><span class="pCenter"></span></a>
-			<span class="pCenter1"></span>
-		</div>
-		<div class="teacher2">
-			<a href="teacher.html"><img class="teacherPic" src="img/classPic.png"></a>
-			<a href="teacher.html"><span class="pCenter"></span></a>
-			<span class="pCenter1"></span>
-		</div>
-		<div class="teacher3">
-			<a href="teacher.html"><img class="teacherPic" src="img/classPic.png"></a>
-			<a href="teacher.html"><span class="pCenter"></span></a>
-			<span class="pCenter1"></span>
-		</div>
-		<div class="teacher4">
-			<a href="teacher.html"><img class="teacherPic" src="img/classPic.png"></a>
-			<a href="teacher.html"><span class="pCenter"></span></a>
-			<span class="pCenter1"></span>
-		</div>
-		</div>
-		<!--老师推荐图标第二行-->
-        <div class="teacherRow2">
-		<div class="teacher1">
-			<a href="teacher.html"><img class="teacherPic" src="img/classPic.png"></a>
-			<a href="teacher.html"><span class="pCenter"></span></a>
-			<span class="pCenter1"></span>
-		</div>
-		<div class="teacher2">
-			<a href="teacher.html"><img class="teacherPic" src="img/classPic.png"></a>
-			<a href="teacher.html"><span class="pCenter"></span></a>
-			<span class="pCenter1"></span>
-		</div>
-		<div class="teacher3">
-			<a href="teacher.html"><img class="teacherPic" src="img/classPic.png"></a>
-			<a href="teacher.html"><span class="pCenter"></span></a>
-			<span class="pCenter1"></span>
-		</div>
-		<div class="teacher4">
-			<a href="teacher.html"><img class="teacherPic" src="img/classPic.png"></a>
-			<a href="teacher.html"><span class="pCenter"></span></a>
-			<span class="pCenter1"></span>
-		</div>
-		</div>
 		</div>
 	    <!--页脚-->
 	    <div class="footer">
-	    	<img class="img-logo" src="img/logo.png" />
-			<img class="head" src="img/字体设计.png" />
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
 			<div class="introduction">
 				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
 			</div>
 			
 			
 	    </div>
-	    </div>
-	    <script>
-	    	document.getElementById('icon').onclick=function(){
-                window.location.assign('http://127.0.0.1:8020/%E4%BA%91%E6%99%BA%E6%95%99%E8%82%B2/login.html?__hbt=1521282909333');
-            }
-	    	/*更多按钮 */   	
-	var btn = document.getElementById('moreBtn');
-    var obj = document.getElementById('classViewPanel');
-    var total_height =  obj.scrollHeight;//文章总高度
-    var show_height = 400;//定义原始显示高度
-    if(total_height>show_height){
-    btn.style.display = 'block';
-    btn.onclick = function(){
-    obj.style.height = total_height + 'px';
-    /*btn.style.display = 'none';*/
-    }
-    
-    }
-	    </script>
+		</div>
 	</body>
 </html>

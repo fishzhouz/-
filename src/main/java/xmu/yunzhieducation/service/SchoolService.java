@@ -2,6 +2,7 @@ package xmu.yunzhieducation.service;
 
 
 import xmu.yunzhieducation.entity.*;
+import xmu.yunzhieducation.vo.CourseVo;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -10,7 +11,7 @@ public interface SchoolService {
     /**
      * 根据学校ID获取全部的课程
      */
-    public List<Course> getCourseBySchoolID(BigInteger school_id);
+    public List<CourseVo> getCourseBySchoolID(BigInteger school_id);
     /**
      * 根据学校ID获取全部的老师
      */

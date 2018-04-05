@@ -49,7 +49,7 @@ public class LoginServiceImpl implements LoginService {
         List<School> schools=schoolMapper.listAllSchools();
         List<School> schools1=new ArrayList<School>();
         if(schools.isEmpty()) return null;
-        for(int i=schools.size()-1,j=0; j<20 && i>=0; j++,i--)//获取20个学校，如果总学校少于20，就全部获取
+        for(int i=schools.size()-1;i>=0;i--)//获取20个学校，如果总学校少于20，就全部获取
             schools1.add(schools.get(i));
         return schools1;
     }

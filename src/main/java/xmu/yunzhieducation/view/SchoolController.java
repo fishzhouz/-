@@ -9,6 +9,7 @@ import xmu.yunzhieducation.entity.School;
 import xmu.yunzhieducation.entity.School_information;
 import xmu.yunzhieducation.entity.User;
 import xmu.yunzhieducation.service.Impl.SchoolServiceImpl;
+import xmu.yunzhieducation.vo.CourseVo;
 
 import javax.jws.soap.SOAPBinding;
 import java.math.BigInteger;
@@ -24,7 +25,7 @@ public class SchoolController {
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(value = "/school/{school_id}/course",method = RequestMethod.GET)
     @ResponseBody
-    public List<Course> getCourseBySchoolID(@PathVariable ("school_id")BigInteger school_id) {
+    public List<CourseVo> getCourseBySchoolID(@PathVariable ("school_id")BigInteger school_id) {
         return schoolServiceImpl.getCourseBySchoolID(school_id);
     }
 

@@ -8,6 +8,7 @@ import xmu.yunzhieducation.mapper.SchoolMapper;
 import xmu.yunzhieducation.service.CourseService;
 import xmu.yunzhieducation.service.SchoolService;
 import xmu.yunzhieducation.vo.CourseAndTeacherVo;
+import xmu.yunzhieducation.vo.CourseVo;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -24,15 +25,23 @@ public class SchoolServiceImpl implements SchoolService{
 
     /*根据学校ID获得全部老师，然后根据老师ID获得全部的课程，返回该学校的所有课程*/
     @Override
-    public List<Course> getCourseBySchoolID(BigInteger school_id) {
+    public List<CourseVo> getCourseBySchoolID(BigInteger school_id) {
+        List<CourseVo> courseVos=new ArrayList<>();
         List<User> teachers=schoolMapper.listTeacherBySchoolId(school_id);
         List<Course> courses=new ArrayList<Course>();
         if(teachers.isEmpty()) return null;
         for(User teacher:teachers) {    //遍历该校所有老师
             List<Course> courses1 = courseMapper.selectCourseByTeacherID(teacher.getId());  //把老师下的课程选择出来
-            courses.addAll(courses1);
+            for(Course c:courses1) {
+                CourseVo courseVo=new CourseVo();
+                courseVo.setTeacher_name(teacher.getName());
+                courseVo.setPicture(c.getPicture());
+                courseVo.setCourse_name(c.getName());
+                courseVo.setCourse_id(c.getId());
+                courseVos.add(courseVo);
+            }
         }
-        return courses;
+        return courseVos;
     }
 
     @Override
@@ -55,11 +64,9 @@ public class SchoolServiceImpl implements SchoolService{
     */
     @Override
     public List<School_information> getSchoolInformationBySchoolID(BigInteger school_id){
-        List<School_information> school_informations=schoolMapper.selectCourseImgByschoolID(school_id);//得到轮播图
+        //List<School_information> school_informations=schoolMapper.selectCourseImgByschoolID(school_id);//得到轮播图
         List<School_information> school_informations1=schoolMapper.selectInfoByschoolID(school_id);//得到学校的资讯
-        if(school_informations.isEmpty()) return null;
-        school_informations.addAll(school_informations1);
-        return school_informations;
+        return school_informations1;
     }
     /*根据资讯（或轮播图）的ID删除这条资讯（或轮播图）*/
     @Override

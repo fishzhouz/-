@@ -170,10 +170,20 @@ button {
 	float: right;
 }
 #classViewPanel{
-	width:900px;
+	width:1300px;
     height:350px;
-    overflow-y:hidden;
+    overflow-x:hidden;
     margin:0 auto;
+    margin-top:50px;
+    margin-bottom:100px;
+}
+#schoolViewPanel{
+	width:1300px;
+    height:350px;
+    overflow-x:hidden;
+    margin:0 auto;
+    margin-top:50px;
+    margin-bottom:100px;
 }
 /*课程分布*/
 .class-row1{
@@ -893,7 +903,7 @@ button {
 #classViewPanel1{
 	width:900px;
     height:420px;
-    overflow-y:hidden;
+    overflow-x:hidden;
     margin:0 auto;
 }
 
