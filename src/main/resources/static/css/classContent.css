@@ -128,8 +128,8 @@ button {
 	position: relative;
 	top: 70px;
 	left: 100px;
-	color: #000000;
-	font-size: larger;
+	color: #F9F0DA;
+	font-size: 30px;
 	text-decoration: none;
 	margin-right: 7px;
 }
@@ -248,14 +248,16 @@ button {
 /*课程详情面板*/
 .secondBox{
 	width: 800px;
-	height: 400px;
+	height:600px;
 	margin: 0 auto;
+	overflow-x:hidden;
+	position: relative;
 	background-color: rgba(240,240,240);
 	border: 1px solid #BBBBBB;
 }
 /*具体内容框框*/
 #content{
-	width: 700px;
+	width: 800px;
 	margin: 0 auto;
 	position: relative;
 	top: 50px;
@@ -263,7 +265,7 @@ button {
 /*目录框框*/
 #menu{
 	display: none;
-	width: 700px;
+	width: 800px;
 	margin: 0 auto;
 	position: relative;
 	top: 50px;
@@ -272,10 +274,7 @@ button {
 /*评价框框*/
 #view{
     display: none;
-	width: 700px;
-	margin: 0 auto;
-	position: relative;
-	top: 50px;
+	width: 800px;
 }
 /*页脚*/
 .footer{
@@ -319,11 +318,53 @@ button {
 .menuContent{
 	width: 100px;
 	height: 30px;
-	border: solid #000000 1px;
 }
 
+/*帖子面板*/
+.panel1 {
+	width: 800px;
+	background-color: #F0F0F0;
+	margin: 0 auto;
+	border: solid #BBBBBB 1px;
+}
+/*按钮样式*/
+.panel1 button{
+	width: 70px;
+	height: 30px;
+}
+/*按钮点击后效果*/
+.panel1 button:hover,button:focus{
+	background: #B9E3D9;
+	border:1px solid #BBBBBB;
+	color: #000000;
+}
+.panel1 button:active{
+	background: #B9E3D9;
+	border:1px solid #BBBBBB;
+	color: #000000;
+}
+/*发帖图片*/
+.img1{
+	width: 34px;
+	height: 30px;
+	position: relative;
+	top: 27px;
+	left: 50px;
+}
+/*发帖按钮位置*/
+#card{
+	position: relative;
+	left: 50px;
+	top: 20px;
+}
+/*分隔符*/
+.hr1{
+	position: relative;
+	top: 25px;
+}
 /*第一篇帖子*/
 .box1{
+    width=800px;
 	height: 130px;
 	position: relative;
 	top: 30px;
@@ -357,33 +398,43 @@ button {
 }
 /*帖子内容*/
 .cicleContent{
-	width: 600px;
-	height: 100px;
+	width: 620px;
+	height: 80px;
 	position: relative;
-	top: -85px;
-	left: 140px;
+	top: -75px;
+	left: 150px;
 }
-.date1{
+/*发表日期*/
+.date{
 	width: 100px;
 	height: 20px;
 	position: relative;
-	top: -200px;
+	top: -195px;
 	left: 650px;
 	color: #5E5C5E;
 	font-size: 10px;
 }
-.img21{
+/*评论图片*/
+.img2{
 	width: 15px;
 	height: 15px;
 	position: relative;
 	top: -193px;
 	left: 650px;
 }
+.num{
+	width: 65px;
+	height: 20px;
+	position: relative;
+	top: -212px;
+	left: 675px;
+	font-size: 10px;
+}
 .num1{
 	width: 65px;
 	height: 20px;
 	position: relative;
-	top: -222px;
-	left: 675px;
+	top: -192px;
+	left: 650px;
 	font-size: 10px;
 }

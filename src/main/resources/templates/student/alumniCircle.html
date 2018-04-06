@@ -1,116 +1,157 @@
 <!DOCTYPE html>
 <html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+<script>
+        var schoolID=getCookie("schoolID_temp");
+		window.onload=function(){
+		getSchoolInfo(schoolID);
+		getTopic(schoolID);
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+     function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+   function getSchoolInfo(id)
+	{
+$.ajax({
+        type:"GET", //请求方式
+        url: "/school/"+id ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+
+        $("#school").html(data.name+"校友圈");
+        str="";
+        str=str+"<p class=\"deTitle\">"+data.city+"</p>";
+        $("#schoolIntro").html(str);
+        document.getElementById("picture").src=data.picture;
+        }
+        });
+	}
+	</script>
+<script>
+	function getTopic(id)
+	{
+$.ajax({
+        type:"GET", //请求方式
+        url: "/topic1/0/"+id ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+        str=str+"<img src=\"/img/帖子.png\" class=\"img1\" /><button type=\"button\" id=\"card\" onclick=\"putTopic()\">发帖</button><button type=\"button\" id=\"card1\" onclick=\"goBack()\">返回上一页</button>";
+         $.each(data,function(i,item){
+        str=str+"<hr class=\"hr1\" /><div class=\"box1\"><div class=\"circle\"><p class=\"circleNum\">"+item.no+"</p></div><a onclick=\"goTopic("+item.id+",'"+item.heading+"','"+item.content+"','"+item.name+"')\" class=\"cicleTitle\">"+item.heading+"</a><div class=\"cicleContent\"><p>"+item.content+"</p></div><div class=\"date\"><p>"+item.time+"</p></div><a onclick=\"goComment()\"><img src=\"/img/消息.png\" class=\"img2\"></a><div class=\"num\"><p>"+item.comment_num+"人"+"</p></div><div class=\"num1\"><p>帖子发起人:"+item.name+"</p></div></div>";
+			                          });
+	     $("#view").html(str);
+        }
+        });
+	}
+</script>
+<script>
+    function goBack()
+    {
+    window.location.href="/student/schoolIndex";
+    }
+	function putTopic()
+	{
+	if(schoolID==getCookie("schoolID"))
+	  {
+	  setCookie("type",2);
+	  window.location.href="/student/circleToPut";}
+	else
+	alert("不是该学校成员，不能进行操作！");
+	}
+	function goTopic(id,heading,content,name)
+	{
+	if(schoolID==getCookie("schoolID"))
+	setCookie("is_operate","yes");
+	else
+	setCookie("is_operate","no");
+	setCookie("topicID",id);
+	setCookie("heading",heading);
+	setCookie("content",content);
+	setCookie("topic_name",name);
+	setCookie("type",2);
+	window.location.href="/student/circleComment";
+	}
+	function goComment()
+	{
+	if(schoolID==getCookie("schoolID"))
+	  {window.location.href="/student/circleToComment";
+	  setCookie("type",2);
+	  setCookie("topicID",id);}
+	else
+	alert("不是该学校成员，不能进行操作！");
+	}
+</script>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="css/circle.css" />
+		<link rel="stylesheet" href="/css/circle.css" />
 		<title>校友圈</title>
 	</head>
 	<body>
 		<div class="container">
 		<!--顶部标题栏-->
-		<div class="header">
-			<img class="img-logo" src="img/logo.png" />
-			<img class="head" src="img/字体设计.png" />
-		        <a  href="myStudy.html" class="nav1">我的学习</a>
-		        <a href="message.html" class="nav2">消息</a>
-		        <a href="login.html" class="nav3">登录/注册</a>
-            <img id="icon" src="img/头像.png" /> 
+		<div class="header" id="header">
 		</div>
 		<!--学校背景图-->
-		<div class="schoolBg">
-			
-		</div>
-		<!--学校校徽-->
-		<img class="schoolBedge" src="img/Badge 5.png"/>
-		<!--学校简介-->
-		<div class="schoolIntro">
-			<p>这里是学校简介巴拉不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不</p>
-		</div>
+			<div class="schoolBg" ><img class="schoolBg" src="/img/background.jpg"/></div>
+			<!--学校校徽-->
+			<img class="schoolBedge" id="picture"/><a id="school"></a>
+			<!--学校简介-->
+			<div class="schoolIntro" id="schoolIntro">
+			</div>
 		<!--分隔符-->
 		<div class="hr">
 		     	
 		</div>
 		<!--帖子面板-->
-		<div class="panel1">
-			<img src="img/帖子.png" class="img1" />
-			<button type="button" id="card">发帖</button>
-			<!--第一篇帖子-->
-			<hr class="hr1" />
-			<div class="box1">
-				<div class="circle">
-				   <p class="circleNum">1</p>
-				</div>
-					<a href="circle comment.html" class="cicleTitle">帖子名称</a>
-				<div class="cicleContent">
-					<p>帖子内容</p>
-				</div>
-				<div class="date">
-					<p>2018-03-29</p>
-				</div>
-				<a href="circleToComment.html"><img src="img/消息.png" class="img2"></a>
-				<div class="num">
-					<p>2938人</p>
-				</div>
-			</div>
-			<!--第二篇帖子-->
-			<hr class="hr1" />
-			<div class="box1">
-				<div class="circle">
-				   <p class="circleNum">2</p>
-				</div>
-				<a href="circle comment.html" class="cicleTitle">帖子名称</a>
-				<div class="cicleContent">
-					<p>帖子名称</p>
-				</div>
-				<div class="date">
-					<p>2018-03-29</p>
-				</div>
-				<a href="circleToComment.html"><img src="img/消息.png" class="img2"></a>
-				<div class="num">
-					<p>2018-03-29</p>
-				</div>
-			</div>
-			<!--第三篇帖子-->
-			<hr class="hr1" />
-			<div class="box1">
-				<div class="circle">
-				   <p class="circleNum">3</p>
-				</div>
-				<a href="circle comment.html" class="cicleTitle">帖子名称</a>
-				<div class="cicleContent">
-					<p>2018-03-29</p>
-				</div>
-				<div class="date">
-					<p>2018-03-29</p>
-				</div>
-				<a href="circleToComment.html"><img src="img/消息.png" class="img2"></a>
-				<div class="num">
-					<p>2018-03-29</p>
-				</div>
-			</div>
-			<!--第四篇帖子-->
-			<hr class="hr1" />
-			<div class="box1">
-				<div class="circle">
-				   <p class="circleNum">4</p>
-				</div>
-				<a href="circle comment.html" class="cicleTitle">帖子名称</a>
-				<div class="cicleContent">
-					<p>2018-03-29</p>
-				</div>
-				<div class="date">
-					<p>2018-03-29</p>
-				</div>
-				<a href="circleToComment.html"><img src="img/消息.png" class="img2"></a>
-				<div class="num">
-					<p>2018-03-29</p>
-				</div>
-			</div>
+		<div class="panel1" id="view">
 		</div>
 		<!--页脚-->
 	    <div class="footer">
-	    	<img class="img-logo" src="img/logo.png" />
-			<img class="head" src="img/字体设计.png" />
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
 			<div class="introduction">
 				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
 			</div>

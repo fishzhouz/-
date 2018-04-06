@@ -24,6 +24,9 @@ public class StudentController {
     @RequestMapping(value="/classContent")
     public String classContent() { return "student/classContent"; }
 
+    @RequestMapping(value="/classContentTrue")
+    public String classContentTrue() { return "student/classContentTrue"; }
+
     @RequestMapping(value="/classDetails")
     public String classDetails() { return "student/classDetails"; }
 

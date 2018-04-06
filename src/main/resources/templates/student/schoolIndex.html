@@ -34,6 +34,22 @@
      delCookie("identification");
      window.location.href="/student/login";
     }
+     function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
 	</script>
 <script>
 	function getSchoolInfo(id)
@@ -150,6 +166,9 @@ $.ajax({
 		 function login(id)
 {
    setCookie("courseID",id);
+   if(schoolID==getCookie("schoolID"))
+   window.location.href="/student/classContentTrue";
+   else
    window.location.href="/student/classContent";
 }
 		 function goTeacher(id)
@@ -157,22 +176,6 @@ $.ajax({
    setCookie("teacherID",id);
    window.location.href="/student/teacher";
 }
-   function joinStudy()
-   {
-   var userID=getCookie("userID");
-   if(userID==null){alert("请先登录!");}
-   else
-   {
-   window.location.href="/student/myStudy";}
-   }
-      function joinMessage()
-   {
-   var userID=getCookie("userID");
-   if(userID==null){alert("请先登录!");}
-   else
-   {
-   window.location.href="/student/message";}
-   }
 	</script>
 	<head>
 		<meta charset="utf-8" />
@@ -182,7 +185,7 @@ $.ajax({
 	<body>
 		<div class="container">
 		<!--顶部标题栏-->
-		<div id="header">
+		<div id="header" class="header">
 		</div>
 		<!--学校背景图-->
 			<div class="schoolBg" ><img class="schoolBg" src="/img/background.jpg"/></div>

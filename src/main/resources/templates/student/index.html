@@ -33,11 +33,6 @@
     }
 	</script>
 	<script>
-		 function login(id)
-{
-   setCookie("courseID",id);
-   window.location.href="/student/classContent";
-}
 function goSchool(id)
 {
    setCookie("schoolID_temp",id);
@@ -61,6 +56,12 @@ function goSchool(id)
    }
 	</script>
 	<script>
+	  function login(id,id1)
+{
+   setCookie("courseID",id1);
+   setCookie("teacher_name",id);
+   window.location.href="/student/classContent";
+}
 		  function getCourseList()
 		   {
        $.ajax({
@@ -81,7 +82,7 @@ function goSchool(id)
          if(i==0)  str=str+"<div class=\"class-row1\">";
          else   str=str+"<div class=\"class-row\">";
          }
-         str=str+"<a onclick=\"login("+item.course_id+")\" class=\"class"+(i%5+1)+"\"><img class=\"classPicture\" src="+item.picture+"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></a>";
+         str=str+"<a onclick=\"login('"+item.teacher_name+"',"+item.course_id+")\" class=\"class"+(i%5+1)+"\"><img class=\"classPicture\" src="+item.picture+"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></a>";
 	    	if(i==sum-1)
 	    	{
 	    	str=str+"</div>";
@@ -143,7 +144,7 @@ function goSchool(id)
 	</head>
 	<body>
 		<!--顶部标题栏-->
-		<div id="header">
+		<div id="header" class="header">
 		</div>
 		<!--轮播图-->
 		<div class="carousel">

@@ -185,14 +185,17 @@ public class CourseServiceImpl implements CourseService{
         List<TopicVo> topicVos=new ArrayList<>();
         List<Topic> topics=commentMapper.selectTopicBybelongingID(belonging_id, type);
         BigInteger index=new BigInteger("1");
-        for(Topic t:topics){
+        for(int i=topics.size()-1;i>=0;i--)
+        {
             TopicVo topicVo=new TopicVo();
             topicVo.setNo(index);
             index=index.add(new BigInteger("1"));
-            topicVo.setHeading(t.getHeading());
-            topicVo.setContent(t.getContent());
-            topicVo.setTime(t.getTime());
-            List<Comment> comments=commentMapper.selectCommentBytopicID(t.getId());
+            topicVo.setHeading(topics.get(i).getHeading());
+            topicVo.setContent(topics.get(i).getContent());
+            topicVo.setTime(topics.get(i).getTime());
+            topicVo.setTopic_id(topics.get(i).getId());
+            topicVo.setName(loginMapper.selectUserByuserID(topics.get(i).getUser_id()).getName());
+            List<Comment> comments=commentMapper.selectCommentBytopicID(topics.get(i).getId());
             topicVo.setComment_num(new BigInteger((comments.size()+"")));
             topicVos.add(topicVo);
         }

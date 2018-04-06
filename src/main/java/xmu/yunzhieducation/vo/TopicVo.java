@@ -4,11 +4,29 @@ import java.math.BigInteger;
 import java.util.Date;
 
 public class TopicVo {
+    private BigInteger topic_id;
     private BigInteger no;
     private String heading;
     private String content;
     private Date time;
     private BigInteger comment_num;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigInteger getTopic_id() {
+        return topic_id;
+    }
+
+    public void setTopic_id(BigInteger topic_id) {
+        this.topic_id = topic_id;
+    }
 
     public BigInteger getNo() {
         return no;
