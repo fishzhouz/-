@@ -11,6 +11,8 @@ import xmu.yunzhieducation.mapper.CommentMapper;
 import xmu.yunzhieducation.mapper.LoginMapper;
 import xmu.yunzhieducation.service.CommentService;
 import xmu.yunzhieducation.service.CourseService;
+import xmu.yunzhieducation.vo.CommentVo;
+
 import java.math.BigInteger;
 import java.util.*;
 
@@ -50,19 +52,35 @@ public class CommentServiceImpl implements CommentService{
     /**
      * 查看话题下的所有评论
      */
-    public List<Comment> ListAllCommentByTopicId(BigInteger topic_id){
+    public List<CommentVo> ListAllCommentByTopicId(BigInteger topic_id){
+        List<CommentVo> commentVos=new ArrayList<>();
         List<Comment> commentList;
         commentList=commentMapper.selectCommentBytopicID(topic_id);
-        return commentList;
+        for(Comment c:commentList)
+        {
+            CommentVo commentVo=new CommentVo();
+            commentVo.setComment(c);
+            commentVo.setName(loginMapper.selectUserByuserID(c.getUser_id()).getName());
+            commentVos.add(commentVo);
+        }
+        return commentVos;
     }
 
     /**
      * 查看用户的全部评论
      */
-    public List<Comment> ListAllCommentByUserId(BigInteger user_id){
+    public List<CommentVo> ListAllCommentByUserId(BigInteger user_id){
+        List<CommentVo> commentVos=new ArrayList<>();
         List<Comment> commentList;
         commentList=commentMapper.selectCommentByuserID(user_id);
-        return commentList;
+        for(Comment c:commentList)
+        {
+            CommentVo commentVo=new CommentVo();
+            commentVo.setComment(c);
+            commentVo.setName(loginMapper.selectUserByuserID(user_id).getName());
+            commentVos.add(commentVo);
+        }
+        return commentVos;
     }
 
     /**
@@ -77,10 +95,18 @@ public class CommentServiceImpl implements CommentService{
     /**
      *查看用户某个话题下的所有评论
      */
-    public List<Comment> ListAllCommentByTopicIdAndMe(BigInteger user_id,BigInteger topic_id){
+    public List<CommentVo> ListAllCommentByTopicIdAndMe(BigInteger user_id,BigInteger topic_id){
+        List<CommentVo> commentVos=new ArrayList<>();
         List<Comment> commentList;
-        commentList=commentMapper.selectCommentBytopicIDAnduserID(user_id, topic_id);
-        return commentList;
+        commentList=commentMapper.selectCommentBytopicIDAnduserID(topic_id,user_id);
+        for(Comment c:commentList)
+        {
+            CommentVo commentVo=new CommentVo();
+            commentVo.setComment(c);
+            commentVo.setName(loginMapper.selectUserByuserID(user_id).getName());
+            commentVos.add(commentVo);
+        }
+        return commentVos;
     }
 
     /**

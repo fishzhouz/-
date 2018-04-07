@@ -1,5 +1,6 @@
 package xmu.yunzhieducation.service;
 import org.springframework.stereotype.Component;
+import xmu.yunzhieducation.vo.CommentVo;
 import xmu.yunzhieducation.vo.CourseAndTeacherVo;
 import java.math.BigInteger;
 import java.util.List;
@@ -31,12 +32,12 @@ public interface CommentService {
     /**
      * 查看话题下的所有评论
      */
-    public List<Comment> ListAllCommentByTopicId(BigInteger topic_id);
+    public List<CommentVo> ListAllCommentByTopicId(BigInteger topic_id);
 
     /**
      * 查看用户的全部评论
      */
-    public List<Comment> ListAllCommentByUserId(BigInteger user_id);
+    public List<CommentVo> ListAllCommentByUserId(BigInteger user_id);
 
     /**
      * 查看用户的所有话题
@@ -46,7 +47,7 @@ public interface CommentService {
     /**
      *查看用户某个话题下的评论
      */
-    public List<Comment> ListAllCommentByTopicIdAndMe(BigInteger user_id,BigInteger topic_id);
+    public List<CommentVo> ListAllCommentByTopicIdAndMe(BigInteger user_id,BigInteger topic_id);
 
     /**
      * 删除所选评论

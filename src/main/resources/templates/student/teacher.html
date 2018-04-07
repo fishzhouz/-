@@ -1,143 +1,149 @@
 <!DOCTYPE html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+var teacherName;
+<script>
+        var teacherID=getCookie("teacherID");
+		window.onload=function(){
+		getTInfo(teacherID);
+		getCourseList(teacherID);
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+     function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
+<script>
+	function getTInfo(id)
+	{
+     $.ajax({
+        type:"GET", //请求方式
+        url: "/me/"+id,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        teacherName=data.name;
+         $("#name").html(data.name);
+         $("#introduction").html("个人简介~："+data.introduction);
+        }
+        });
+	}
+	function getCourseList(id)
+	{
+	 $.ajax({
+        type:"GET", //请求方式
+        url: "/course/teacher?user_id="+id,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+         sum=0;
+         $.each(data,function(i,item){
+         sum=sum+1;
+			                          });
+		$.each(data,function(i,item){
+         if(i%5==0)
+         {
+         if(i==0)  str=str+"<div class=\"tea-row1\">";
+         else   str=str+"<div class=\"tea-row2\">";
+         }
+         str=str+"<a onclick=\"login("+item.course_id+")\" class=\"class"+(i%5+1)+"\"><img class=\"classPicture\" src="+item.picture+"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></a>";
+	    	if(i==sum-1)
+	    	{
+	    	str=str+"</div>";
+	    	}
+	    	else if(i%5==4)
+	    	{
+	    	str=str+"</div>";
+	    	}
+			                          });
+	     $("#classViewPanel1").html(str);
+        }
+        });
+	}
+	function login(id)
+{
+   setCookie("courseID",id);
+   setCookie("teacher_name",teacherName);
+   setCookie("path",3);
+   if(getCookie("schoolID_temp")==getCookie("schoolID"))
+   window.location.href="/student/classContentTrue";
+   else
+   window.location.href="/student/classContent";
+}
+function goBack()
+{
+alert("返回咯~");
+window.location.href="/student/schoolIndex";
+}
+</script>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="/css/style.css" />
 		<title>教师</title>
 	</head>
 	<body>
 <div class="container">
 	<!--顶部标题栏-->
-	<div class="header">
-		<img class="img-logo" src="img/logo.png" />
-		<img class="head" src="img/字体设计.png" />
-		    <a  href="myStudy.html" class="nav1">我的学习</a>
-		    <a href="message.html" class="nav2">消息</a>
-		    <a href="login.html" class="nav3">登录/注册</a>
-		<img id="icon" src="img/头像.png" />
+	<div class="header" id="header">
 	</div>
 	<!--教师头像-->
-	<img src="img/classPic.png" class="teacherImg" />
+	<img src="/img/classPic.png" class="teacherImg" />
 	<div class="teaName">
-		<p>蒋某</p>
-		<p>副教授</p>
+		<p id="name"></p>
+		<p id="introduction"></p>
 	</div>
 	<!--导航-->
 	<div class="navigation">
 		<span class="teaClass">全部课程</span>
-		<button id="moreBtn">更多</button>
+		<button id="moreBtn" onclick="goBack()">返回学校主页</button>
 	</div>
 	<!--课程列表第一行-->
 	<div id="classViewPanel1">
-		<div class="tea-row1">
-	    <div class="class1">
-	    	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
-	    	<div class="classHeader">
-	    		<a href="classContent.html">一起学习吧</a>
-	    	</div>
-	    	<div class="subHeader">
-	    		<p>讲师某某某</p>
-	    	</div>
-	    </div>
-	    
-	    <div class="class2">
-	    	<img class="classPicture" src="img/logo.png"  />
-	    	<div class="classHeader">
-	    		<p>一起学习吧</p>
-	    	</div>
-	    	<div class="subHeader">
-	    		<p>讲师某某某</p>
-	    	</div>
-	    </div>
-	    
-	    <div class="class3">
-	     	<img class="classPicture" src="img/logo.png"  />
-	    	<div class="classHeader">
-	    		<p>一起学习吧</p>
-	    	</div>
-	    	<div class="subHeader">
-	    		<p>讲师某某某</p>
-	    	</div>
-	    </div>
-	     
-	    <div class="class4">
-	     	<img class="classPicture" src="img/logo.png"  />
-	    	<div class="classHeader">
-	    		<p>一起学习吧</p>
-	    	</div>
-	    	<div class="subHeader">
-	    		<p>讲师某某某</p>
-	    	</div>
-	    </div>
-	    
-	    <div class="class5">
-	     	<img class="classPicture" src="img/logo.png"  />
-	    	<div class="classHeader">
-	    		<p>一起学习吧</p>
-	    	</div>
-	    	<div class="subHeader">
-	    		<p>讲师某某某</p>
-	    	</div>
-	    </div>
-	 </div>
-	    <!--  课程列表第二行-->
-	    <div class="tea-row2">
-	    <!--课程列表-->
-	    <div class="class1">
-	    	<img class="classPicture" src="img/logo.png"  />
-	    	<div class="classHeader">
-	    		<p>一起学习吧</p>
-	    	</div>
-	    	<div class="subHeader">
-	    		<p>讲师某某某</p>
-	    	</div>
-	    </div>
-	    
-	    <div class="class2">
-	    	<img class="classPicture" src="img/logo.png"  />
-	    	<div class="classHeader">
-	    		<p>一起学习吧</p>
-	    	</div>
-	    	<div class="subHeader">
-	    		<p>讲师某某某</p>
-	    	</div>
-	    </div>
-	    
-	    <div class="class3">
-	     	<img class="classPicture" src="img/logo.png"  />
-	    	<div class="classHeader">
-	    		<p>一起学习吧</p>
-	    	</div>
-	    	<div class="subHeader">
-	    		<p>讲师某某某</p>
-	    	</div>
-	    </div>
-	     
-	    <div class="class4">
-	     	<img class="classPicture" src="img/logo.png"  />
-	    	<div class="classHeader">
-	    		<p>一起学习吧</p>
-	    	</div>
-	    	<div class="subHeader">
-	    		<p>讲师某某某</p>
-	    	</div>
-	    </div>
-	    
-	    <div class="class5">
-	     	<img class="classPicture" src="img/logo.png"  />
-	    	<div class="classHeader">
-	    		<p>一起学习吧</p>
-	    	</div>
-	    	<div class="subHeader">
-	    		<p>讲师某某某</p>
-	    	</div>
-	    </div>
-	  </div>
 	  </div>
 	   <!--页脚-->
 	    <div class="footer">
-	    	<img class="img-logo" src="img/logo.png" />
-			<img class="head" src="img/字体设计.png" />
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
 			<div class="introduction">
 				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
 			</div>

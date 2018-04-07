@@ -107,7 +107,7 @@ $.ajax({
          if(i==0)  str=str+"<div class=\"class-row1\">";
          else   str=str+"<div class=\"class-row2\">";
          }
-         str=str+"<a onclick=\"login("+item.course_id+")\" class=\"class"+(i%5+1)+"\"><img class=\"classPicture\" src="+item.picture+"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></a>";
+         str=str+"<a onclick=\"login('"+item.teacher_name+"',"+item.course_id+")\" class=\"class"+(i%5+1)+"\"><img class=\"classPicture\" src="+item.picture+"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></a>";
 	    	if(i==sum-1)
 	    	{
 	    	str=str+"</div>";
@@ -163,9 +163,11 @@ $.ajax({
 	}
 </script>
 <script>
-		 function login(id)
+		 function login(id,id1)
 {
-   setCookie("courseID",id);
+   setCookie("courseID",id1);
+   setCookie("teacher_name",id);
+   setCookie("path",2);
    if(schoolID==getCookie("schoolID"))
    window.location.href="/student/classContentTrue";
    else

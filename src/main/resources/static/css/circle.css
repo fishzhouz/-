@@ -336,6 +336,11 @@ button {
 	left: 550px;
 	top: -10px;
 }
+#back{
+	position: relative;
+	left: 350px;
+	top: -10px;
+}
 .date1{
 	width: 100px;
 	height: 20px;
@@ -449,7 +454,11 @@ button {
 	position: relative;
 	left: 400px;
 }
-
+/*发表按钮*/
+#gog{
+	position: relative;
+	left: 400px;
+}
 /*circleToPut****************
 ***************************
 ****************************/
@@ -461,13 +470,18 @@ button {
 	background: white;
 	position: relative;
 	top: 20px;
-	left: -25px;
+	left: -75px;
 }
 /*发表按钮*/
 #Toput{
 	position: relative;
 	left: 500px;
 	top: -20px;
+}
+#Toput1{
+	position: relative;
+	left: 400px;
+	top: -90px;
 }
 /*评论方框*/
 .putcommentBox{

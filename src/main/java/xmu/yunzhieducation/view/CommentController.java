@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import xmu.yunzhieducation.service.Impl.CommentServiceImpl;
 
 import xmu.yunzhieducation.entity.*;
+import xmu.yunzhieducation.vo.CommentVo;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -22,7 +23,7 @@ public class CommentController {
     @RequestMapping(value="/topic/{topic_id}",method = RequestMethod.GET)
     @ResponseBody
     //测试完毕
-    public List<Comment> GetCurrentTopic(@PathVariable("topic_id") BigInteger topic_id)
+    public List<CommentVo> GetCurrentTopic(@PathVariable("topic_id") BigInteger topic_id)
     {
         return commentServiceImpl.ListAllCommentByTopicId(topic_id);
     }
@@ -33,6 +34,8 @@ public class CommentController {
     //测试完毕
     public boolean InsertComment(@RequestBody Comment comment)
     {
+        Date date=new Date();
+        comment.setTime(date);
         return commentServiceImpl.InsertCommentByBelongingId(comment);
     }
 
@@ -62,7 +65,7 @@ public class CommentController {
     @RequestMapping(value=("/comment/{topic_id}"),method=RequestMethod.GET)
     @ResponseBody
     //测试完毕
-    public List<Comment> GetCommentByTopicId(@PathVariable("topic_id")BigInteger topic_id){
+    public List<CommentVo> GetCommentByTopicId(@PathVariable("topic_id")BigInteger topic_id){
         return commentServiceImpl.ListAllCommentByTopicId(topic_id);
     }
 
@@ -70,7 +73,7 @@ public class CommentController {
     @RequestMapping(value=("/comment"),method=RequestMethod.GET)
     @ResponseBody
     //测试完毕。
-    public List<Comment > GetCommentByUserId(@RequestParam BigInteger user_id){
+    public List<CommentVo> GetCommentByUserId(@RequestParam BigInteger user_id){
         return commentServiceImpl.ListAllCommentByUserId(user_id);
     }
 
@@ -86,7 +89,7 @@ public class CommentController {
     @RequestMapping(value=("/comment/{topic_id}/me"),method=RequestMethod.GET)
     @ResponseBody
     //测试完毕
-    public List<Comment> GetCommentByUserIdAndTopicId(@PathVariable BigInteger topic_id
+    public List<CommentVo> GetCommentByUserIdAndTopicId(@PathVariable BigInteger topic_id
                     ,@RequestParam BigInteger user_id){
         return commentServiceImpl.ListAllCommentByTopicIdAndMe(user_id,topic_id);
     }

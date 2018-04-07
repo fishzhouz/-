@@ -10,6 +10,8 @@
         var topicID=getCookie("topicID");
 		window.onload=function(){
 		getTopicInfo(topicID);
+		getAllComment(topicID);
+		getMyComment(topicID);
 		str="";
 		if(getCookie("identification")==1)
 		{str2="我的课程";}
@@ -55,6 +57,56 @@
   $("#content").html("     "+getCookie("content"));
    $("#name").html("帖主： "+getCookie("topic_name"));
 	}
+	function goComment()
+	{
+	if(getCookie("is_operate")==0)
+	alert("你没有评论的权限!");
+	else
+	window.location.href="/student/circleToComment";
+	}
+	function getAllComment(id)
+	{
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/topic/"+id ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+        $.each(data,function(i,item){
+                 str=str+"<hr class=\"hr1\" /><div class=\"box1\"><div class=\"circle\"><p class=\"circleNum\">"+(i+1)+"</p></div><div class=\"cicleContent\"><p>"+item.comment.content+"</p></div><div class=\"date1\"><p>"+item.comment.time+"</p></div><img src=\"/img/消息.png\" class=\"img21\"><div class=\"num1\"><p>"+"回复人： "+item.name+"</p></div></div>";
+			                          });
+	     str=str+"<hr class=\"hr1\" />";
+	     $("#all").html(str);
+        }
+        });
+	}
+		function getMyComment(id)
+	{
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/comment/"+id+"/me?user_id="+getCookie("userID"),
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+        $.each(data,function(i,item){
+                 str=str+"<hr class=\"hr1\" /><div class=\"box1\"><div class=\"circle\"><p class=\"circleNum\">"+(i+1)+"</p></div><div class=\"cicleContent\"><p>"+item.comment.content+"</p></div><div class=\"date1\"><p>"+item.comment.time+"</p></div><img src=\"/img/消息.png\" class=\"img21\"><div class=\"num1\"><p>"+"回复人： "+item.name+"</p></div></div>";
+			                          });
+	     str=str+"<hr class=\"hr1\" />";
+	     $("#my").html(str);
+	     }
+        });
+	}
+	function goBack()
+	{
+	if(getCookie("type")==1)
+	window.location.href="/student/classContent";
+	if(getCookie("type")==2)
+	window.location.href="/student/alumniCircle";
+	}
 </script>
 	<head>
 		<meta charset="UTF-8">
@@ -77,26 +129,10 @@
 			<p class="pColor1" id="name"></p>
 			<button type="button" id="allComment" autofocus="autofocus">全部评论</button>
 			<button type="button" id="myComment">我的评论</button>
-			<button type="button" id="Comment">发表评论</button>
-
+			<button type="button" id="Comment" onclick="goComment()">发表评论</button>
+			<button type="button" id="back" onclick="goBack()">返回上页</button>
 			<!--第一篇帖子-->
 			<div id="all">
-			<hr class="hr1" />
-			<div class="box1">
-				<div class="circle">
-				   <p class="circleNum">1</p>
-				</div>
-				<div class="cicleContent">
-					<p>帖子内容</p>
-				</div>
-				<div class="date1">
-					<p>2018-03-29</p>
-				</div>
-				<a href="circleToComment.html"><img src="/img/消息.png" class="img21"></a>
-				<div class="num1">
-					<p>2938人</p>
-				</div>
-			</div>
 			</div>
 			<div id="my">
 				<hr class="hr1" />
@@ -110,7 +146,7 @@
 					<div class="date1">
 						<p>2018-03-29</p>
 					</div>
-					<a href="circleToComment.html"><img src="/img/消息.png" class="img21"></a>
+					<img src="/img/消息.png" class="img21">
 					<div class="num1">
 						<p>29人</p>
 					</div>
@@ -127,11 +163,6 @@
 			
 	    </div>
 		</div>
-		<script>
-			document.getElementById('Comment').onclick=function(){
-                window.location.assign('http://127.0.0.1:8020/%E4%BA%91%E6%99%BA%E6%95%99%E8%82%B2/circleToComment.html');
-            }
-		</script>
 	<script>
 		var btn1 = document.getElementById("allComment");
         btn1.onclick =function(){

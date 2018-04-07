@@ -60,6 +60,7 @@ function goSchool(id)
 {
    setCookie("courseID",id1);
    setCookie("teacher_name",id);
+   setCookie("path",1);
    window.location.href="/student/classContent";
 }
 		  function getCourseList()
@@ -181,25 +182,6 @@ function goSchool(id)
 			
 			
 	    </div>
-	    
-	    <script>
-	    	document.getElementById('icon').onclick=function(){
-                window.location.assign('http://127.0.0.1:8020/%E4%BA%91%E6%99%BA%E6%95%99%E8%82%B2/login.html?__hbt=1521282909333');
-            }
-	/*更多按钮 */   	
-	var btn = document.getElementById('moreBtn');
-    var obj = document.getElementById('classViewPanel');
-    var total_height =  obj.scrollHeight;//文章总高度
-    var show_height = 400;//定义原始显示高度
-    if(total_height>show_height){
-    btn.style.display = 'block';
-    btn.onclick = function(){
-    obj.style.height = total_height + 'px';
-    /*btn.style.display = 'none';*/
-    }
-    
-    }
-	    </script>
 
 	</body>
 </html>
