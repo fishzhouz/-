@@ -5,10 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import xmu.yunzhieducation.mapper.CommentMapper;
+import xmu.yunzhieducation.mapper.LoginMapper;
 import xmu.yunzhieducation.service.Impl.CommentServiceImpl;
 
 import xmu.yunzhieducation.entity.*;
+import xmu.yunzhieducation.service.Impl.LoginServiceImpl;
 import xmu.yunzhieducation.vo.CommentVo;
+import xmu.yunzhieducation.vo.TopicVo;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -18,6 +22,10 @@ import java.util.List;
 public class CommentController {
     @Autowired
     private CommentServiceImpl commentServiceImpl;
+    @Autowired
+    private CommentMapper commentMapper;
+    @Autowired
+    private LoginMapper loginMapper;
 
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/topic/{topic_id}",method = RequestMethod.GET)
@@ -27,6 +35,22 @@ public class CommentController {
     {
         return commentServiceImpl.ListAllCommentByTopicId(topic_id);
     }
+
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value="/topic/this/{topic_id}",method = RequestMethod.GET)
+    @ResponseBody
+    //测试完毕
+    public TopicVo GetTopic(@PathVariable("topic_id") BigInteger topic_id)
+    {
+        Topic t=commentMapper.selectTopicBytopicID(topic_id);
+        TopicVo topicVo=new TopicVo();
+        topicVo.setContent(t.getContent());
+        topicVo.setHeading(t.getHeading());
+        topicVo.setName(loginMapper.selectUserByuserID(t.getUser_id()).getName());
+        return topicVo;
+    }
+
+
 
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/comment",method =RequestMethod.POST)

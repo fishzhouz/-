@@ -36,12 +36,18 @@
         From topic
         WHERE user_id= #{user_id}
     </select>
+    <select id="selectTopicBytopicID"  resultMap="topicResultMap">
+        SELECT *
+        From topic
+        WHERE id= #{topic_id}
+    </select>
     <resultMap id="topicResultMap" type="xmu.yunzhieducation.entity.Topic">
         <id property="id" column="id"/>
         <result property="belonging_id" column="belonging_id"/>
         <result property="time" column="time"/>
         <result property="type" column="type"/>
         <result property="user_id" column="user_id"/>
+        <result property="heading" column="heading"/>
         <result property="content" column="content"/>
     </resultMap>
 

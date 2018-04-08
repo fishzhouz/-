@@ -37,9 +37,14 @@
 <script>
 	function getCourseInfo(id)
 	{
+	var userID;
+	if(getCookie("userID")==null)
+	userID=0;
+	else
+	userID=getCookie("userID");
 $.ajax({
         type:"GET", //请求方式
-        url: "/course/"+id+"?user_id="+getCookie("userID") ,
+        url: "/course/"+id+"?user_id="+userID ,
         cache: false,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
@@ -109,9 +114,6 @@ $.ajax({
 	{
 	setCookie("is_operate",0);
 	setCookie("topicID",id);
-	setCookie("heading",heading);
-	setCookie("content",content);
-	setCookie("topic_name",name);
 	setCookie("type",1);
 	window.location.href="/student/circleComment";
 	}

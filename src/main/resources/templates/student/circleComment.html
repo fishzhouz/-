@@ -53,9 +53,18 @@
 <script>
 	function getTopicInfo(id)
 	{
- $("#heading").html("#"+getCookie("heading"));
-  $("#content").html("     "+getCookie("content"));
-   $("#name").html("帖主： "+getCookie("topic_name"));
+		$.ajax({
+        type:"GET", //请求方式
+        url: "/topic/this/"+id ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         $("#heading").html(data.heading);
+        $("#content").html("     "+data.content);
+        $("#name").html("帖主： "+data.name);
+        }
+        });
 	}
 	function goComment()
 	{
@@ -84,9 +93,14 @@
 	}
 		function getMyComment(id)
 	{
+	var userID;
+	if(getCookie("userID")==null)
+	userID=0;
+	else
+	userID=getCookie("userID");
 	$.ajax({
         type:"GET", //请求方式
-        url: "/comment/"+id+"/me?user_id="+getCookie("userID"),
+        url: "/comment/"+id+"/me?user_id="+userID,
         cache: false,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
@@ -106,6 +120,8 @@
 	window.location.href="/student/classContent";
 	if(getCookie("type")==2)
 	window.location.href="/student/alumniCircle";
+	if(getCookie("type")==3)
+	window.location.href="/student/message";
 	}
 </script>
 	<head>
@@ -135,22 +151,6 @@
 			<div id="all">
 			</div>
 			<div id="my">
-				<hr class="hr1" />
-				<div class="box1">
-					<div class="circle">
-						<p class="circleNum">1</p>
-					</div>
-					<div class="cicleContent">
-						<p>帖子内容</p>
-					</div>
-					<div class="date1">
-						<p>2018-03-29</p>
-					</div>
-					<img src="/img/消息.png" class="img21">
-					<div class="num1">
-						<p>29人</p>
-					</div>
-				</div>
 			</div>
 		</div>
 		<!--页脚-->

@@ -1,31 +1,150 @@
 <!DOCTYPE html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+<script>
+		window.onload=function(){
+		getMessage(getCookie("userID"));
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+     function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
+<script>
+	function getMessage(id)
+	{
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/me/message/"+id,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+        $.each(data,function(i,item){
+        if(item.is_read==1)
+               str=str+"<div class=\"mesBox1\"><div class=\"GreenCircle\"><p class=\"mesCircleNum\">"+(i+1)+"</p></div>";
+        else if(item.is_read==0)
+               str=str+"<div class=\"mesBox1\"><div class=\"RedCircle\"><p class=\"mesCircleNum\">"+(i+1)+"</p></div>";
+        if(item.type==1)
+             str=str+"<div class=\"mesCicleContent\" onclick=\"goThis("+item.id+")\"><p>"+item.content+"</p></div>";
+        else if(item.type==0)
+             str=str+"<div class=\"mesCicleContent\" onclick=\"goTopic("+item.id+","+item.topic_id+")\"><p>"+item.content+"</p></div>";
+             str=str+"<button onclick=\"delthis("+item.id+")\">删除</button></div>";
+			                          });
+	     $("#mesPanel").html(str);
+	     }
+        });
+	}
+	function goThis(id)
+	{
+	$.ajax({
+        type:"PUT", //请求方式
+        url: "/me/message/"+id,
+        contentType :"application/json",
+        dataType: 'json',   //返回值类型
+         success:function(data){
+         alert("你已读该消息！");
+	      window.location.href="/student/message";
+         },
+          error:function(data){
+          alert(111);
+         }
+         });
+	}
+		function goTopic(id,id1)
+	{
+	$.ajax({
+        type:"PUT", //请求方式
+        url: "/me/message/"+id,
+        contentType :"application/json",
+        dataType: 'json',   //返回值类型
+         success:function(data){
+         },
+          error:function(data){
+         }
+         });
+    setCookie("is_operate",1);
+	setCookie("topicID",id1);
+	setCookie("type",3);
+	window.location.href="/student/circleComment";
+	}
+	function delthis(id)
+	{
+	$.ajax({
+        type:"DELETE", //请求方式
+        url: "/me/message/"+id,
+        contentType :"application/json",
+        dataType: 'json',   //返回值类型
+         success:function(data){
+         alert("你已删除此条消息！");
+         window.location.href="/student/message";
+         },
+          error:function(data){
+          alert(111);
+         }
+         });
+	}
+</script>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="/css/style.css" />
 		<title>我的消息</title>
 	</head>
 	<body>
 <div class="container">
 		<!--顶部标题栏-->
-		<div class="header">
-			<img class="img-logo" src="img/logo.png" />
-			<img class="head" src="img/字体设计.png" />
-		     <a  href="myStudy.html" class="nav1">我的学习</a>
-		        <a href="message.html" class="nav2">消息</a>
-		        <a href="login.html" class="nav3">登录/注册</a>
-            <img id="icon" src="img/头像.png" />     
+		<div class="header" id="header">
 		</div>
 		<!--我的消息-->
 		<div class="message">
-			<p class="meP">课程消息</p>
+			<p class="meP">你的消息</p>
+			<p class="meP">（红色代表未读，绿色已读）</p>
 		</div>
 		<!--消息列表-->
-		<div class="mesPanel"></div>
+		<div class="mesPanel" id="mesPanel">
+		</div>
 		<!--页脚-->
 	    <div class="footer">
-	    	<img class="img-logo" src="img/logo.png" />
-			<img class="head" src="img/字体设计.png" />
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
 			<div class="introduction">
 				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
 			</div>

@@ -10,6 +10,7 @@ import xmu.yunzhieducation.entity.Course;
 import xmu.yunzhieducation.entity.Message;
 import xmu.yunzhieducation.entity.School;
 import xmu.yunzhieducation.entity.User;
+import xmu.yunzhieducation.mapper.LoginMapper;
 import xmu.yunzhieducation.service.Impl.LoginServiceImpl;
 import xmu.yunzhieducation.vo.CourseVo;
 
@@ -21,6 +22,8 @@ import java.util.List;
 public class LoginController {
     @Autowired
     private LoginServiceImpl loginServiceImpl;
+    @Autowired
+    private LoginMapper loginMapper;
 
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(value = "/login/course",method = RequestMethod.GET)
@@ -119,5 +122,17 @@ public class LoginController {
     public List<Message> getAllMessage(@PathVariable("user_id")BigInteger user_id)
     {
         return loginServiceImpl.getAllMessage(user_id);
+    }
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @RequestMapping(value = "/me/message/{message_id}",method = RequestMethod.PUT)
+    @ResponseBody
+    public void updateMessage(@PathVariable("message_id")BigInteger message_id){ loginMapper.updateMessage(message_id);
+    }
+
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @RequestMapping(value = "/me/message/{message_id}",method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deleteMessage(@PathVariable("message_id")BigInteger message_id){
+        loginMapper.deleteMessageByID(message_id);
     }
 }

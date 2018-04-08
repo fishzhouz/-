@@ -43,10 +43,19 @@ public class CommentServiceImpl implements CommentService{
     }
 
     /**
-     *对某个话题进行评论
+     *对某个话题进行评论,增加消息
      **/
     public Boolean InsertCommentByBelongingId(Comment comment){
         commentMapper.insertCommentByID(comment);
+        Topic topic=commentMapper.selectTopicBytopicID(comment.getTopic_id());
+        Message message=new Message();
+        message.setUser_id(topic.getUser_id());
+        message.setContent("你的帖子\""+topic.getHeading()+"\"被回复\""+comment.getContent()+"\"!");
+        message.setType(0);
+        message.setTime(comment.getTime());
+        message.setIs_read(0);
+        message.setTopic_id(comment.getTopic_id());
+        loginMapper.insertMessage(message);
         return true;
     }
     /**

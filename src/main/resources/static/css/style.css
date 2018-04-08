@@ -914,32 +914,90 @@ button {
 ********************************/
 /*我的消息列表*/
 .message{
-	width: 150px;
-	height: 50px;
+	width: 250px;
+	height: 80px;
 	background: rgb(185,227,217);
 	border: #BBBBBB solid 1px;
 	position: relative;
-	top: 90px;
-	left: 130px;
+	top: 110px;
+	left: 50px;
 }
 /*我的消息字体*/
 .meP{
 	font-size: large;
 	position: relative;
 	top: 12px;
-	left: 40px;
+	left: 10px;
 }
 /*我的消息框框*/
 .mesPanel{
 	width: 700px;
-	height: 400px;
+	height: 500px;
+	overflow-x:hidden;
 	border: #000000 solid 1px;
 	position: relative;
 	left: 350px;
 	top: 40px;
 }
 
-
+.GreenCircle {
+    width: 40px;
+    height: 40px;
+    background-color: rgb(185,227,217);
+    -webkit-border-radius: 100px;
+    position: relative;
+    top: 10px;
+    left: 20px;
+}
+.RedCircle {
+    width: 40px;
+    height: 40px;
+    background-color: rgb(244,0,2);
+    -webkit-border-radius: 100px;
+    position: relative;
+    top: 10px;
+    left: 20px;
+}
+/*楼层数*/
+.mesCircleNum{
+	position: relative;
+	top: 10px;
+	left: 15px;
+	font-weight: bold;
+	font-size: larger;
+}
+/*帖子内容*/
+.mesCicleContent{
+	width: 500px;
+	height: 60px;
+	position: relative;
+	top: -25px;
+	left:80px;
+	font-size:20px;
+	color: #3F51B5;
+}
+.mesBox1{
+	height: 80px;
+	position: relative;
+	top: 30px;
+}
+/*按钮样式*/
+.mesBox1 button{
+	width: 50px;
+	height: 30px;
+	top:10px;
+	left:600px;
+}
+.mesBox1 button:hover,button:focus{
+	background: #B9E3D9;
+	border:1px solid #BBBBBB;
+	color: #000000;
+}
+.mesBox1 button:active{
+	background: #B9E3D9;
+	border:1px solid #BBBBBB;
+	color: #000000;
+}
 /*课程详情***************************
 *********************************
 **********************************/
