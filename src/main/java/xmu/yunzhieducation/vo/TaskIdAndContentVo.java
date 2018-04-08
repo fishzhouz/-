@@ -5,6 +5,7 @@ import java.math.BigInteger;
 public class TaskIdAndContentVo {
     private BigInteger task_id;
     private String content;
+    private boolean is_finished;
 
     public BigInteger getTask_id() {
         return task_id;
@@ -20,6 +21,14 @@ public class TaskIdAndContentVo {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public boolean isIs_finished() {
+        return is_finished;
+    }
+
+    public void setIs_finished(boolean is_finished) {
+        this.is_finished = is_finished;
     }
 
     @Override

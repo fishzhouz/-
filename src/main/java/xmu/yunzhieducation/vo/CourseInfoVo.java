@@ -8,6 +8,15 @@ public class CourseInfoVo {
     private boolean is_choose;//学生是否有选该门课程
     private Integer num;//课程总人数
     private Course course;//课程基本信息
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public boolean isIs_choose() {
         return is_choose;

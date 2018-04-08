@@ -85,6 +85,7 @@ public class CourseServiceImpl implements CourseService{
         }
         courseInfoVo.setNum(sum);
         courseInfoVo.setCourse(courseMapper.selectCourseinfoByCourseID(course_id));
+        courseInfoVo.setName(loginMapper.selectUserByuserID(courseMapper.selectCourseinfoByCourseID(course_id).getTeacher_id()).getName());
         List<Class_student> class_students=courseMapper.selectClassstudentByStudentID(user_id);
         boolean temp=false;
         for(Class_student c:class_students)
@@ -139,7 +140,7 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public List<TaskIdAndContentVo> getOwnTask(BigInteger class_id)
+    public List<TaskIdAndContentVo> getOwnTask(BigInteger class_id,BigInteger user_id)
     {
         List<TaskIdAndContentVo> taskIdAndContentVos =new ArrayList<>();
         List<Period> periods=periodMapper.selectPeriodByClassID(class_id);
@@ -150,6 +151,15 @@ public class CourseServiceImpl implements CourseService{
                 TaskIdAndContentVo taskIdAndContentVo =new TaskIdAndContentVo();
                 taskIdAndContentVo.setTask_id(t.getId());
                 taskIdAndContentVo.setContent("任务"+index+"  "+t.getName());
+                Student_task s=taskMapper.selectStudenttaskByID(user_id,t.getId());
+                if(s==null)
+                {
+                    taskIdAndContentVo.setIs_finished(false);
+                }
+                else
+                {
+                    taskIdAndContentVo.setIs_finished(true);
+                }
                 index+=1;
                 taskIdAndContentVos.add(taskIdAndContentVo);
             }
@@ -167,7 +177,7 @@ public class CourseServiceImpl implements CourseService{
             WrongQuestionVo wrongQuestionVo = new WrongQuestionVo();
             wrongQuestionVo.setWrong_answer(s.getOwn_answer());
             Question question = taskMapper.selectQuestionByquestionID(s.getQuestion_id());
-            wrongQuestionVo.setHeading(index + ". " + question.getHeading());
+            wrongQuestionVo.setHeading(question.getHeading());
             wrongQuestionVo.setA(question.getA());
             wrongQuestionVo.setB(question.getB());
             wrongQuestionVo.setC(question.getC());

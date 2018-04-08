@@ -7,13 +7,27 @@
 <script src="/js/jquery.inview.min.js"></script>
 <script src="/js/cookie3.js"></script>
 <script>
+var userID=getCookie("userID");
 		window.onload=function(){
 		document.getElementById('mystudyMission').style.display='none';
         document.getElementById('mystudyTraining').style.display='none';
         document.getElementById('mystudyMistake').style.display='none';
         document.getElementById('mystudyCicle').style.display='none';
-        document.getElementById('myStudyClass').style.display='block';
         document.getElementById('mystudyAbility').style.display='none';
+        document.getElementById('myStudyClass').style.display='block';
+        document.getElementById('end').style.display='none';
+        document.getElementById('now').style.display='none';
+        document.getElementById('all').style.display='block';
+        document.getElementById('end1').style.display='none';
+        document.getElementById('now1').style.display='none';
+        document.getElementById('all1').style.display='block';
+        document.getElementById('comment').style.display='none';
+        document.getElementById('topic').style.display='block';
+        getMyClass(userID);
+        getMyTask(userID);
+        getMyTraining(userID);
+        getMyMistake(userID);
+        getMyCircle(userID);
 		str="";
 		if(getCookie("identification")==1)
 		{str2="我的课程";}
@@ -52,6 +66,197 @@
    window.location.href="/student/message";}
    }
 	</script>
+<script>
+	function getMyClass(id)
+	{
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/course/student?user_id="+id,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+        str1="";
+        str2="";
+        $.each(data,function(i,item){
+        str=str+"<div onclick=\"goClass("+item.course_id+","+item.class_id+",'"+item.teacher_name+"')\" class=\"class1\"><img class=\"classPicture\" src=\""+item.picture+"\"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"> <span class=\"subHeader\">"+item.teacher_name+"</span></div><div class=\"state\"><p>"+item.replay+"</p></div></div>";
+        if(item.is_end==false)
+        str1=str1+"<div onclick=\"goClass("+item.course_id+","+item.class_id+",'"+item.teacher_name+"')\" class=\"class1\"><img class=\"classPicture\" src=\""+item.picture+"\"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"> <span class=\"subHeader\">"+item.teacher_name+"</span></div><div class=\"state\"><p>"+item.replay+"</p></div></div>";
+                if(item.is_end==true)
+        str2=str2+"<div onclick=\"goClass("+item.course_id+","+item.class_id+",'"+item.teacher_name+"')\" class=\"class1\"><img class=\"classPicture\" src=\""+item.picture+"\"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"> <span class=\"subHeader\">"+item.teacher_name+"</span></div><div class=\"state\"><p>"+item.replay+"</p></div></div>";
+			                          });
+	     $("#all").html(str);
+	     $("#now").html(str1);
+	     $("#end").html(str2);
+	     }
+        });
+	}
+	function goClass(id,id1,id2)
+	{
+	setCookie("courseID",id);
+	setCookie("classID",id1);
+	setCookie("teacher_name",id2);
+	setCookie("road",1);
+	window.location.href="/student/classContentTrue";
+	}
+</script>
+<script>
+	function getMyTask(id)
+	{
+	  var str="";
+	  var str1="";
+      var  str2="";
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/course/student?user_id="+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        $.each(data,function(i,item){
+        str=str+"<div class=\"mystudyMissionP\"><div class=\"class1\"><img class=\"classPicture\" src=\""+item.picture+"\"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></div><div class=\"mystudyMissionPa\">";
+        str1=str1+"<div class=\"mystudyMissionP\"><div class=\"class1\"><img class=\"classPicture\" src=\""+item.picture+"\"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></div><div class=\"mystudyMissionPa\">";
+        str2=str2+"<div class=\"mystudyMissionP\"><div class=\"class1\"><img class=\"classPicture\" src=\""+item.picture+"\"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></div><div class=\"mystudyMissionPa\">";
+$.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+item.class_id+"/task?user_id="+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data1){
+        $.each(data1,function(i1,item1){
+               str=str+"<div class=\"mystudyMissionPe\">"+item1.content+"</div>";
+               if(item1.is_finished==false)
+               str1=str1+"<div class=\"mystudyMissionPe\">"+item1.content+"</div>";
+               if(item1.is_finished==true)
+               str2=str2+"<div class=\"mystudyMissionPe\">"+item1.content+"</div>";
+			           });
+	           }
+              });
+        str=str+"</div></div>";
+        str1=str1+"</div></div>";
+        str2=str2+"</div></div>";
+        });
+        $("#all1").html(str);
+	    $("#now1").html(str1);
+	    $("#end1").html(str2);
+	    }
+	    });
+	}
+</script>
+<script>
+	function getMyTraining(id)
+	{
+	var str="";
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/course/student?user_id="+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        $.each(data,function(i,item){
+        str=str+"<div class=\"mystudyMissionP\"><div class=\"class1\"><img class=\"classPicture\" src=\""+item.picture+"\"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></div><div class=\"mystudyMissionPa\">";
+    $.ajax({
+        type:"GET", //请求方式
+        url: "/training/course/"+item.course_id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data1){
+        $.each(data1,function(i1,item1){
+               str=str+"<div class=\"mystudyMissionPe\">"+"实训"+(i1+1)+"   "+item1.traing_introduction+"</div>";
+			           });
+	           }
+              });
+        str=str+"</div></div>";
+        });
+        $("#tr").html(str);
+	    }
+	    });
+	}
+</script>
+<script>
+	function getMyMistake(id)
+	{
+var str="";
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/course/student?user_id="+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        $.each(data,function(i,item){
+        str=str+"<div class=\"mystudyMissionP\"><div class=\"class1\"><img class=\"classPicture\" src=\""+item.picture+"\"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></div><div class=\"mystudyMissionPa\">";
+    $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+item.course_id+"/error?user_id="+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data1){
+        $.each(data1,function(i1,item1){
+               str=str+"<div class=\"mystudyMissionPe\">"+"错题"+(i1+1)+"."+item1.heading+"            >>>>>>>>你的答案： "+item1.wrong_answer+"       正确答案： "+item1.answer+"</div>";
+               str=str+"<div class=\"mystudyMissionPe\">"+"A."+item1.a+"         B."+item1.b+"</div>";
+               str=str+"<div class=\"mystudyMissionPe\">"+"C."+item1.c+"         D."+item1.d+"</div>";
+			           });
+	           }
+              });
+        str=str+"</div></div>";
+        });
+        $("#mi").html(str);
+	    }
+	    });
+	}
+</script>
+<script>
+	function getMyCircle(id)
+	{
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/topic?user_id="+id,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+        $.each(data,function(i,item){
+          str=str+"<span onclick=\"goTopic("+item.id+")\" class=\"mycircletitle\">"+(i+1)+".你的帖子：    "+item.heading+"</span>";
+			                          });
+	     $("#topic").html(str);
+	     }
+        });
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/comment?user_id="+id,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+        $.each(data,function(i,item){
+          str=str+"<span onclick=\"goTopic("+item.comment.topic_id+")\"class=\"mycircletitle\">"+(i+1)+".你的评论：    "+item.comment.content+"</span>";
+			                          });
+	     $("#comment").html(str);
+	     }
+        });
+	}
+	function goTopic(id)
+	{
+	setCookie("is_operate","yes");
+	setCookie("topicID",id);
+	setCookie("type",4);
+	window.location.href="/student/circleComment";
+	}
+</script>
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="/css/style.css" />
@@ -84,76 +289,72 @@
 				<button type="button" id="myStudyBeing" >进行中</button>
 				<button type="button" id="myStudyEnd" >已结束</button>
 			<div class="mystudyClasses">
-			<div class="class1">
-	    	<a href="classContent.html"><img class="classPicture" src="/img/logo.png"></a>
-	    	<div class="classHeader">
-	    		<a href="classContent.html"><span class="classHeader"></span></a>
-	    	</div>
-	    	<div class="subHeader">
-	    	    <span class="subHeader"></span>
-	    	</div>
-	    	<div class="state">
-	    		<p>进行中</p>
-	    	</div>
-	        </div>
-	        <div class="class1">
-	    	<a href="classContent.html"><img class="classPicture" src="/img/logo.png"></a>
-	    	<div class="classHeader">
-	    		<a href="classContent.html"><span class="classHeader"></span></a>
-	    	</div>
-	    	<div class="subHeader">
-	    	    <span class="subHeader"></span>
-	    	</div>
-	    	<div class="state1">
-	    		<p>已结束  90分</p>
-	    	</div>
-	        </div>
+				<div id="all"></div>
+				<div id="now"></div>
+				<div id="end"></div>
 			</div>
 			</div>
+
 		    <div id="mystudyMission">
-		    	<button type="button" id="myStudyAllMission">全部</button>
-		    	<div class="mystudyMissionP"></div>
-		    	<div class="mystudyMissionP"></div>
+		    	<button type="button" class="myStudyAllMission" id="myStudyAllMission" autofocus="autofocus">全部</button>
+				<button type="button" class="myStudyAllMission" id="myStudyAllBeing">进行中</button>
+				<button type="button" class="myStudyAllMission" id="myStudyAllEnd">已完成</button>
+				<div id="all1"></div>
+				<div id="now1"></div>
+				<div id="end1"></div>
 		    </div>
+
 		    <div id="mystudyTraining">
-		    	<button type="button" id="myStudyAlltraining">全部</button>
-		    	<div class="mystudyMissionP"></div>
-		    	<div class="mystudyMissionP"></div>
+		    	<button type="button" id="myStudyAlltraining">全部实训</button>
+				<div id="tr"></div>
 		    </div>
-		   <!-- <div id="mystudyTraining2">
-		    	<button type="button" id="myStudyMytraining">我的实训</button>
-		    	<button type="button" id="myStudytrainingCircle">实训交流圈</button>
-		    </div>	-->
+
 		    <div id="mystudyMistake">
-		    	<button type="button" id="myStudyAllMistake">全部</button>
-		    	<span class="mystudyMistakeP"></span>
+		    	<button type="button" id="myStudyAllMistake">全部错题</button>
+				<div id="mi"></div>
 		    </div>
+
 		    <div id="mystudyCicle">
-		    	<button type="button" id="myStudytOPIC">话题</button>
-		    	<button type="button" id="myStudycomment">评论</button>
-		    	<span class="mycircletitle"></span>
+		    	<button type="button" id="myStudytOPIC" autofocus="autofocus">我的话题</button>
+		    	<button type="button" id="myStudycomment">我的评论</button>
+				<div id="topic">
+				</div>
+				<div id="comment"></div>
 		    </div>
+
 		   <div id="mystudyAbility">
 		   	<div class="ability1">
 		   	<div class="class1">
-	    	<a href="classContent.html"><img class="classPicture" src="img/logo.png"></a>
-	    	<div class="classHeader">
-	    		<a href="classContent.html"><span class="classHeader"></span></a>
-	    	</div>
-	    	<div class="subHeader">
-	    		<span class="subHeader"></span>
-	    	</div>
-	        </div>
-	        <div class="teacher-point">
-	        	<p>老师：</p>
-	        	<span class="teacher-name">asdf</span>
-	        	<p class="teacher-date">时间：</p>
-	        	<span class="point-date">sdj</span>
-	        	<div class="teacher-content">
-	        		
-	        	</div>
-	        </div>
+				<img class="classPicture" src="/img/logo.png">
+				<div class="classHeader">
+					<span class="classHeader">ffff</span>
+				</div>
+			</div>
+				<div class="teacher-point">
+					<p>老师：</p>
+					<span class="teacher-name">asdf</span>
+					<p class="teacher-date">时间：</p>
+					<span class="point-date">sdj</span>
+					<div class="teacher-content">
+					</div>
+				</div>
 		   	</div>
+			   <div class="ability1">
+				   <div class="class1">
+					   <img class="classPicture" src="/img/logo.png">
+					   <div class="classHeader">
+						   <span class="classHeader">ffff</span>
+					   </div>
+				   </div>
+				   <div class="teacher-point">
+					   <p>老师：</p>
+					   <span class="teacher-name">asdf</span>
+					   <p class="teacher-date">时间：</p>
+					   <span class="point-date">sdj</span>
+					   <div class="teacher-content">
+					   </div>
+				   </div>
+			   </div>
 		   </div>
 		</div>
         
@@ -223,5 +424,57 @@
         	document.getElementById('mystudyAbility').style.display='block';
         }
 	</script>
+	<script>
+		var btn1 = document.getElementById("myStudyAllClass");
+        btn1.onclick =function(){
+        document.getElementById('end').style.display='none';
+            document.getElementById('now').style.display='none';
+            document.getElementById('all').style.display='block';
+        }
+        var btn2=document.getElementById("myStudyBeing");
+        btn2.onclick=function(){
+        document.getElementById('end').style.display='none';
+        	document.getElementById('all').style.display='none';
+        	document.getElementById('now').style.display='block';
+        }
+        var btn3=document.getElementById("myStudyEnd");
+        btn3.onclick=function(){
+        document.getElementById('now').style.display='none';
+        	document.getElementById('all').style.display='none';
+        	document.getElementById('end').style.display='block';
+        }
+</script>
+	<script>
+		var btn1 = document.getElementById("myStudyAllMission");
+        btn1.onclick =function(){
+        document.getElementById('end1').style.display='none';
+            document.getElementById('now1').style.display='none';
+            document.getElementById('all1').style.display='block';
+        }
+        var btn2=document.getElementById("myStudyAllBeing");
+        btn2.onclick=function(){
+        document.getElementById('end1').style.display='none';
+        	document.getElementById('all1').style.display='none';
+        	document.getElementById('now1').style.display='block';
+        }
+        var btn3=document.getElementById("myStudyAllEnd");
+        btn3.onclick=function(){
+        document.getElementById('now1').style.display='none';
+        	document.getElementById('all1').style.display='none';
+        	document.getElementById('end1').style.display='block';
+        }
+</script>
+	<script>
+		var btn1 = document.getElementById("myStudytOPIC");
+        btn1.onclick =function(){
+        document.getElementById('comment').style.display='none';
+            document.getElementById('topic').style.display='block';
+        }
+        var btn2=document.getElementById("myStudycomment");
+        btn2.onclick=function(){
+        document.getElementById('topic').style.display='none';
+        	document.getElementById('comment').style.display='block';
+        }
+</script>
 	</body>
 </html>

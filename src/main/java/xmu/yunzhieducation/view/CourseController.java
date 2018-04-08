@@ -50,9 +50,9 @@ public class CourseController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/course/{class_id}/task",method = RequestMethod.GET)
     @ResponseBody
-    public List<TaskIdAndContentVo> getOwnTask(@PathVariable("class_id") BigInteger class_id)
+    public List<TaskIdAndContentVo> getOwnTask(@PathVariable("class_id") BigInteger class_id,@RequestParam(value="user_id") BigInteger user_id)
     {
-        return courseServiceImpl.getOwnTask(class_id);
+        return courseServiceImpl.getOwnTask(class_id,user_id);
     }
 
     @ResponseStatus(value= HttpStatus.OK)

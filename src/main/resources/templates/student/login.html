@@ -48,6 +48,7 @@
         url:"/login2?account="+account+"&password="+password ,
         cache: false,   //如果使用缓存
         contentType : "application/json",
+        async:false,
         dataType: 'json',   //返回值类型
         success:function(data){
          setCookie("name",data.name);

@@ -1,52 +1,52 @@
 package xmu.yunzhieducation.vo;
 
 public class WrongQuestionVo {
-    private String Heading;
-    private String A;
-    private String B;
-    private String C;
-    private String D;
+    private String heading;
+    private String a;
+    private String b;
+    private String c;
+    private String d;
     private char answer;
     private char wrong_answer;
 
     public String getHeading() {
-        return Heading;
+        return heading;
     }
 
     public void setHeading(String heading) {
-        Heading = heading;
+        this.heading = heading;
     }
 
     public String getA() {
-        return A;
+        return a;
     }
 
     public void setA(String a) {
-        A = a;
+        this.a = a;
     }
 
     public String getB() {
-        return B;
+        return b;
     }
 
     public void setB(String b) {
-        B = b;
+        this.b = b;
     }
 
     public String getC() {
-        return C;
+        return c;
     }
 
     public void setC(String c) {
-        C = c;
+        this.c = c;
     }
 
     public String getD() {
-        return D;
+        return d;
     }
 
     public void setD(String d) {
-        D = d;
+        this.d = d;
     }
 
     public char getAnswer() {
@@ -68,11 +68,11 @@ public class WrongQuestionVo {
     @Override
     public String toString() {
         return "WrongQuestionVo{" +
-                "Heading='" + Heading + '\'' +
-                ", A='" + A + '\'' +
-                ", B='" + B + '\'' +
-                ", C='" + C + '\'' +
-                ", D='" + D + '\'' +
+                "Heading='" + heading + '\'' +
+                ", A='" + a + '\'' +
+                ", B='" + b + '\'' +
+                ", C='" + c + '\'' +
+                ", D='" + d + '\'' +
                 ", answer='" + answer + '\'' +
                 ", wrong_answer='" + wrong_answer + '\'' +
                 '}';

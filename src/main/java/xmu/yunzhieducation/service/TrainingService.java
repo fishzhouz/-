@@ -9,7 +9,7 @@
 @Component
 public interface TrainingService {
     /**
-     * 获取当前用户下的所有实训
+     * 获取当前课程下的所有实训
      */
     public List<Trainging> GetTrainingByCourseId(BigInteger course_id);
 

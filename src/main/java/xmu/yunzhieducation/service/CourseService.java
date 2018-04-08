@@ -32,7 +32,7 @@ public interface CourseService {
     /**
      * 获取用户当前课程班级下的任务  /course/{class_id}/task GET
      */
-   List<TaskIdAndContentVo> getOwnTask(BigInteger class_id);
+   List<TaskIdAndContentVo> getOwnTask(BigInteger class_id,BigInteger user_id);
     /**
      * 获取用户当前课程下的错题 /course/{course_id}/error GET
      */

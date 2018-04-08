@@ -504,8 +504,9 @@ button {
 /*面板*/
 .myPanel{
 	width: 85%;
-	height: 400px;
+	height: 500px;
 	margin: 20px auto;
+	overflow-x:hidden;
 	border: #808080 solid 1px;
 	position: relative;
 	top: 75px;
@@ -593,18 +594,29 @@ button {
     margin: 10px auto;
 }
 .mystudyMissionP{
-	width: 90%;
-	height: 150px;
-	margin: 30px auto;
-	border: solid #000000 1px;
-}
+ 	width: 90%;
+ 	height: 150px;
+ 	margin: 30px auto;
+ }
+ .mystudyMissionPa{
+ 	width: 80%;
+ 	height: 150px;
+ 	margin: 30px auto;
+ 	overflow-x:hidden;
+ 	border: solid #000000 1px;
+ }
+ .mystudyMissionPe{
+ 	width: 65%;
+ 	height: 40px;
+ 	color: #3F51B5;
+ }
 #mystudyMission button{
 	width: 80px;
 	height: 25px;
 	background: none;
 	font-size: 16px;
 }
-#myStudyAllMission{
+.myStudyAllMission{
 	position: relative;
 	top: 10px;
 }
@@ -687,6 +699,7 @@ button {
 	width: 90%;
 	height: 200px;
 	margin: 0 auto;
+	margin-bottom:100px;
 }
 .teacher-point{
 	width: 80%;
@@ -698,7 +711,6 @@ button {
 	position: relative;
 	left: 50px;
 	top: -20px;
-	border: solid #000000 1px;
 }
 .teacher-date{
 	position: relative;
@@ -1005,6 +1017,7 @@ button {
 	width: 80%;
 	height: 680px;
 	margin: 100px auto;
+	overflow-x:hidden;
 	border: #BBBBBB solid 1px;
 	position: relative;
 	background: #F0F0F0;
