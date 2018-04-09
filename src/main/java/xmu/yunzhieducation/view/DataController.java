@@ -34,7 +34,7 @@ public class DataController {
 
     @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.OK)
-    @RequestMapping(value = "/ablility/{student_id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/ability/{student_id}",method = RequestMethod.GET)
     @ResponseBody
     public List<Ablity_file> getAbilityfileByStudentID(@PathVariable("student_id") BigInteger student_id){
         return dataService.getAbilityfileByStudentID(student_id);
@@ -44,7 +44,7 @@ public class DataController {
 
     @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.OK)
-    @RequestMapping(value = "/ablility/{course_id}/course",method = RequestMethod.GET)
+    @RequestMapping(value = "/ability/{course_id}/course",method = RequestMethod.GET)
     @ResponseBody
     public List<Ablity_file> getAbilityfileByCourseID(@PathVariable("course_id") BigInteger course_id){
         return dataService.getAbilityfileBycourseID(course_id);
@@ -53,7 +53,7 @@ public class DataController {
 
     @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.OK)
-    @RequestMapping(value = "/ablility/{course_id}/{student_id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/ability/{course_id}/{student_id}",method = RequestMethod.GET)
     @ResponseBody
     public Ablity_file getAbilityfileByCourseIDAndStudentID(@PathVariable("course_id") BigInteger course_id,@PathVariable("student_id")BigInteger student_id){
         return dataService.getAbilityfileBycourseIDAndStudentID(course_id,student_id);
@@ -63,7 +63,7 @@ public class DataController {
 
     @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.CREATED)
-    @RequestMapping(value = "/ablility/{course_id}/{student_id}",method = RequestMethod.POST)
+    @RequestMapping(value = "/ability/{course_id}/{student_id}",method = RequestMethod.POST)
     @ResponseBody
     public void insertAbilityfileByStudentID(@PathVariable("course_id")BigInteger course_id,@PathVariable("student_id")BigInteger student_id,@RequestBody String comment){
         Ablity_file ablity_file=new Ablity_file();

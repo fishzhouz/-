@@ -28,6 +28,7 @@ var userID=getCookie("userID");
         getMyTraining(userID);
         getMyMistake(userID);
         getMyCircle(userID);
+        getMyAbility(userID);
 		str="";
 		if(getCookie("identification")==1)
 		{str2="我的课程";}
@@ -257,6 +258,37 @@ var str="";
 	window.location.href="/student/circleComment";
 	}
 </script>
+<script>
+	function getMyAbility(id)
+	{
+		$.ajax({
+        type:"GET", //请求方式
+        url: "/ability/"+id,
+        async:false,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+        $.each(data,function(i,item){
+                 $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+item.course_id+"?user_id="+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data1){
+                str=str+"<div class=\"ability1\"><div class=\"class1\"><img class=\"classPicture\" src=\""+data1.course.picture+"\"><div class=\"classHeader\"><span class=\"classHeader\">"+data1.course.name+"</span></div></div><div class=\"teacher-point\"><p>老师：</p><span class=\"teacher-name\">"+data1.name+"</span>";
+	     }
+        });
+        str=str+"<p class=\"teacher-date\">时间：</p><span class=\"point-date\">"+item.time+"</span><div class=\"teacher-content\">"+item.comment+"</div></div></div>";
+			                          });
+	     $("#mystudyAbility").html(str);
+	     }
+        });
+	}
+</script>
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="/css/style.css" />
@@ -323,38 +355,6 @@ var str="";
 		    </div>
 
 		   <div id="mystudyAbility">
-		   	<div class="ability1">
-		   	<div class="class1">
-				<img class="classPicture" src="/img/logo.png">
-				<div class="classHeader">
-					<span class="classHeader">ffff</span>
-				</div>
-			</div>
-				<div class="teacher-point">
-					<p>老师：</p>
-					<span class="teacher-name">asdf</span>
-					<p class="teacher-date">时间：</p>
-					<span class="point-date">sdj</span>
-					<div class="teacher-content">
-					</div>
-				</div>
-		   	</div>
-			   <div class="ability1">
-				   <div class="class1">
-					   <img class="classPicture" src="/img/logo.png">
-					   <div class="classHeader">
-						   <span class="classHeader">ffff</span>
-					   </div>
-				   </div>
-				   <div class="teacher-point">
-					   <p>老师：</p>
-					   <span class="teacher-name">asdf</span>
-					   <p class="teacher-date">时间：</p>
-					   <span class="point-date">sdj</span>
-					   <div class="teacher-content">
-					   </div>
-				   </div>
-			   </div>
 		   </div>
 		</div>
         

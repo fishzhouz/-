@@ -710,20 +710,19 @@ button {
 .teacher-name{
 	position: relative;
 	left: 50px;
-	top: -20px;
+	top: -5px;
 }
 .teacher-date{
 	position: relative;
-	top: -20px;
-	left: -100px;
+	top: -5px;
+	left: -200px;
 	float: right;
 }
 .point-date{
 	position: relative;
-	top: -20px;
+	top: -5px;
 	left: -30px;
 	float: right;
-	border: solid #000000 1px;
 }
 .teacher-content{
 	width: 90%;
