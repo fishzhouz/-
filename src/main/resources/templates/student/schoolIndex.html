@@ -167,11 +167,15 @@ $.ajax({
 {
    setCookie("courseID",id1);
    setCookie("teacher_name",id);
-   setCookie("path",2);
    if(schoolID==getCookie("schoolID"))
-   window.location.href="/student/classContentTrue";
+   {window.location.href="/student/classContentTrue";
+    setCookie("road",2);
+    }
    else
+   {
+    setCookie("path",2);
    window.location.href="/student/classContent";
+   }
 }
 		 function goTeacher(id)
 {

@@ -2,6 +2,7 @@
  import org.springframework.stereotype.Component;
  import xmu.yunzhieducation.entity.Trainging;
  import xmu.yunzhieducation.entity.Student_training;
+ import xmu.yunzhieducation.vo.TraingingVo;
 
  import java.math.BigInteger;
  import java.util.List;
@@ -16,7 +17,7 @@ public interface TrainingService {
     /**
      * 查看实训具体内容
      */
-    public Trainging GetTrainingByTrainingId(BigInteger training_id);
+    public TraingingVo GetTrainingByTrainingId(BigInteger training_id,BigInteger user_id);
 
 
     /**

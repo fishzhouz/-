@@ -6,7 +6,12 @@
 <script src="/js/jquery.inview.min.js"></script>
 <script src="/js/cookie3.js"></script>
 <script>
+       var trainingID=getCookie("trainingID");
 		window.onload=function(){
+		document.getElementById('mystudyTraining2').style.display='block';
+        document.getElementById('mystudyTraining3').style.display='none';
+        getTopic(trainingID);
+        getTrain(trainingID);
 		str="";
 		if(getCookie("identification")==1)
 		{str2="我的课程";}
@@ -45,6 +50,108 @@
    window.location.href="/student/message";}
    }
 	</script>
+<script>
+	function getTopic(id)
+	{
+$.ajax({
+        type:"GET", //请求方式
+        url: "/topic1/2/"+id ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+        str=str+"<img src=\"/img/帖子.png\" class=\"img1\" /><button type=\"button\" id=\"card\" onclick=\"putTopic()\">发帖</button>";
+         $.each(data,function(i,item){
+        str=str+"<hr class=\"hr1\"><div class=\"box1\"><div class=\"circle\"><p class=\"circleNum\">"+item.no+"</p></div><a onclick=\"goTopic("+item.topic_id+",'"+item.heading+"','"+item.content+"','"+item.name+"')\" class=\"cicleTitle\">"+item.heading+"</a><div class=\"cicleContent\"><p>"+item.content+"</p></div><div class=\"date\"><p>"+item.time+"</p></div><a onclick=\"goComment("+item.topic_id+")\"><img src=\"/img/消息.png\" class=\"img2\"></a><div class=\"num\"><p>"+item.comment_num+"</p></div><div class=\"num1\"><p>帖子发起人:"+item.name+"</p></div></div>";
+			                          });
+		str=str+"<hr class=\"hr1\">";
+	     $("#mystudyTraining3").html(str);
+        }
+        });
+	}
+	function putTopic()
+	{
+	  setCookie("type",2);
+	  window.location.href="/student/circleToPut";
+	}
+	function goTopic(id,heading,content,name)
+	{
+	setCookie("is_operate",1);
+	setCookie("topicID",id);
+	setCookie("type",5);
+	window.location.href="/student/circleComment";
+	}
+	function goComment(id)
+	{
+	  setCookie("type",5);
+	  setCookie("topicID",id);
+      window.location.href="/student/circleToComment";
+	}
+	function goBack()
+	{
+	alert("返回我的学习");
+	window.location.href="/student/myStudy";
+	}
+</script>
+<script>
+	function getTrain(id)
+	{
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/training/"+id+"?user_id="+getCookie("userID") ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         str="";
+         str=str+"<span class=\"trainingTitle\">"+"实训介绍："+data.trainging.traing_introduction+"</span><p class=\"due-endp\">起止时间:</p><span class=\"due-end\">"+data.trainging.start_time+" - "+data.trainging.end_time+"</span><p>已有"+data.trainging.student_num+"人提交实训报告</p>";
+         if(data.is_upload==true)
+         {
+          $.ajax({
+        type:"GET", //请求方式
+        url: "/training/"+id+"/grade?user_id="+getCookie("userID") ,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data1){
+         str=str+"<p>你已提交实训报告！             实训分数:";
+         if(data1.score==null)
+         str=str+"老师未评分</p>";
+         else
+         str=str+data1.score+"分</p>";
+         str=str+"<textarea rows=\"8\" id=\"report\" cols=\"10\" class=\"edit\"  readonly=\"readonly\">"+data1.report+"</textarea>";
+        }
+        });
+         }
+         else
+          {
+          str=str+"<p>在线编写实训报告：</p><textarea rows=\"8\" id=\"report\" cols=\"10\" class=\"edit\"></textarea><button onclick=\"goUpload()\" type=\"submit\" id=\"trainingPut\">提交</button>";
+          }
+          $("#mystudyTraining2").html(str);
+        }
+        });
+	}
+	function goUpload()
+	{
+	var bind=document.getElementById("report").value;
+	$.ajax({
+        type:"POST", //请求方式
+        url: "/training/"+getCookie("trainingID")+"/upload?user_id="+getCookie("userID") ,
+        contentType : "application/json",
+        data:JSON.stringify(bind),
+        dataType: 'json',   //返回值类型
+        success:function(data){
+             alert("提交实训报告成功！");
+             window.location.href="/student/mytraining";
+        },
+        error:function(data){
+          alert(111);
+         }
+        });
+	}
+</script>
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -66,33 +173,11 @@
 		<div class="navigation">
 			<button type="button" id="myStudyMytraining" autofocus="autofocus">我的实训</button>
 			<button type="button" id="myStudytrainingCircle">实训交流圈</button>
+			<button type="button" onclick="goBack()" id="myStudytrainingCircle1">返回上页</button>
 		</div>
 		<div id="mystudyTraining2">
-		    <span class="trainingTitle">课程名称</span>
-		    <p class="due-endp">起止时间:</p>
-		    <span class="due-end">2018.01.21-2829.92.20</span>
-		    <p>请在这里选择实训报告</p>
-		    <p>在线编写实训报告：</p>
-		    <textarea  rows="8" cols="10" class="edit" ></textarea>
-		    <button type="submit" id="trainingPut">提交</button>
 	    </div>
 	    <div id="mystudyTraining3">
-	    	<div class="box1">
-				<div class="circle">
-				   <p class="circleNum">1</p>
-				</div>
-					<a href="circle comment.html" class="cicleTitle">帖子名称</a>
-				<div class="cicleContent">
-					<p>帖子内容</p>
-				</div>
-				<div class="date">
-					<p>2018-03-29</p>
-				</div>
-				<a href="circleToComment.html"><img src="/img/消息.png" class="img2"></a>
-				<div class="num">
-					<p>2938人</p>
-				</div>
-			</div>
 	    </div>
 		<!--页脚-->
 	    <div class="footer">

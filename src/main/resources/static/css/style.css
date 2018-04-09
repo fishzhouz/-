@@ -761,6 +761,11 @@ button {
 	left: 10px;
 	top: 5px;
 }
+#myStudytrainingCircle1{
+	position: relative;
+	left: 5px;
+	top: 5px;
+}
 #mystudyTraining2{
 	width: 90%;
 	height: 400px;
@@ -777,7 +782,7 @@ button {
 	top: 100px;
 }
 .trainingTitle{
-	border: solid #000000 1px;
+	color:#A52A2A;
 }
 .due-endp{
 	position: relative;

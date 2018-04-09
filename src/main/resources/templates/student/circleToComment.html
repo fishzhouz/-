@@ -8,7 +8,7 @@
 <script src="/js/cookie3.js"></script>
 <script>
 		window.onload=function(){
-		getInfo();
+		getInfo(getCookie("topicID"));
 		str="";
 		if(getCookie("identification")==1)
 		{str2="我的课程";}
@@ -48,10 +48,19 @@
    }
 	</script>
 <script>
-	function getInfo()
+	function getInfo(id)
 	{
-    $("#name").html("#"+getCookie("heading"));
-     $("#con").html("     "+getCookie("content"));
+			$.ajax({
+        type:"GET", //请求方式
+        url: "/topic/this/"+id ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         $("#name").html(data.heading);
+        $("#con").html("     "+data.content);
+        }
+        });
 	}
 	function putComment()
 	{

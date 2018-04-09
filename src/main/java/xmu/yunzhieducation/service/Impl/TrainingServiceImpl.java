@@ -11,6 +11,7 @@ import xmu.yunzhieducation.mapper.LoginMapper;
 import xmu.yunzhieducation.mapper.CourseMapper;
 
 import xmu.yunzhieducation.service.TrainingService;
+import xmu.yunzhieducation.vo.TraingingVo;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -30,9 +31,16 @@ public class TrainingServiceImpl implements TrainingService{
     }
 
     @Override
-    public Trainging GetTrainingByTrainingId(BigInteger training_id) {
+    public TraingingVo GetTrainingByTrainingId(BigInteger training_id,BigInteger user_id) {
+        TraingingVo traingingVo=new TraingingVo();
         Trainging train=trainingMapper.listTrainingByTrainingId(training_id);
-        return train;
+        traingingVo.setTrainging(train);
+        Student_training student_training=trainingMapper.listStudentTrainingByStudentIdAndTrainingId(user_id,training_id);
+        if(student_training==null)
+            traingingVo.setIs_upload(false);
+        else
+            traingingVo.setIs_upload(true);
+        return traingingVo;
     }
 
     @Override

@@ -171,7 +171,7 @@ $.ajax({
         dataType: 'json',   //返回值类型
         success:function(data1){
         $.each(data1,function(i1,item1){
-               str=str+"<div class=\"mystudyMissionPe\">"+"实训"+(i1+1)+"   "+item1.traing_introduction+"</div>";
+               str=str+"<div onclick=\"goTraining("+item1.id+")\" class=\"mystudyMissionPe\">"+"实训"+(i1+1)+"   "+item1.traing_introduction+"</div>";
 			           });
 	           }
               });
@@ -180,6 +180,11 @@ $.ajax({
         $("#tr").html(str);
 	    }
 	    });
+	}
+	function goTraining(id)
+	{
+	setCookie("trainingID",id);
+	window.location.href="/student/mytraining";
 	}
 </script>
 <script>

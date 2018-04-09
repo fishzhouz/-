@@ -103,11 +103,12 @@ var teacherName;
 {
    setCookie("courseID",id);
    setCookie("teacher_name",teacherName);
-   setCookie("path",3);
    if(getCookie("schoolID_temp")==getCookie("schoolID"))
-   window.location.href="/student/classContentTrue";
+   {window.location.href="/student/classContentTrue";
+    setCookie("road",3);}
    else
-   window.location.href="/student/classContent";
+   {window.location.href="/student/classContent";
+    setCookie("path",3);}
 }
 function goBack()
 {
