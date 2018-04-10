@@ -129,11 +129,11 @@ $.ajax({
         dataType: 'json',   //返回值类型
         success:function(data1){
         $.each(data1,function(i1,item1){
-               str=str+"<div class=\"mystudyMissionPe\">"+item1.content+"</div>";
+               str=str+"<div onclick=\"goTask("+item1.task_id+",'"+item1.is_finished+"')\" class=\"mystudyMissionPe\">"+item1.content+"</div>";
                if(item1.is_finished==false)
-               str1=str1+"<div class=\"mystudyMissionPe\">"+item1.content+"</div>";
+               str1=str1+"<div onclick=\"goTask("+item1.task_id+",'"+item1.is_finished+"')\" class=\"mystudyMissionPe\">"+item1.content+"</div>";
                if(item1.is_finished==true)
-               str2=str2+"<div class=\"mystudyMissionPe\">"+item1.content+"</div>";
+               str2=str2+"<div onclick=\"goTask("+item1.task_id+",'"+item1.is_finished+"')\" class=\"mystudyMissionPe\">"+item1.content+"</div>";
 			           });
 	           }
               });
@@ -146,6 +146,17 @@ $.ajax({
 	    $("#end1").html(str2);
 	    }
 	    });
+	}
+	function goTask(id,id1)
+	{
+    alert("进入任务中...");
+	setCookie("taskID",id);
+	setCookie("house",2);
+	if(id1=="false")
+	setCookie("is_finished",0);
+	else if(id1=="true")
+	setCookie("is_finished",1);
+	window.location.href="/student/task";
 	}
 </script>
 <script>

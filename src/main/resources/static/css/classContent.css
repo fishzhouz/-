@@ -334,10 +334,23 @@ button {
 }
 
 .menuContent{
-	width: 100px;
+	width: 500px;
 	height: 30px;
+	color:#00AA55;
+	margin_bottom:10px;
 }
-
+.topicContent{
+	width: 500px;
+	height: 30px;
+	color:#5555FF;
+	margin_bottom:10px;
+}
+.dd{
+    position: relative;
+    top: -45px;
+	left:80px;
+	color:#00BBFF;
+}
 /*帖子面板*/
 .panel1 {
 	width: 800px;

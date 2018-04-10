@@ -8,6 +8,7 @@
 <script src="/js/cookie3.js"></script>
 <script>
         var sum=0;
+        var classID;
         var is_choose;
         var courseID=getCookie("courseID");
 		window.onload=function(){
@@ -59,8 +60,6 @@ $.ajax({
         is_choose=data.is_choose;
         if(data.is_choose==false)
         {
-        $("#open_btn").html("立即加入");
-        document.getElementById("open_btn").disabled="false";
         $("#fg").html();
 		$("#menu").html("<p>目录</p><span class=\"menuContent\">还未选课，不能加载目录</span>");
 		$.ajax({
@@ -84,7 +83,51 @@ $.ajax({
         {
         $("#open_btn").html("已加入课程");
         document.getElementById("open_btn").disabled="true";
-        $("#fg").html("<button type=\"button\" id=\"open_btn1\">退课</button>");
+        $("#fg").html("<button onclick=\"tui()\" type=\"button\" id=\"open_btn1\">退课</button>");
+        var str="";
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/course/class/"+id+"?user_id="+getCookie("userID") ,
+        async:false,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        classID=data.class_id;
+        str=str+"<p>"+"你已加入"+data.name+"     课程目录</p>";
+        }
+        });
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+classID+"/period?user_id="+getCookie("userID") ,
+        async:false,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         $.each(data,function(i,item){
+        str=str+"<div class=\"menuContent\">"+">>>第"+(i+1)+"课时:"+item.knowledge_point+"</div>";
+        if(item.ppt!=null)
+        str=str+"<div onclick=\"goD('"+item.knowledge_point+"','"+item.ppt+"')\" class=\"topicContent\"><img class=\"img-logo\" src=\"/teacher/img/folder.png\"/><div class=\"dd\"><p>课件</p></div></div>";
+        if(item.video!=null)
+        str=str+"<div onclick=\"goD('"+item.knowledge_point+"','"+item.video+"')\"  class=\"topicContent\"><img class=\"img-logo\" src=\"/teacher/img/folder.png\"/><div class=\"dd\"><p>视频</p></div></div>";
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/period/"+item.id+"/task?user_id="+getCookie("userID") ,
+        async:false,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        $.each(data,function(i1,item1){
+                str=str+"<div onclick=\"goTest("+item1.task_id+",'"+item1.is_finished+"')\" class=\"topicContent\"><img class=\"img-logo\" src=\"/teacher/img/folder.png\"/><div class=\"dd\"><p>"+item1.content+"</p></div></div>";
+        });
+        }
+             });
+        });
+        }
+        });
+        $("#menu").html(str);
         }
         str=" ";
         str=str+"<p>"+">>>>教学进度：  "+data.course.teaching_progress+"</p>";
@@ -96,6 +139,38 @@ $.ajax({
         $("#content").html(str);
         }
         });
+	}
+	function goTest(id,id1)
+	{
+	alert("进入任务中...");
+	setCookie("taskID",id);
+	setCookie("house",1);
+	if(id1=="false")
+	setCookie("is_finished",0);
+	else if(id1=="true")
+	setCookie("is_finished",1);
+	window.location.href="/student/task";
+	}
+	function tui()
+	{
+	    $.ajax({
+        type:"DELETE", //请求方式
+        url: "/course/"+classID+"/drop?user_id="+getCookie("userID") ,
+        async:false,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        alert("你已退出该课程！");
+        window.location.href="/student/classContentTrue";
+        }
+        });
+	}
+	function goD(id,id1)
+	{
+	setCookie("display",id1);
+	setCookie("content",id);
+	window.location.href="/student/classDetails";
 	}
 </script>
 <script>

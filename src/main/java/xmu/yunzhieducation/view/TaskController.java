@@ -43,25 +43,9 @@ public class TaskController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/task/{task_id}/info",method = RequestMethod.GET)
     @ResponseBody
-    public Task2Vo getTaskInfo(@PathVariable("task_id")BigInteger task_id){
-        Task2Vo task2Vo =new Task2Vo();
+    public Task getTaskInfo(@PathVariable("task_id")BigInteger task_id){
         Task task=taskService.getTaskInfo(task_id);
-        task2Vo.setId(task.getId());
-        task2Vo.setName(task.getName());
-        task2Vo.setEnd_time(task.getEnd_time());
-        task2Vo.setInformation(task.getInformation());
-        task2Vo.setPeriod_id(task.getPeriod_id());
-        task2Vo.setStart_time(task.getStart_time());
-        task2Vo.setType(task.getType());
-        task2Vo.setWord_file(task.getWord_file());
-        List<Question> questions=taskService.getQuestionBytaskID(task_id);
-        for(int i=0;i<questions.size();i++)
-            if(!(questions.get(i).getAnswer()>='A'&&questions.get(i).getAnswer()<='D')){
-                task2Vo.setIs_finished(1);
-                return task2Vo;
-            }
-        task2Vo.setIs_finished(0);
-        return task2Vo;
+        return task;
     }
 
 

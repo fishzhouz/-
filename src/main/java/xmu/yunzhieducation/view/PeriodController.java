@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import xmu.yunzhieducation.entity.Period;
+import xmu.yunzhieducation.entity.Task;
 import xmu.yunzhieducation.service.PeriodService;
 
 import java.math.BigInteger;
@@ -23,8 +24,6 @@ public class PeriodController {
     public Period getPeriod(@PathVariable("period_id") BigInteger period_id){
         return periodService.getPeriod(period_id);
     }
-
-
 
 
     @JsonIgnoreProperties

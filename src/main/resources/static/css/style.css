@@ -1004,6 +1004,31 @@ button {
 	top:10px;
 	left:600px;
 }
+#kk{
+    width: 100px;
+	height: 30px;
+	top:10px;
+	left:600px;
+}
+
+.testButton{
+    width: 100px;
+	height: 30px;
+	top:350px;
+	left:800px;
+}
+#backButton{
+    width: 100px;
+	height: 30px;
+	top:350px;
+	left:950px;
+}
+#info{
+    width: 450px;
+	height: 150px;
+	margin-top:20px;
+	border:1px solid #BBBBBB;
+}
 .mesBox1 button:hover,button:focus{
 	background: #B9E3D9;
 	border:1px solid #BBBBBB;
@@ -1026,6 +1051,16 @@ button {
 	position: relative;
 	background: #F0F0F0;
 }
+.taskPanel{
+	width: 60%;
+	height: 400px;
+	margin-top: 100px;
+	margin-left: 200px;
+	overflow-x:hidden;
+	border: #BBBBBB solid 1px;
+	position: relative;
+	background: #F0F0F0;
+}
 /*课程题目*/
 .deTitle{
 	font-family: "微软雅黑";
@@ -1035,8 +1070,18 @@ button {
     left: 50px;
 }
 /*视频*/
-.deVideo{
-	width: 400px;
+.deVideo{“
+	width: 900px;
+	height: 500px;
+	border: #BBBBBB solid 1px;
+	position: relative;
+	top: 30px;
+	left: 50px;
+	background: white;
+}
+/*视频*/
+.de{
+	width: 600px;
 	height: 250px;
 	border: #BBBBBB solid 1px;
 	position: relative;
@@ -1099,6 +1144,7 @@ button {
 	margin: 0 auto;
 	background: #F0F0F0;
 	position: relative;
+	overflow-x:hidden;
 	top: 90px;
 }
 .finshtitle{
@@ -1111,7 +1157,7 @@ button {
 }
 .test{
 	width: 80%;
-	height: 580px;
+	height: 100px;
 	background: #FFFFFF;
 	margin: 0 auto;
 	border: #BBBBBB solid 1px;
@@ -1124,26 +1170,34 @@ button {
 	height:20px;
 	position: relative;
 	top: 35px;
-	left: -120px;
+	left: -110px;
 }
 .A{
 	position: relative;
 	top: 30px;
-	left: -115px;
+	left: -105px;
 }
 #finish{
-	width: 80px;
+	width: 120px;
 	height: 40px;
 	float: right;
 	position: relative;
-	left:-60px;
+	left:-30px;
 	top: 30px;
+	background: #FFFFFF;
+}
+#go{
+	width: 120px;
+	height: 40px;
+	float: right;
+	position: relative;
+	left:90px;
+	top: 100px;
 	background: #FFFFFF;
 }
 .testTitle{
 	width: 90%;
 	height: 40px;
-	border: solid #000000 1px;
 	position: relative;
 	left: 20px;
 }

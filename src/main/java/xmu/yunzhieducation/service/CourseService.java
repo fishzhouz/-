@@ -2,6 +2,7 @@ package xmu.yunzhieducation.service;
 import org.springframework.stereotype.Component;
 import xmu.yunzhieducation.entity.Class1;
 import xmu.yunzhieducation.entity.Course;
+import xmu.yunzhieducation.entity.Period;
 import xmu.yunzhieducation.vo.*;
 
 import java.math.BigInteger;
@@ -21,6 +22,7 @@ public interface CourseService {
      * 查看某门课程的课程信息   /course/{course_id} GET
      */
     CourseInfoVo getCourseInfo(BigInteger user_id, BigInteger course_id);
+    ClassVo  getMyClassInCourse(BigInteger user_id, BigInteger course_id);
     /**
      * 用户选课,选课后班级人数加一    /course/{class_id}/choose POST
      */
@@ -28,11 +30,12 @@ public interface CourseService {
     /**
      * 获取用户当前课程班级下的课时  /course/{class_id}/period  GET
      */
-    List<PeriodInfoVo> getOwnPeriod(BigInteger class_id, BigInteger user_id);
+    List<Period> getOwnPeriod(BigInteger class_id, BigInteger user_id);
     /**
      * 获取用户当前课程班级下的任务  /course/{class_id}/task GET
      */
    List<TaskIdAndContentVo> getOwnTask(BigInteger class_id,BigInteger user_id);
+   List<TaskIdAndContentVo> getTask(BigInteger period_id,BigInteger user_id);
     /**
      * 获取用户当前课程下的错题 /course/{course_id}/error GET
      */

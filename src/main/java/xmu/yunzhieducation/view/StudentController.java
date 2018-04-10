@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentController {
     @RequestMapping(value="/index")
     public String index() { return "student/index"; }
+    @RequestMapping(value="/task")
+    public String task() { return "student/task"; }
 
     @RequestMapping(value="/alumniCircle")
     public String alumniCircle() { return "student/alumniCircle"; }

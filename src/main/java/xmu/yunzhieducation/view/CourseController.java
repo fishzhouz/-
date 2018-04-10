@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import xmu.yunzhieducation.entity.Class1;
 import xmu.yunzhieducation.entity.Course;
+import xmu.yunzhieducation.entity.Period;
 import xmu.yunzhieducation.service.Impl.CourseServiceImpl;
 import xmu.yunzhieducation.vo.*;
 
@@ -38,11 +39,17 @@ public class CourseController {
     {
         return courseServiceImpl.getCourseInfo(user_id,course_id);
     }
-
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value="/course/class/{course_id}",method = RequestMethod.GET)
+    @ResponseBody
+    public ClassVo getClassInfo(@RequestParam(value="user_id") BigInteger user_id, @PathVariable("course_id") BigInteger course_id)
+    {
+        return courseServiceImpl.getMyClassInCourse(user_id,course_id);
+    }
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/course/{class_id}/period",method = RequestMethod.GET)
     @ResponseBody
-    public List<PeriodInfoVo> getOwnPeriod(@PathVariable("class_id") BigInteger class_id,@RequestParam(value="user_id") BigInteger user_id)
+    public List<Period> getOwnPeriod(@PathVariable("class_id") BigInteger class_id, @RequestParam(value="user_id") BigInteger user_id)
     {
         return courseServiceImpl.getOwnPeriod(class_id,user_id);
     }
@@ -54,7 +61,13 @@ public class CourseController {
     {
         return courseServiceImpl.getOwnTask(class_id,user_id);
     }
-
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value="/period/{period_id}/task",method = RequestMethod.GET)
+    @ResponseBody
+    public List<TaskIdAndContentVo> getTask(@PathVariable("period_id") BigInteger period_id,@RequestParam(value="user_id") BigInteger user_id)
+    {
+        return courseServiceImpl.getTask(period_id,user_id);
+    }
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/course/{course_id}/error",method = RequestMethod.GET)
     @ResponseBody

@@ -75,6 +75,25 @@ public class CourseServiceImpl implements CourseService{
         return courseVos;
     }
     @Override
+    public ClassVo getMyClassInCourse(BigInteger user_id, BigInteger course_id)
+    {
+        ClassVo classVo=new ClassVo();
+        List<Class1> class1s=courseMapper.selectClassByCourseID(course_id);
+        List<Class_student> class_students=courseMapper.selectClassstudentByStudentID(user_id);
+        for(Class_student c:class_students)
+        {
+            for(Class1 class1:class1s)
+            {
+                if(class1.getId()==c.getClass_id())
+                {
+                    classVo.setClass_id(c.getClass_id());
+                    classVo.setName(class1.getClass_name());
+                }
+            }
+        }
+        return classVo;
+    }
+    @Override
     public CourseInfoVo getCourseInfo(BigInteger user_id,BigInteger course_id)
     {
         CourseInfoVo courseInfoVo=new CourseInfoVo();
@@ -116,27 +135,10 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public List<PeriodInfoVo> getOwnPeriod(BigInteger class_id, BigInteger user_id)
+    public List<Period> getOwnPeriod(BigInteger class_id, BigInteger user_id)
     {
-        List<PeriodInfoVo> periodInfoVos =new ArrayList<PeriodInfoVo>();
         List<Period> periods=periodMapper.selectPeriodByClassID(class_id);
-        Integer index=1;
-        for(Period p:periods)
-        {
-            PeriodInfoVo periodInfoVo =new PeriodInfoVo();
-            periodInfoVo.setPeriod_id(p.getId());
-            periodInfoVo.setContent("第"+index+"课时  "+p.getKnowledge_point());
-            index+=1;
-            Student_period s=dateMapper.listStudentPeriodByPeriodIdAndStudentId(p.getId(),user_id);
-            if(s==null){
-                periodInfoVo.setIs_click(false);
-            }
-            else{
-                periodInfoVo.setIs_click(true);
-            }
-            periodInfoVos.add(periodInfoVo);
-        }
-        return periodInfoVos;
+        return periods;
     }
 
     @Override
@@ -166,7 +168,29 @@ public class CourseServiceImpl implements CourseService{
         }
         return taskIdAndContentVos;
     }
-
+    @Override
+    public List<TaskIdAndContentVo> getTask(BigInteger period_id,BigInteger user_id)
+    {
+        List<TaskIdAndContentVo> taskIdAndContentVos=new ArrayList<>();
+        Integer index=1;
+        List<Task> tasks=taskMapper.selectTaskByperiodID(period_id);
+        for(Task t:tasks){
+            TaskIdAndContentVo taskIdAndContentVo =new TaskIdAndContentVo();
+            taskIdAndContentVo.setTask_id(t.getId());
+            taskIdAndContentVo.setContent("课时任务"+index+"  "+t.getName());
+            Student_task s=taskMapper.selectStudenttaskByID(user_id,t.getId());
+            if(s==null)
+            {
+                    taskIdAndContentVo.setIs_finished(false); }
+                else
+                {
+                    taskIdAndContentVo.setIs_finished(true);
+                }
+                index+=1;
+                taskIdAndContentVos.add(taskIdAndContentVo);
+            }
+        return taskIdAndContentVos;
+    }
     @Override
     public List<WrongQuestionVo> getOwnWrongQuestion(BigInteger user_id,BigInteger course_id)
     {

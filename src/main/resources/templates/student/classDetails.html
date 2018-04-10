@@ -1,4 +1,58 @@
 <!DOCTYPE html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+<script>
+		window.onload=function(){
+		$("#name").html("#课时："+getCookie("content"));
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+     function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
+<script>
+	function goBack()
+	{
+	alert("返回课程");
+	window.location.href="/student/classContentTrue";
+	}
+</script>
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -8,46 +62,19 @@
 	<body>
 <div class="container">
 		<!--顶部标题栏-->
-		<div class="header">
-			<img class="img-logo" src="/img/logo.png" />
-			<img class="head" src="/img/字体设计.png" />
-		        <a  href="myStudy.html" class="nav1">我的学习</a>
-		        <a href="message.html" class="nav2">消息</a>
-		        <a href="login.html" class="nav3">登录/注册</a>
-            <img id="icon" src="/img/头像.png" />
+		<div class="header" id="header">
 		</div>
 	    <!--面板-->
 	    <div class="classPanel">
 	    	<!--课程题目-->
 	    	<div class="deTitle">
-	    		<h2>课程题目</h2>
-	    		<p>讲师：某某某</p>
+	    		<h2 id="name"></h2>
+	    		<p>视频/课件展示</p>
+				<button id="kk" onclick="goBack()">返回课程</button>
 	    	</div>
 	    	<!--视频播放区-->
 	    	<div class="deVideo">
 	    		
-	    	</div>
-	    	<!--知识点介绍-->
-	    	<div class="deKnowledge">
-	    		<p>课程要掌握的知识点等</p>
-	    		<!--要求掌握的知识点-->
-	    		<div id="deknowledgeT">
-	    			<p>1.知识点1g</p>
-	    		</div>
-	    	</div>
-	    	<!--实训任务-->
-	    	<div class="deTraining">
-	    		<p>实训任务 </p>
-	    		<div id="deTrainingT">
-	    			<p>1.实训任务1</p>
-	    		</div>
-	    	</div>
-	    	<!--任务列表-->
-	    	<div class="deMission">
-	    		<p>任务</p>
-	    		<div id="deMissionT">
-	    			<p>1.任务1</p>
-	    		</div>
 	    	</div>
 	    </div>
 	    <!--页脚-->
