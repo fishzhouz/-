@@ -2,6 +2,7 @@ package xmu.yunzhieducation.service;
 
 import org.springframework.stereotype.Component;
 import xmu.yunzhieducation.entity.Question;
+import xmu.yunzhieducation.entity.Student_question;
 import xmu.yunzhieducation.entity.Task;
 
 import java.math.BigInteger;
@@ -32,7 +33,7 @@ public interface TaskService {
     /*
     答题，并将答案上传
      */
-    public void insertStudentQuestion(BigInteger question_id,char answer,BigInteger user_id);
+    public void insertStudentQuestion(Student_question student_question);
     /*
     删除任务
      */

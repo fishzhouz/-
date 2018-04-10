@@ -44,7 +44,11 @@ function goSchool(id)
    if(userID==null){alert("请先登录!");}
    else
    {
-   window.location.href="/student/myStudy";}
+   if(getCookie("identification")==1)
+   window.location.href="/student/classj";
+   if(getCookie("identification")==2)
+   window.location.href="/student/myStudy";
+   }
    }
       function joinMessage()
    {

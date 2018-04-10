@@ -69,10 +69,24 @@ var taskID=getCookie("taskID");
         $("#info").html("任务介绍：  "+data.information);
         start_time=new Date(data.start_time);
         end_time=new Date(data.end_time);
-        if(getCookie("is_finished")==0)
-        $("#question").html("<button class=\"testButton\" onclick=\"start1()\">开始答题</button>");
-        else  if(getCookie("is_finished")==1)
-        $("#question").html("<button class=\"testButton\" onclick=\"start2()\">查看答题</button>");
+        	$.ajax({
+        type:"GET", //请求方式
+        url: "/task/"+id+"/judge?user_id="+getCookie("userID"),
+        async:false,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        if(data==false)
+        {$("#question").html("<button class=\"testButton\" onclick=\"start1()\">开始答题</button>");
+        setCookie("nlk",0);
+        }
+        else  if(data==true)
+        {$("#question").html("<button class=\"testButton\" onclick=\"start2()\">查看答题</button>");
+        setCookie("nlk",1);
+        }
+        }
+        });
         }
         });
 	}

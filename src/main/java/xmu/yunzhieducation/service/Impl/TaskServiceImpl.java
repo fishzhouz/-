@@ -79,21 +79,14 @@ public class TaskServiceImpl implements TaskService{
     答题，并将答案上传
      */
     @Override
-    public void insertStudentQuestion(BigInteger question_id,char answer,BigInteger user_id){
+    public void insertStudentQuestion(Student_question student_question){
 
-        Question question=taskMapper.selectQuestionByquestionID(question_id);
-        Student_question student_question=new Student_question();
+        Question question=taskMapper.selectQuestionByquestionID(student_question.getQuestion_id());
         Task task=taskMapper.selectTaskBytaskID(question.getTask_id());
         Period period=periodMapper.selectPeriodByPeriodID(task.getPeriod_id());
         Class1 class1=courseMapper.selectCourseIDByClassID(period.getClass_id());
 
         student_question.setCourse_id(class1.getCourse_id());
-        student_question.setOwn_answer(answer);
-        student_question.setQuestion_id(question_id);
-        student_question.setUser_id(user_id);
-        if(answer==question.getAnswer())student_question.setIs_true(1);
-        else student_question.setIs_true(0);
-
         taskMapper.insertStudentquestionBycourseID(student_question);
     }
 

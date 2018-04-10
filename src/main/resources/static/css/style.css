@@ -1155,6 +1155,14 @@ button {
 	left: 30px;
 	top: 30px;
 }
+.fi{
+	border: solid #000000 1px;
+	font-weight: bold;
+	font-size: 40px;
+	position: relative;
+	left: 80px;
+	top: 30px;
+}
 .test{
 	width: 80%;
 	height: 100px;
@@ -1169,13 +1177,17 @@ button {
 	width: 20px;
 	height:20px;
 	position: relative;
-	top: 35px;
-	left: -110px;
+	top: 5px;
+	left: 30px;
 }
 .A{
-	position: relative;
-	top: 30px;
-	left: -105px;
+     position: relative;
+	top: 0px;
+	left: 35px;
+	margin-right:10px;
+}
+.as{
+height=50px;
 }
 #finish{
 	width: 120px;
@@ -1207,5 +1219,14 @@ button {
 	width:100%;
 	height:200px;
 	margin-top: 100px;
+}
+
+.red{
+margin-left:20px;
+color:#FF3333 ;
+}
+.green{
+margin-left:20px;
+color:#00DD00;
 }
 

@@ -6,11 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import xmu.yunzhieducation.entity.Question;
+import xmu.yunzhieducation.entity.Student_question;
+import xmu.yunzhieducation.entity.Student_task;
 import xmu.yunzhieducation.entity.Task;
+import xmu.yunzhieducation.mapper.TaskMapper;
 import xmu.yunzhieducation.service.TaskService;
 import xmu.yunzhieducation.vo.Task2Vo;
+import xmu.yunzhieducation.vo.WrongQuestionVo;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,7 +27,8 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-
+@Autowired
+private TaskMapper taskMapper;
 
 
 
@@ -63,21 +69,56 @@ public class TaskController {
     }
 
 
+    @JsonIgnoreProperties
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value = "/task/{task_id}/judge",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean taskID(@PathVariable("task_id")BigInteger task_id,@RequestParam(value="user_id") BigInteger user_id){
+        Student_task student_task=taskMapper.selectStudenttaskByID(user_id,task_id);
+        if(student_task==null)
+            return false;
+        else
+            return true;
+    }
 
-
-
+    @JsonIgnoreProperties
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value = "/task/{task_id}/own",method = RequestMethod.GET)
+    @ResponseBody
+    public List<WrongQuestionVo> getStudentQuestionByID(@PathVariable("task_id")BigInteger task_id, @RequestParam(value="user_id") BigInteger user_id){
+        List<WrongQuestionVo> wrongQuestionVos=new ArrayList<>();
+        List<Question> questions=taskMapper.selectQuestionBytaskID(task_id);
+        for(Question q:questions) {
+            WrongQuestionVo wrongQuestionVo=new WrongQuestionVo();
+            wrongQuestionVo.setA(q.getA());
+            wrongQuestionVo.setB(q.getB());
+            wrongQuestionVo.setC(q.getC());
+            wrongQuestionVo.setD(q.getD());
+            wrongQuestionVo.setHeading(q.getHeading());
+            wrongQuestionVo.setAnswer(q.getAnswer());
+            wrongQuestionVo.setWrong_answer(taskMapper.selectStudentquestionByquestionID(user_id,q.getId()).getOwn_answer());
+            wrongQuestionVos.add(wrongQuestionVo);
+        }
+        return wrongQuestionVos;
+    }
 
 
 
     @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.CREATED)
-    @RequestMapping(value = "/task/{question_id}/{answer}",method = RequestMethod.POST)
+    @RequestMapping(value = "/task/answer",method = RequestMethod.POST)
     @ResponseBody
-    public void insertStudentQuestion(@PathVariable("question_id")BigInteger question_id,@PathVariable("answer")char answer,@RequestParam(value = "user_id") BigInteger user_id){
-        taskService.insertStudentQuestion(question_id,answer,user_id);
+    public void insertStudentQuestion(@RequestBody Student_question student_question){
+        taskService.insertStudentQuestion(student_question);
     }
 
-
+    @JsonIgnoreProperties
+    @ResponseStatus(value= HttpStatus.CREATED)
+    @RequestMapping(value = "/task/answer2",method = RequestMethod.POST)
+    @ResponseBody
+    public void insertStudentTask(@RequestBody Student_task student_task){
+        taskMapper.insertStudenttaskByID(student_task);
+    }
 
 
 
