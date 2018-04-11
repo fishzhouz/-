@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+<script>
+var userID=getCookie("userID");
+		window.onload=function(){
+		document.getElementById('tr').style.display='none';
+         document.getElementById('ab').style.display='none';
+         document.getElementById('co').style.display='block';
+         getMyClass(userID);
+         getMyTraining(userID);
+         getMyAbility(userID);
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+     function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+    if(getCookie("identification")==1)
+   window.location.href="/student/teacherClass";
+   if(getCookie("identification")==2)
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
+<script>
+	function getMyClass(id)
+	{
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/course/teacher?user_id="+id,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+        $.each(data,function(i,item){
+          str=str+"<div onclick=\"goClass("+item.course_id+",'"+item.teacher_name+"')\" class=\"class1\"><img class=\"classPicture\" src=\""+item.picture+"\"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"> <span class=\"subHeader\">"+item.teacher_name+"</span></div></div>";
+			                          });
+	     $("#co").html(str);
+	     }
+        });
+	}
+	function goClass(id,id1)
+	{
+	setCookie("courseID",id);
+	setCookie("teacher_name",id1);
+    alert(id);
+	}
+</script>
+<script>
+	function getMyTraining(id)
+	{
+	var str="";
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/course/teacher?user_id="+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        $.each(data,function(i,item){
+        str=str+"<div class=\"mystudyMissionP\"><div class=\"class1\"><img class=\"classPicture\" src=\""+item.picture+"\"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></div><div class=\"mystudyMissionPa\">";
+    $.ajax({
+        type:"GET", //请求方式
+        url: "/training/course/"+item.course_id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data1){
+        sum=0;
+        $.each(data1,function(i1,item1){
+        sum=sum+1;
+               str=str+"<div onclick=\"goTraining("+item1.id+")\" class=\"mystudyMissionPe\">"+"实训"+(i1+1)+"   "+item1.traing_introduction+"</div>";
+			           });
+			       if(sum==0)
+        str=str+"<div class=\"mystudyMissionPe\">"+"还没有实训发布哦~"+"</div>";
+	           }
+              });
+        str=str+"</div></div>";
+        });
+        $("#tr").html(str);
+	    }
+	    });
+	}
+		function goTraining(id)
+	{
+	setCookie("trainingID",id);
+	alert(id);
+	}
+</script>
+<script>
+	function getMyAbility(id)
+	{
+	var str="";
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/course/teacher?user_id="+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        $.each(data,function(i,item){
+        str=str+"<div class=\"mystudyMissionP\"><div class=\"class1\"><img class=\"classPicture\" src=\""+item.picture+"\"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></div><div class=\"mystudyMissionPa\">";
+    $.ajax({
+        type:"GET", //请求方式
+        url: "/data/courseStudent/"+item.course_id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data1){
+        str=str+"<div class=\"mystudyMissionPe\">"+"课程学生："+"</div>";
+        sum=0;
+        $.each(data1,function(i1,item1){
+        sum=sum+1;
+               str=str+"<div onclick=\"goAbility("+item1.id+")\" class=\"mystudyMissionPe\">"+"*******学生："+item1.name+"</div>";
+			           });
+			     if(sum==0)
+        str=str+"<div class=\"mystudyMissionPe\">"+"还没有学生选课哦~"+"</div>";
+	           }
+              });
+        str=str+"</div></div>";
+        });
+        $("#ab").html(str);
+	    }
+	    });
+	}
+		function goAbility(id)
+	{
+	setCookie("studentID",id);
+	alert(id);
+	}
+</script>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/teacher/css/style.css" />
+		<title>我的课程</title>
+	</head>
+	<body>
+	<div class="container">
+		<!--顶部标题栏-->
+		<div class="header" id="header">
+		</div>
+		<!--课程推荐-->
+		<div class="navigation">
+			<span class="allClass" id="courseManage">课程管理</span>
+			<span class="latestClass" id="training">综合实训</span>
+			<span class="latestClass" id="ability">能力档案</span>
+			<button type="button" id="startClass">新建课程</button>
+		</div>
+		<!--课程列表第一行-->
+		<div id="classViewPanel1">
+			<div id="co"></div>
+			<div id="tr"></div>
+			<div id="ab"></div>
+	 </div>
+		 <!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+			</div>	
+	    </div>
+	</div>
+	<script>
+		var btn1 = document.getElementById("courseManage");
+        btn1.onclick =function(){
+        document.getElementById('tr').style.display='none';
+            document.getElementById('ab').style.display='none';
+            document.getElementById('co').style.display='block';
+        }
+        var btn2=document.getElementById("training");
+        btn2.onclick=function(){
+        document.getElementById('co').style.display='none';
+        	document.getElementById('ab').style.display='none';
+        	document.getElementById('tr').style.display='block';
+        }
+        var btn3=document.getElementById("ability");
+        btn3.onclick=function(){
+        document.getElementById('co').style.display='none';
+        	document.getElementById('tr').style.display='none';
+        	document.getElementById('ab').style.display='block';
+        }
+</script>
+	</body>
+</html>

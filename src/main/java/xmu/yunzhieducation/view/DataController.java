@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import xmu.yunzhieducation.entity.Ablity_file;
+import xmu.yunzhieducation.entity.Class1;
 import xmu.yunzhieducation.entity.Student_training;
 import xmu.yunzhieducation.entity.User;
+import xmu.yunzhieducation.mapper.CourseMapper;
 import xmu.yunzhieducation.service.DataService;
 import xmu.yunzhieducation.vo.ParticipationVo;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +24,8 @@ public class DataController {
 
     @Autowired
     private DataService dataService;
+    @Autowired
+    private CourseMapper courseMapper;
 
     @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.OK)
@@ -82,7 +87,19 @@ public class DataController {
     public List<User> getAllStudentByClassID(@PathVariable("class_id") BigInteger class_id){
         return dataService.getAllStudentByClassID(class_id);
     }
-
+    @JsonIgnoreProperties
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value = "/data/courseStudent/{course_id}",method = RequestMethod.GET)
+    @ResponseBody
+    public List<User> getAllStudentByCourseID(@PathVariable("course_id") BigInteger course_id){
+        List<User> users=new ArrayList<>();
+        List<Class1> class1s=courseMapper.selectClassByCourseID(course_id);
+        for(Class1 c:class1s){
+            if(dataService.getAllStudentByClassID(c.getId())!=null)
+            users.addAll(dataService.getAllStudentByClassID(c.getId()));
+        }
+        return users;
+    }
 
 
 

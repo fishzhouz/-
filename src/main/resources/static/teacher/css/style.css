@@ -149,7 +149,7 @@ button {
 	font-size: 16px;
 	position: relative;
 	top:8px;
-	left: 15px;	
+	left: 50px;
 }
 
 /*最新课程*/
@@ -172,7 +172,7 @@ button {
 #classViewPanel{
 	width:900px;
     height:350px;
-    overflow-y:hidden;
+    overflow-x:hidden;
     margin:0 auto;
 }
 /*课程分布*/
@@ -204,7 +204,6 @@ button {
 	font-size: 18px;
 	position: relative;
 	margin-left: 20px;
-	border: solid #000000 1px;
 }
 
 /*课程讲师*/
@@ -212,7 +211,6 @@ button {
 	font-size: 14px;
 	margin-left: 20px;
 	margin-top: 10px;
-	border: solid #000000 1px;
 }
 
 
@@ -231,7 +229,23 @@ button {
 	float: left;
 	margin-left: 28px;
 }
-
+.mystudyMissionP{
+ 	width: 90%;
+ 	height: 150px;
+ 	margin: 30px auto;
+ }
+ .mystudyMissionPa{
+ 	width: 80%;
+ 	height: 150px;
+ 	margin: 30px auto;
+ 	overflow-x:hidden;
+ 	border: solid #000000 1px;
+ }
+ .mystudyMissionPe{
+ 	width: 65%;
+ 	height: 40px;
+ 	color: #3F51B5;
+ }
 .class4{
 	width: 150px;  
     height: 150px;  
@@ -408,8 +422,8 @@ button {
 /*课程列表*/
 #classViewPanel1{
 	width:900px;
-    height:350px;
-    overflow-y:hidden;
+    height:600px;
+    overflow-x:hidden;
     margin:0 auto;
     position: relative;
     top: 100px;

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 @RequestMapping(value="/student")
 public class StudentController {
-    @RequestMapping(value="/classj")
-    public String classj() { return "student/classj"; }
+    @RequestMapping(value="/teacherClass")
+    public String teacherClass() { return "student/teacherClass"; }
 
     @RequestMapping(value="/index")
     public String index() { return "student/index"; }
