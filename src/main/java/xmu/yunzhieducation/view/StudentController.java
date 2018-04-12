@@ -16,7 +16,8 @@ public class StudentController {
     public String teacherScoreT() { return "student/teacherScoreT"; }
     @RequestMapping(value="/teacherNewLesson")
     public String teacherNewLesson() { return "student/teacherNewLesson"; }
-
+    @RequestMapping(value="/teacherClassContent")
+    public String teacherClassContent() { return "student/teacherClassContent"; }
 
 
     @RequestMapping(value="/index")

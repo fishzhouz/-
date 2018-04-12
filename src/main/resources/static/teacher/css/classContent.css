@@ -254,7 +254,7 @@ ul a {
 	color: #000000;
 }
 /*介绍按钮位置*/
-#intronBtn{
+#studentBtn{
 	position: relative;
 	left: -150px;
 	top: 10px;
@@ -265,16 +265,7 @@ ul a {
 	left: -150px;
 	top: 10px;
 }
-/*评价按钮位置*/
-#viewBtn{
-	position: relative;
-	top: -20px;
-}
-/*班级学生按钮位置*/
-#studentBtn{
-	position: relative;
-	top: -20px;
-}
+
 /*课程详情面板*/
 .secondBox{
 	width: 800px;
@@ -439,9 +430,10 @@ ul a {
 .class-class{
 	font-size: small;
 	margin-right: 10px;
+	border: #BBBBBB solid 1px;
 }
 /*新建班级*/
-#startclassBtn{
+.startclassBtn{
 	position: relative;
 	margin: 0px;
 	width: 90px;

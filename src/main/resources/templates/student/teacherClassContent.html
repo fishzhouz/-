@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+<script>
+    var courseID=getCookie("courseID");
+		window.onload=function(){
+		document.getElementById('menu').style.display='block';
+        document.getElementById('student').style.display='none';
+		getCourseInfo(courseID);
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+     function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+    if(getCookie("identification")==1)
+   window.location.href="/student/teacherClass";
+   if(getCookie("identification")==2)
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
+<script>
+	function getCourseInfo(id)
+	{
+$.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+id+"?user_id="+0 ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         $("#title").html(data.course.name);
+         $("#author").html("讲师： "+getCookie("teacher_name"));
+         $("#introduction").html("课程简介： "+data.course.introduction);
+        document.getElementById("picture").src=data.course.picture;
+        }
+        });
+	}
+</script>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/teacher/css/classContent.css" />
+		<title>课程详情</title>
+	</head>
+	<body>
+		<!--顶部标题栏-->
+		<div class="header" id="header">
+		</div>
+	    <a href="/student/teacherClass" class="backIndex">我的课程</a>
+	    <a href="/student/teacherClassContent" class="backIndex">> 课程详情</a>
+	    <!--课程概述-->
+	    <div class="classPic">
+	        <!--课程封面图片-->
+	    	<img id="picture" class="Picture"/>
+	    	<!--课程相关介绍-->
+	    	<div class="classIntroduction">
+	    		<p class="title" id="title"></p>
+	    		<p class="author" id="author"></p>
+	    		<p class="introduction" id="introduction"></p>
+				<div id="classes">
+	    		<span class="class-class">班级1</span>
+					<span class="class-class">班级2</span>
+	    		<button type="button" class="startclassBtn">新建班级</button>
+				</div>
+	    	</div>
+	    	<!--导航栏-->
+            <div class="classNavigation">
+            	<div class="classbutton">
+            	    <button type="button" id="menuBtn" autofocus="autofocus" >目录</button>
+            	    <button type="button" id="studentBtn">班级学生</button>
+            	</div>
+            </div>	    	
+	    </div>
+	    <!--课程详情-->
+	    <div class="secondBox">
+	    	<div id="menu">
+	    		<button type="button" id="newClass">创建新课时</button>
+	    		<p>目录</p>
+	    		<div class="menuContentdiv">
+	    		<span class="menuContent">这里是一条目录</span>
+	    		<img src="/img/删除.png" class="delete" />
+	    		<img src="/img/编辑.png" class="editpic" />
+	    		</div>
+	    	</div>
+	    	<div id="student">
+	    		
+	    	</div>
+	    </div>
+	    <!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="img/logo.png" />
+			<img class="head" src="img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+			</div>
+			
+			
+	    </div>
+	<script>
+		var btn1 = document.getElementById("menuBtn");  
+        btn1.onclick =function(){
+            document.getElementById('menu').style.display='block';
+            document.getElementById('student').style.display='none';
+        }
+        var btn6 = document.getElementById("studentBtn");  
+        btn6.onclick =function(){  
+            document.getElementById('menu').style.display='none';
+            document.getElementById('student').style.display='block';
+        }
+	</script>
+	</body>
+</html>
