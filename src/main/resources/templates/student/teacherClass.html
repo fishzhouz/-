@@ -149,7 +149,7 @@ var userID=getCookie("userID");
         sum=0;
         $.each(data1,function(i1,item1){
         sum=sum+1;
-               str=str+"<div onclick=\"goAbility("+item1.id+")\" class=\"mystudyMissionPe\">"+"*******学生："+item1.name+"</div>";
+               str=str+"<div onclick=\"goAbility("+item1.id+","+item.course_id+",'"+item.course_name+"','"+item1.name+"')\" class=\"mystudyMissionPe\">"+"*******学生："+item1.name+"</div>";
 			           });
 			     if(sum==0)
         str=str+"<div class=\"mystudyMissionPe\">"+"还没有学生选课哦~"+"</div>";
@@ -161,10 +161,13 @@ var userID=getCookie("userID");
 	    }
 	    });
 	}
-		function goAbility(id)
+		function goAbility(id,id1,id2,id3)
 	{
 	setCookie("studentID",id);
-	alert(id);
+	setCookie("studentCourse",id1);
+	setCookie("sname",id3);
+	setCookie("cname",id2);
+	window.location.href="/student/teacherAbility";
 	}
 </script>
 <html>

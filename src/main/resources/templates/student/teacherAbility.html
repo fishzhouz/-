@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+<script>
+var ID=getCookie("studentID");
+var ID1=getCookie("studentCourse");
+		window.onload=function(){
+		getAbility(ID,ID1);
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+     function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   if(getCookie("identification")==1)
+   window.location.href="/student/teacherClass";
+   if(getCookie("identification")==2)
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
+<script>
+	function getAbility(id,id1)
+	{
+     $("#name").html("课程名称： "+getCookie("cname"));
+     $("#type").html("学生： "+getCookie("sname")+"的能力档案");
+     no=0
+     $.ajax({
+        type:"GET", //请求方式
+        url: "/ability1/"+id1+"/"+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        if(data!=null)
+        {
+        no=1
+        $("#de").html(data.comment);
+        document.getElementById('de').readOnly=true;
+        }
+	           }
+              });
+         if(no==0)
+        $("#question").html("<button class=\"testButton\" onclick=\"start()\">提交档案</button>");
+	}
+	function start()
+	{
+	var bind={
+"comment": $('#de').val() ,
+    "course_id":getCookie("studentCourse"),
+    "student_id":getCookie("studentID")
+    }
+	   $.ajax({
+        type:"POST", //请求方式
+        url: "/ability1",
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        data:JSON.stringify(bind),
+        dataType: 'json',   //返回值类型
+        success:function(data){
+	           }
+              });
+        alert("提交成功！");
+        window.location.href="/student/teacherAbility";
+	}
+</script>
+<script>
+	function goBack()
+	{
+    alert("返回我的课程！");
+	window.location.href="/student/teacherClass";
+	}
+</script>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/css/style.css" />
+		<title>能力档案</title>
+	</head>
+	<body>
+<div class="container">
+		<!--顶部标题栏-->
+		<div class="header" id="header">
+		</div>
+	    <!--面板-->
+	    <div class="taskPanel">
+	    	<!--课程题目-->
+	    	<div class="deTitle">
+	    		<h2 id="name"></h2>
+	    		<p id="type"></p>
+	    	</div>
+	    	<!--能力档案评价-->
+				<textarea class="de" id="de">
+				</textarea>
+
+			<div id="question">
+			</div>
+			<button id="backButton" onclick="goBack()">返回上页</button>
+	    </div>
+	    <!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+			</div>
+			
+	    </div>
+</div>
+	</body>
+</html>

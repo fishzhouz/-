@@ -1089,6 +1089,14 @@ button {
 	left: 50px;
 	background: white;
 }
+.ed{
+	width: 600px;
+	height: 250px;
+	border: #BBBBBB solid 1px;
+	position: relative;
+	top: 30px;
+	left: 50px;
+}
 /*知识点介绍*/
 .deKnowledge{
 	width: 450px;
