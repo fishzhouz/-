@@ -768,11 +768,21 @@ button {
 }
 #mystudyTraining2{
 	width: 90%;
-	height: 400px;
+	height: 600px;
 	margin: 0 auto;
 	position: relative;
 	top: 100px;
 	line-height: 50px;
+}
+.enter{
+margin-left:30px;
+    position:relative;
+    width:80px;
+    height:30px;
+}
+.ss{
+    width:600px;
+    height:50px;
 }
 #mystudyTraining3{
 	width: 90%;
@@ -794,9 +804,17 @@ button {
 	position: relative;
 	left: 50px;
 }
+.edit1{
+	width: 90%;
+	height: 350px;
+	border: #BBBBBB solid 1px;
+	background: #c0c0c0;
+	overflow-x:hidden;
+}
 .edit{
 	width: 90%;
-	height: 150px;
+	height: 350px;
+	overflow-x:hidden;
 }
 #trainingPut{
 	position: relative;
@@ -1236,5 +1254,11 @@ color:#FF3333 ;
 .green{
 margin-left:20px;
 color:#00DD00;
+}
+.score{
+position:relative;
+width:80px;
+border: #BBBBBB solid 1px;
+margin-right:30px;
 }
 

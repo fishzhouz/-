@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+<script>
+var userID=getCookie("userID");
+		window.onload=function(){
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+     function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+    if(getCookie("identification")==1)
+   window.location.href="/student/teacherClass";
+   if(getCookie("identification")==2)
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
+<script>
+	function goBack()
+	{
+	alert("取消新建课程！");
+	window.location.href="/student/teacherClass";
+	}
+</script>
+<script>
+	function newe()
+	{
+	var bind={
+    "name": $('#name').val() ,
+    "introduction":$('#introduction').val(),
+    "teaching_progress":$('#progress').val(),
+    "knowledge_point":$('#point').val(),
+    "teacher_id":getCookie("userID"),
+    "picture":"/img/logo.png"
+    }
+$.ajax({
+        type:"POST", //请求方式
+        url: "/course",
+        contentType :"application/json",
+        data:JSON.stringify(bind),
+        dataType: 'json',   //返回值类型
+         success:function(data){
+         alert("新建课程成功！");
+         window.location.href="/student/teacherClass";
+         },
+          error:function(data){
+          alert(111);
+         }
+         });
+	}
+</script>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/teacher/css/style.css" />
+		<title>新建课程</title>
+	</head>
+	<body>
+		<div class="container">
+		<!--顶部标题栏-->
+		<div class="header" id="header">
+		</div>
+		<div class="newClassPanel">
+			<div id="newClassPanel1">
+			<div class="newclassPic"></div>
+			<p class="newclassP">请在这里上传课程封面</p>
+			<div class="newclassText">
+				<p>请在这里输入课程名称：</p>
+				<input type="text" id="name" />
+				<p>请在这里输入课程介绍：</p>
+				<textarea rows="5" cols="10" id="introduction"></textarea>
+				<p>请在这里输入教学进度：</p>
+				<textarea rows="5" cols="10" id="progress"></textarea>
+				<p>请在这里输入课程知识点：</p>
+				<textarea rows="5" cols="10" id="point"></textarea>
+			</div>
+			<button type="submit" id="save" onclick="newe()">确定新建</button>
+			<button type="submit" id="quit" onclick="goBack()">取消</button>
+			</div>
+		</div>
+		 <!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+			</div>	
+	    </div>
+	    </div>
+	</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+<script>
+       var trainingID=getCookie("trainingID");
+		window.onload=function(){
+		getTrain(trainingID);
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+     function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   if(getCookie("identification")==1)
+   window.location.href="/student/teacherClass";
+   if(getCookie("identification")==2)
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
+<script>
+	function getTrain(id)
+	{
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/training/"+id+"/grade?user_id="+getCookie("studentID"),
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        if(data.score==null)
+        {
+         str="";
+         str=str+"<span class=\"trainingTitle\">"+"为实训打分(百分制)："+"</span><input class=\"score\" id=\"score\"></input><button class=\"score\" onclick=\"goSubmit()\">提交</button>";
+         str=str+"<p>"+getCookie("Name")+"的报告：</p><textarea rows=\"8\" id=\"report\" cols=\"10\" class=\"edit\" readOnly>"+data.report+"</textarea>";
+        }
+        else
+        {
+         str="";
+         str=str+"<span class=\"trainingTitle\">"+"实训得分："+data.score+"</span>";
+         str=str+"<p>"+getCookie("Name")+"的报告：</p><textarea rows=\"8\" id=\"report\" cols=\"10\" class=\"edit\" readOnly>"+data.report+"</textarea>";
+          }
+          $("#mystudyTraining2").html(str);
+        }
+        });
+	}
+	function goBack()
+	{
+	window.location.href="/student/teacherTraining";
+	}
+	function goSubmit()
+	{
+	if($("#score").val()<0||$("#score").val()>100)
+	alert("分数不在范围内，请重新打分！");
+	else
+	{
+		$.ajax({
+        type:"POST", //请求方式
+        url: "/training/"+trainingID+"/grade/"+getCookie("studentID")+"?grade="+$("#score").val(),
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         alert("打分成功！");
+        window.location.href="/student/teacherScoreT";
+        }
+        });
+	}
+	}
+</script>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/css/style.css" />
+		<title>实训报告</title>
+	</head>
+	<body>
+	<div class="container">
+		<!--顶部标题栏-->
+		<div class="header" id="header">
+		</div>
+		<!--我的学习背景-->
+		<div class="myBg">
+			<img src="/img/头像.png" class="myImg" />
+			<h2 class="myh1">学习本无底，前进莫徬徨</h2>
+			<p class="morning">早上好！</p>
+		</div> 
+		<!--导航栏-->
+		<div class="navigation">
+			<button type="button" onclick="goBack()" id="myStudytrainingCircle1">返回上页</button>
+		</div>
+		<div id="mystudyTraining2">
+	    </div>
+		<!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+			</div>
+			
+	    </div>
+	</div>>
+	</body>
+</html>

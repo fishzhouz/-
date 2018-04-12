@@ -11,9 +11,12 @@ import xmu.yunzhieducation.mapper.LoginMapper;
 import xmu.yunzhieducation.mapper.CourseMapper;
 
 import xmu.yunzhieducation.service.TrainingService;
+import xmu.yunzhieducation.vo.Student;
 import xmu.yunzhieducation.vo.TraingingVo;
+import xmu.yunzhieducation.vo.TraingingVo2;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,7 +45,26 @@ public class TrainingServiceImpl implements TrainingService{
             traingingVo.setIs_upload(true);
         return traingingVo;
     }
-
+    @Override
+    public TraingingVo2 GetTrainingById(BigInteger training_id) {
+        TraingingVo2 traingingVo2=new TraingingVo2();
+        Trainging train=trainingMapper.listTrainingByTrainingId(training_id);
+        traingingVo2.setTrainging(train);
+        List<Student_training> student_trainings=trainingMapper.listStudentTrainingByTrainingId(training_id);
+        List<Student> students=new ArrayList<>();
+        for(Student_training s:student_trainings){
+            Student student=new Student();
+            student.setId(s.getStudent_id());
+            student.setName(loginMapper.selectUserByuserID(s.getStudent_id()).getName());
+            if(s.getScore()==null)
+            student.setScore(-1);
+            else
+                student.setScore(s.getScore());
+            students.add(student);
+        }
+        traingingVo2.setStudents(students);
+        return traingingVo2;
+    }
     @Override
     public Boolean UploadTrainingReport(Student_training st) {
         trainingMapper.insertStudentTraining(st);

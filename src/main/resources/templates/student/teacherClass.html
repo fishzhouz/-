@@ -120,7 +120,7 @@ var userID=getCookie("userID");
 		function goTraining(id)
 	{
 	setCookie("trainingID",id);
-	alert(id);
+	window.location.href="/student/teacherTraining";
 	}
 </script>
 <script>
@@ -170,6 +170,12 @@ var userID=getCookie("userID");
 	window.location.href="/student/teacherAbility";
 	}
 </script>
+<script>
+	function newLesson()
+	{
+	window.location.href="/student/teacherNewLesson";
+	}
+</script>
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -186,7 +192,7 @@ var userID=getCookie("userID");
 			<span class="allClass" id="courseManage">课程管理</span>
 			<span class="latestClass" id="training">综合实训</span>
 			<span class="latestClass" id="ability">能力档案</span>
-			<button type="button" id="startClass">新建课程</button>
+			<button type="button" id="startClass" onclick="newLesson()">新建课程</button>
 		</div>
 		<!--课程列表第一行-->
 		<div id="classViewPanel1">

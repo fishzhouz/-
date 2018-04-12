@@ -10,6 +10,15 @@ public class StudentController {
     public String teacherClass() { return "student/teacherClass"; }
     @RequestMapping(value="/teacherAbility")
     public String teacherAbility() { return "student/teacherAbility"; }
+    @RequestMapping(value="/teacherTraining")
+    public String teacherTraining() { return "student/teacherTraining"; }
+    @RequestMapping(value="/teacherScoreT")
+    public String teacherScoreT() { return "student/teacherScoreT"; }
+    @RequestMapping(value="/teacherNewLesson")
+    public String teacherNewLesson() { return "student/teacherNewLesson"; }
+
+
+
     @RequestMapping(value="/index")
     public String index() { return "student/index"; }
     @RequestMapping(value="/task")

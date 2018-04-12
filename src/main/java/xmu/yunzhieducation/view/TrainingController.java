@@ -10,6 +10,7 @@ import xmu.yunzhieducation.service.Impl.CommentServiceImpl;
 import xmu.yunzhieducation.entity.*;
 import xmu.yunzhieducation.service.Impl.TrainingServiceImpl;
 import xmu.yunzhieducation.vo.TraingingVo;
+import xmu.yunzhieducation.vo.TraingingVo2;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -35,7 +36,13 @@ public class TrainingController {
     public TraingingVo getTrainingByTrainingId(@PathVariable BigInteger training_id, @RequestParam(value = "user_id") BigInteger user_id){
         return trainingServiceImpl.GetTrainingByTrainingId(training_id,user_id);
     }
-
+    @ResponseStatus(value=HttpStatus.OK)
+    @RequestMapping(value=("/training1/{training_id}"),method=RequestMethod.GET)
+    @ResponseBody
+    //测试完毕
+    public TraingingVo2 getTrainingById(@PathVariable BigInteger training_id){
+        return trainingServiceImpl.GetTrainingById(training_id);
+    }
     @ResponseStatus(value=HttpStatus.CREATED)
     @RequestMapping(value=("/training/{training_id}/upload"),method=RequestMethod.POST)
     @ResponseBody

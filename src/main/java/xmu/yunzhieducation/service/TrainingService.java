@@ -3,6 +3,7 @@
  import xmu.yunzhieducation.entity.Trainging;
  import xmu.yunzhieducation.entity.Student_training;
  import xmu.yunzhieducation.vo.TraingingVo;
+ import xmu.yunzhieducation.vo.TraingingVo2;
 
  import java.math.BigInteger;
  import java.util.List;
@@ -19,6 +20,10 @@ public interface TrainingService {
      */
     public TraingingVo GetTrainingByTrainingId(BigInteger training_id,BigInteger user_id);
 
+    /**
+     * 查看实训的消息和学生以及分数
+     */
+    public TraingingVo2 GetTrainingById(BigInteger training_id);
 
     /**
      * 上传文件报告
