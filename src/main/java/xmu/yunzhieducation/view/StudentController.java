@@ -18,7 +18,14 @@ public class StudentController {
     public String teacherNewLesson() { return "student/teacherNewLesson"; }
     @RequestMapping(value="/teacherClassContent")
     public String teacherClassContent() { return "student/teacherClassContent"; }
-
+    @RequestMapping(value="/teacherNewClass")
+    public String teacherNewClass() { return "student/teacherNewClass"; }
+    @RequestMapping(value="/teacherNewPeriod")
+    public String teacherNewPeriod() { return "student/teacherNewPeriod"; }
+    @RequestMapping(value="/teacherNewTask")
+    public String teacherNewTask() { return "student/teacherNewTask"; }
+    @RequestMapping(value="/teacherViewTask")
+    public String teacherViewTask() { return "student/teacherViewTask"; }
 
     @RequestMapping(value="/index")
     public String index() { return "student/index"; }

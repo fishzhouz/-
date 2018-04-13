@@ -143,6 +143,20 @@ private TaskMapper taskMapper;
         taskService.insertQuestion(question);
     }
 
+    @JsonIgnoreProperties
+    @ResponseStatus(value= HttpStatus.CREATED)
+    @RequestMapping(value = "/task",method = RequestMethod.POST)
+    @ResponseBody
+    public void insertTask(@RequestBody Task task){
+        taskMapper.insertTaskByID(task);
+    }
+    @JsonIgnoreProperties
+    @ResponseStatus(value= HttpStatus.CREATED)
+    @RequestMapping(value = "/task/question",method = RequestMethod.POST)
+    @ResponseBody
+    public void insertQuestion(@RequestBody Question question){
+        taskMapper.insertQuestionBytaskID(question);
+    }
 
     @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.NO_CONTENT)

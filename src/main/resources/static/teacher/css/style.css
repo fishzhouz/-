@@ -531,7 +531,7 @@ button {
 	font-weight: bold;
 	margin-bottom: 20px;
 }
-#ToNewlesson{
+.ToNewlesson{
 	position: relative;
 	top: 50px;
 }

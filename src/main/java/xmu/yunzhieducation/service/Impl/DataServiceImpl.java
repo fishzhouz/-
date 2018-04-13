@@ -41,7 +41,10 @@ public class DataServiceImpl implements DataService{
      */
     @Override
     public int getGradeByCourseIDStudentID(BigInteger class_id,BigInteger student_id){
-        return dateMapper.listClassStudentByClassIdAndStudentId(class_id,student_id).getGrade();
+          if(dateMapper.listClassStudentByClassIdAndStudentId(class_id,student_id).getGrade()==null)
+              return -1;
+          else
+              return dateMapper.listClassStudentByClassIdAndStudentId(class_id,student_id).getGrade();
     }
     /**
      *老师或学校查看某个学生的所有能力档案

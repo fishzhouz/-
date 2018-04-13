@@ -6,8 +6,8 @@
     <!--新建一个课时-->
     <insert id="createPeriod" parameterType="xmu.yunzhieducation.entity.Period" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO period
-        (class_id,knowledge_point)
-        VALUES (#{class_id},#{knowledge_point})
+        (class_id,ppt,knowledge_point,video)
+        VALUES (#{class_id},#{ppt},#{knowledge_point},#{video})
     </insert>
     <!--根据课时ID删除课时-->
     <delete id="deletePeriodByPeriodID">

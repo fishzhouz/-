@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+<script>
+        var periodID=getCookie("periodID");
+		window.onload=function(){
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /><a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+	</script>
+<script>
+   function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   if(getCookie("identification")==1)
+   window.location.href="/student/teacherClass";
+   if(getCookie("identification")==2)
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
+<script>
+	function newT()
+	{
+	var bind={
+    "start_time": $('#startTime').val() ,
+    "end_time":$('#endTime').val(),
+    "period_id":periodID,
+    "information":$('#ppt').val(),
+    "name":$('#name').val(),
+    "type":$('#video').val()
+    }
+$.ajax({
+        type:"POST", //请求方式
+        url: "/task",
+        contentType :"application/json",
+        data:JSON.stringify(bind),
+        dataType: 'json',   //返回值类型
+         success:function(data){
+         },
+          error:function(data){
+         }
+         });
+         alert("新建任务成功！");
+         window.location.href="/student/teacherClassContent";
+	}
+</script>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/teacher/css/classContent.css" />
+		<title>新建课时</title>
+	</head>
+	<body>
+		<!--顶部标题栏-->
+		<div class="header" id="header">
+		</div>
+	    <a href="/student/teacherClassContent" class="backIndex">返回</a>
+	    <!--课程概述-->
+	    <!--课程详情-->
+	    <div class="secondBox">
+             <div id="upclass1">
+             	<button type="button" id="up1" onclick="newT()">确定创建</button>
+             	<p class="upclassP1">请输入任务名称：</p>
+             	<input type="text" class="classname" id="name"/>
+             	<p class="upclassP2">请输入任务简介:</p>
+				 <input type="text" class="classname2"  id="ppt"/>
+				 <p class="upclassP2">请输入任务类型:</p>
+				 <input type="text" class="classname2" id="video"/>
+				 <p class="upclassP2">开始时间:</p>
+				 <input type="date" class="classname2" id="startTime"/>
+				 <p class="upclassP2">结束时间：</p>
+				 <input type="date" class="classname2" id="endTime"/>
+             </div>
+	    </div>
+	    
+	    <!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+			</div>
+			
+			
+	    </div>
+
+	</body>
+</html>

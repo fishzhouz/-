@@ -35,6 +35,27 @@
     }
 	</script>
 <script>
+   function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   if(getCookie("identification")==1)
+   window.location.href="/student/teacherClass";
+   if(getCookie("identification")==2)
+   window.location.href="/student/myStudy";}
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
+<script>
 	function getCourseInfo(id)
 	{
 $.ajax({
@@ -61,7 +82,7 @@ $.ajax({
         $.each(data,function(i,item){
         str=str+"<button type=\"button\" class=\"class-class\" onclick=\"newP("+item.id+",'"+item.class_name+"')\">"+item.class_name+"</button>";
          });
-         str=str+"<button type=\"button\" class=\"newClass\">新建班级</button>";
+         str=str+"<button type=\"button\" class=\"newClass\" onclick=\"newClass()\">新建班级</button>";
          $("#classes").html(str);
         }
         });
@@ -70,6 +91,7 @@ $.ajax({
 	{
  str="";
  str=str+"<p>"+id1+"   班级目录:"+"</p>";
+ str=str+"<button type=\"button\" class=\"newClass\" onclick=\"goPeriod("+id+")\">新建课时</button>";
                 $.ajax({
         type:"GET", //请求方式
         url: "/course/"+id+"/period?user_id="+getCookie("userID") ,
@@ -79,11 +101,11 @@ $.ajax({
         dataType: 'json',   //返回值类型
         success:function(data){
          $.each(data,function(i,item){
-        str=str+"<div class=\"menuContent\">"+">>>第"+(i+1)+"课时:"+item.knowledge_point+"</div>";
+        str=str+"<div class=\"menuContent\">"+">>>第"+(i+1)+"课时:"+item.knowledge_point+"<button type=\"button\" class=\"newClass\" onclick=\"goT("+item.id+")\">新建任务</button></div>";
           if(item.ppt!=null)
-        str=str+"<div onclick=\"goD('"+item.knowledge_point+"','"+item.ppt+"')\" class=\"topicContent\"><img class=\"img-logo\" src=\"/teacher/img/folder.png\"/><div class=\"dd\"><p>课件</p></div></div>";
+        str=str+"<div class=\"topicContent\"><img class=\"img-logo\" src=\"/teacher/img/folder.png\"/><div class=\"dd\"><p>课件</p></div></div>";
         if(item.video!=null)
-        str=str+"<div onclick=\"goD('"+item.knowledge_point+"','"+item.video+"')\"  class=\"topicContent\"><img class=\"img-logo\" src=\"/teacher/img/folder.png\"/><div class=\"dd\"><p>视频</p></div></div>";
+        str=str+"<div  class=\"topicContent\"><img class=\"img-logo\" src=\"/teacher/img/folder.png\"/><div class=\"dd\"><p>视频</p></div></div>";
               $.ajax({
         type:"GET", //请求方式
         url: "/period/"+item.id+"/task?user_id="+getCookie("userID") ,
@@ -93,7 +115,7 @@ $.ajax({
         dataType: 'json',   //返回值类型
         success:function(data){
         $.each(data,function(i1,item1){
-                str=str+"<div onclick=\"goTest("+item1.task_id+",'"+item1.is_finished+"')\" class=\"topicContent\"><img class=\"img-logo\" src=\"/teacher/img/folder.png\"/><div class=\"dd\"><p>"+item1.content+"</p></div></div>";
+                str=str+"<div  onclick=\"goTask("+item1.task_id+")\"class=\"topicContent\"><img class=\"img-logo\" src=\"/teacher/img/folder.png\"/><div class=\"dd\"><p>"+item1.content+"      (点击新建题目)"+"</p></div></div>";
         });
         }
              });
@@ -101,29 +123,84 @@ $.ajax({
         }
         });
          $("#menu").html(str);
+         str="";
+         $.ajax({
+        type:"GET", //请求方式
+        url: "/data/student/"+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str=str+"<p>"+id1+"   班级学生:"+"</p>";
+        sum=0;
+        $.each(data,function(i,item){
+        sum=sum+1;
+               str=str+"<div class=\"mystudyMissionPe\">"+"*******学生："+item.name;
+                $.ajax({
+        type:"GET", //请求方式
+        url: "/grade/"+item.id+"/"+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data1){
+        if(data1!=-1)
+            str=str+"<span>"+"课程得分： "+data1+"分"+"</span></div>"
+            else
+            str=str+"<span>"+"课程得分： "+"</span><input class=\"cc\" id=\"cc\"></input><button type=\"button\" class=\"newClass\" onclick=\"Score("+item.id+","+id+")\">确定打分</button></div>"
+	           }
+              });
+			           });
+			     if(sum==0)
+        str=str+"<div class=\"mystudyMissionPe\">"+"还没有学生选课哦~"+"</div>";
+	           }
+              });
+        $("#content").html(str);
+	}
+	function goTask(id)
+	{
+	setCookie("taskID",id);
+	window.location.href="/student/teacherViewTask";
+	}
+	function Score(id,id1)
+	{
+	if($('#cc').val()<0||$('#cc').val()>100)
+	alert("分数为百分制！");
+	else
+	{
+	$.ajax({
+        type:"PUT", //请求方式
+        url: "/course/"+id+"/"+id1+"/grade?grade="+$('#cc').val(),
+        contentType :"application/json",
+        dataType: 'json',   //返回值类型
+         success:function(data){
+         alert("打分成功！");
+         window.location.href="/student/teacherClassContent";
+         },
+          error:function(data){
+          alert(111);
+         }
+         });
+         }
 	}
 </script>
 <script>
-   function joinStudy()
-   {
-   var userID=getCookie("userID");
-   if(userID==null){alert("请先登录!");}
-   else
-   {
-   if(getCookie("identification")==1)
-   window.location.href="/student/teacherClass";
-   if(getCookie("identification")==2)
-   window.location.href="/student/myStudy";}
-   }
-      function joinMessage()
-   {
-   var userID=getCookie("userID");
-   if(userID==null){alert("请先登录!");}
-   else
-   {
-   window.location.href="/student/message";}
-   }
-	</script>
+	function newClass()
+	{
+	window.location.href="/student/teacherNewClass";
+	}
+	function goPeriod(id)
+	{
+	setCookie("classID",id);
+	window.location.href="/student/teacherNewPeriod";
+	}
+	function goT(id)
+	{
+	setCookie("periodID",id);
+	window.location.href="/student/teacherNewTask";
+	}
+</script>
 <script>
 	function goBack()
 	{
@@ -150,7 +227,6 @@ $.ajax({
 	    		<p class="author" id="author"></p>
 	    		<p class="author" id="introduction"></p>
 				<div id="classes">
-					<span class="class-class">班级1</span>
 				</div>
 	    		<!--立即加入按钮-->
 	    	</div>
