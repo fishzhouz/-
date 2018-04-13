@@ -171,6 +171,7 @@ button {
 	font-size: 20px;
 	position: relative;
 	top: 15px;
+	margin-bottom:30px;
 }
 /*课程概述*/
 .introduction{
@@ -549,4 +550,18 @@ button {
 .we button:hover,button:focus{
 	background: cadetblue;
 	color: white;
+}
+.class-class {
+position:relative;
+    width:100px;
+    height:30px;
+	margin-right: 10px;
+	border: #BBBBBB solid 3px;
+}
+.newClass {
+position:relative;
+    width:80px;
+    height:30px;
+	margin-left: 40px;
+	border: #BBBBBB solid 3px;
 }

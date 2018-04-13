@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/jquery.js"></script>
 <script src="/js/bootstrap.min.js"></script>
@@ -6,11 +7,11 @@
 <script src="/js/jquery.inview.min.js"></script>
 <script src="/js/cookie3.js"></script>
 <script>
-    var courseID=getCookie("courseID");
+        var courseID=getCookie("courseID");
 		window.onload=function(){
-		document.getElementById('menu').style.display='block';
-        document.getElementById('student').style.display='none';
 		getCourseInfo(courseID);
+		document.getElementById('content').style.display='none';
+        document.getElementById('menu').style.display='block';
 		str="";
 		if(getCookie("identification")==1)
 		{str2="我的课程";}
@@ -18,7 +19,7 @@
 		{str2="我的学校";}
 		else
 		{str2="我的学习";}
-		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /><a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
 		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
         else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
         $("#header").html(str);
@@ -32,13 +33,84 @@
      delCookie("identification");
      window.location.href="/student/login";
     }
-     function joinStudy()
+	</script>
+<script>
+	function getCourseInfo(id)
+	{
+$.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+id+"?user_id=0" ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         $("#title").html(data.course.name);
+         $("#author").html("讲师： "+getCookie("teacher_name"));
+         $("#introduction").html("课程简介： "+data.course.introduction);
+        document.getElementById("picture").src=data.course.picture;
+        }
+        });
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+id+"/class?type=0" ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+        $.each(data,function(i,item){
+        str=str+"<button type=\"button\" class=\"class-class\" onclick=\"newP("+item.id+",'"+item.class_name+"')\">"+item.class_name+"</button>";
+         });
+         str=str+"<button type=\"button\" class=\"newClass\">新建班级</button>";
+         $("#classes").html(str);
+        }
+        });
+	}
+	function newP(id,id1)
+	{
+ str="";
+ str=str+"<p>"+id1+"   班级目录:"+"</p>";
+                $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+id+"/period?user_id="+getCookie("userID") ,
+        async:false,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         $.each(data,function(i,item){
+        str=str+"<div class=\"menuContent\">"+">>>第"+(i+1)+"课时:"+item.knowledge_point+"</div>";
+          if(item.ppt!=null)
+        str=str+"<div onclick=\"goD('"+item.knowledge_point+"','"+item.ppt+"')\" class=\"topicContent\"><img class=\"img-logo\" src=\"/teacher/img/folder.png\"/><div class=\"dd\"><p>课件</p></div></div>";
+        if(item.video!=null)
+        str=str+"<div onclick=\"goD('"+item.knowledge_point+"','"+item.video+"')\"  class=\"topicContent\"><img class=\"img-logo\" src=\"/teacher/img/folder.png\"/><div class=\"dd\"><p>视频</p></div></div>";
+              $.ajax({
+        type:"GET", //请求方式
+        url: "/period/"+item.id+"/task?user_id="+getCookie("userID") ,
+        async:false,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        $.each(data,function(i1,item1){
+                str=str+"<div onclick=\"goTest("+item1.task_id+",'"+item1.is_finished+"')\" class=\"topicContent\"><img class=\"img-logo\" src=\"/teacher/img/folder.png\"/><div class=\"dd\"><p>"+item1.content+"</p></div></div>";
+        });
+        }
+             });
+        });
+        }
+        });
+         $("#menu").html(str);
+	}
+</script>
+<script>
+   function joinStudy()
    {
    var userID=getCookie("userID");
    if(userID==null){alert("请先登录!");}
    else
    {
-    if(getCookie("identification")==1)
+   if(getCookie("identification")==1)
    window.location.href="/student/teacherClass";
    if(getCookie("identification")==2)
    window.location.href="/student/myStudy";}
@@ -53,77 +125,54 @@
    }
 	</script>
 <script>
-	function getCourseInfo(id)
+	function goBack()
 	{
-$.ajax({
-        type:"GET", //请求方式
-        url: "/course/"+id+"?user_id="+0 ,
-        cache: false,   //如果使用缓存
-        contentType : "application/json",
-        dataType: 'json',   //返回值类型
-        success:function(data){
-         $("#title").html(data.course.name);
-         $("#author").html("讲师： "+getCookie("teacher_name"));
-         $("#introduction").html("课程简介： "+data.course.introduction);
-        document.getElementById("picture").src=data.course.picture;
-        }
-        });
+	window.location.href="/student/teacherClass";
 	}
 </script>
-<html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="/teacher/css/classContent.css" />
+		<link rel="stylesheet" href="/css/classContent.css" />
 		<title>课程详情</title>
 	</head>
 	<body>
 		<!--顶部标题栏-->
-		<div class="header" id="header">
+		<div id="header" class="header">
 		</div>
-	    <a href="/student/teacherClass" class="backIndex">我的课程</a>
-	    <a href="/student/teacherClassContent" class="backIndex">> 课程详情</a>
+	    <a onclick="goBack()" class="backIndex">返回上一页</a>
 	    <!--课程概述-->
 	    <div class="classPic">
 	        <!--课程封面图片-->
-	    	<img id="picture" class="Picture"/>
+	    	<img class="Picture" id="picture"/>
 	    	<!--课程相关介绍-->
 	    	<div class="classIntroduction">
 	    		<p class="title" id="title"></p>
 	    		<p class="author" id="author"></p>
-	    		<p class="introduction" id="introduction"></p>
+	    		<p class="author" id="introduction"></p>
 				<div id="classes">
-	    		<span class="class-class">班级1</span>
-					<span class="class-class">班级2</span>
-	    		<button type="button" class="startclassBtn">新建班级</button>
+					<span class="class-class">班级1</span>
 				</div>
+	    		<!--立即加入按钮-->
 	    	</div>
 	    	<!--导航栏-->
             <div class="classNavigation">
             	<div class="classbutton">
-            	    <button type="button" id="menuBtn" autofocus="autofocus" >目录</button>
-            	    <button type="button" id="studentBtn">班级学生</button>
+            	    <button type="button" id="intronBtn" autofocus="autofocus">班级目录</button>
+            	    <button type="button" id="menuBtn">班级学生</button>
             	</div>
             </div>	    	
 	    </div>
 	    <!--课程详情-->
 	    <div class="secondBox">
-	    	<div id="menu">
-	    		<button type="button" id="newClass">创建新课时</button>
-	    		<p>目录</p>
-	    		<div class="menuContentdiv">
-	    		<span class="menuContent">这里是一条目录</span>
-	    		<img src="/img/删除.png" class="delete" />
-	    		<img src="/img/编辑.png" class="editpic" />
-	    		</div>
-	    	</div>
-	    	<div id="student">
-	    		
+			<div id="menu">
+			</div>
+	    	<div id="content">
 	    	</div>
 	    </div>
 	    <!--页脚-->
 	    <div class="footer">
-	    	<img class="img-logo" src="img/logo.png" />
-			<img class="head" src="img/字体设计.png" />
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
 			<div class="introduction">
 				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
 			</div>
@@ -131,16 +180,16 @@ $.ajax({
 			
 	    </div>
 	<script>
-		var btn1 = document.getElementById("menuBtn");  
+		var btn1 = document.getElementById("intronBtn");
         btn1.onclick =function(){
+            document.getElementById('content').style.display='none';
             document.getElementById('menu').style.display='block';
-            document.getElementById('student').style.display='none';
         }
-        var btn6 = document.getElementById("studentBtn");  
-        btn6.onclick =function(){  
+        var btn3 = document.getElementById("menuBtn");
+        btn3.onclick =function(){  
             document.getElementById('menu').style.display='none';
-            document.getElementById('student').style.display='block';
-        }
+            document.getElementById('content').style.display='block';
+        }   
 	</script>
 	</body>
 </html>
