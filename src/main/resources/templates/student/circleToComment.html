@@ -36,7 +36,12 @@
    if(userID==null){alert("请先登录!");}
    else
    {
-   window.location.href="/student/myStudy";}
+     if(getCookie("identification")==1)
+   window.location.href="/student/teacherClass";
+   if(getCookie("identification")==2)
+   window.location.href="/student/myStudy";
+   if(getCookie("identification")==3)
+   window.location.href="/student/zSchoolIndex";}
    }
       function joinMessage()
    {

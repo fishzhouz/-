@@ -27,6 +27,13 @@ public class StudentController {
     @RequestMapping(value="/teacherViewTask")
     public String teacherViewTask() { return "student/teacherViewTask"; }
 
+    @RequestMapping(value="/zSchoolIndex")
+    public String zSchoolIndex() { return "student/zSchoolIndex"; }
+    @RequestMapping(value="/zNews")
+    public String zNews() { return "student/zNews"; }
+    @RequestMapping(value="/zData")
+    public String zData() { return "student/zData"; }
+
     @RequestMapping(value="/index")
     public String index() { return "student/index"; }
     @RequestMapping(value="/task")

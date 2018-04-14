@@ -119,6 +119,7 @@ a{
 	background: gray;
 	margin: 0 auto;
 	position: relative;
+	margin-left:400px;
 	top: 80px;
 }
 /*学校校徽*/
@@ -138,13 +139,17 @@ a{
 /*学校简介栏*/
 .schoolIntro{
 	width: 580px;
-	height: 50px;
+	height: 450px;
 	position: relative;
 	/*top: 10px;*/
 	left: 450px;
 	font-size: large;
 	line-height: 30px;
 	
+}
+#school{
+position:relative;
+margin-left:350px;
 }
 /*分隔符*/
 .hr{
@@ -187,7 +192,11 @@ a{
 	top:8px;
 	left: 15px;	
 }
-
+#f2{
+margin-left:50px;
+font-size: 20px;
+color:cadetblue;
+}
 /*最新课程*/
 .latestClass{
 	font-size: 16px;
@@ -219,7 +228,12 @@ a{
 	position: relative;
 	top: 50px;
 }
-
+.data{
+position:relative;
+width:100px;
+height:30px;
+margin-left:30px;
+}
 /*课程列表*/
 .class1{
 	width: 150px;
@@ -242,7 +256,6 @@ a{
 	font-size: 18px;
 	position: relative;
 	margin-left: 20px;
-	border: solid #000000 1px;
 }
 
 /*课程讲师*/
@@ -250,7 +263,6 @@ a{
 	font-size: 14px;
 	margin-left: 20px;
 	margin-top: 10px;
-	border: solid #000000 1px;
 }
 
 
@@ -440,10 +452,11 @@ ul,li {margin:0;padding:0;list-style:none;}
 /*资讯编辑页面*/
 #newsEdit{
 	width: 75%;
-	height: 500px;
+	height: 600px;
 	margin-left: 250px;
 	margin-top: 80px;
 	margin-bottom: 30px;
+	overflow-x:hidden;
 	border: solid #BBBBBB 1px;
 	background: #F5EDA4;
 }
@@ -501,20 +514,35 @@ ul,li {margin:0;padding:0;list-style:none;}
 	font-size: large;
 }
 .newsContent1{
-	width: 900px;
-	height:350px;
+	width: 1200px;
+	height:490px;
 	margin: 0 auto;
+	margin-top:10px;
 	position: relative;
-	top: 60px;
 	border: solid #000000 1px;
+	overflow-x:hidden;
 }
-#sure{
+#fl{
+margin-left:30px;
+color:green;
+}
+.sure{
 	position: relative;
 	left: 400px;
 	top: 150px;
 	height: 50px !important;
 	width: 150px !important;
 	font-size: large;
+}
+.delete{
+    position: relative;
+    margin-left:50px;
+	height: 30px ;
+	width: 60px ;
+}
+.sd{
+width:100%;
+height:40px;
 }
 #delete{
 	position: relative;
@@ -641,4 +669,23 @@ button {
 	left: 120px;
 	border: solid #000000 1px;
 	
+}
+.taskPanel{
+	width: 80%;
+	height: 280px;
+	margin-left:50px;
+	margin-top:20px;
+	overflow-x:hidden;
+	border: #BBBBBB solid 1px;
+	position: relative;
+	background: #F0F0F0;
+}
+.de{
+	width: 750px;
+	height: 150px;
+	border: #BBBBBB solid 1px;
+	position: relative;
+	top: 0px;
+	left: 50px;
+	background: white;
 }

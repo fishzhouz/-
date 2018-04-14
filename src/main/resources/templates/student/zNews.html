@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+<script>
+var schoolID=getCookie("schoolID");
+		window.onload=function(){
+		getInfo(schoolID);
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+     function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   if(getCookie("identification")==1)
+   window.location.href="/student/teacherClass";
+   if(getCookie("identification")==2)
+   window.location.href="/student/myStudy";
+   if(getCookie("identification")==3)
+   window.location.href="/student/zSchoolIndex";
+   }
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
+<script>
+		function getInfo(id)
+	{
+$.ajax({
+        type:"GET", //请求方式
+        url: "/school/"+id+"/information" ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str=" ";
+        str=str+"<p>"+"学校资讯》》》"+"</p>"
+         $.each(data,function(i,item){
+                 str=str+"<div class=\"sd\"><span>"+"      ...."+item.content+"</span><button type=\"button\" class=\"delete\" onclick=\"deleteNews("+item.id+")\">删除</button></div>"
+			                          });
+        $("#news").html(str);
+        }
+        });
+	}
+	function deleteNews(id)
+	{
+	$.ajax({
+        type:"DELETE", //请求方式
+        url: "/school/"+id+"/information" ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        }
+        });
+        alert("删除成功！");
+        window.location.href="/student/zNews";
+	}
+</script>
+<script>
+	function goThere()
+	{
+	window.location.href="/student/zNews";
+	}
+	function newN()
+	{
+	var bind={
+"school_id":schoolID,
+    "content":$('#name').val(),
+    "type":0
+    }
+		$.ajax({
+        type:"POST", //请求方式
+        url: "/school/"+schoolID+"/information" ,
+        cache: false,   //如果使用缓存
+        data:JSON.stringify(bind),
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        }
+        });
+        alert("新增成功！");
+        window.location.href="/student/zNews";
+	}
+</script>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="/manager/css/schoolIndex.css" />
+	<title>资讯管理</title>
+</head>
+<body>
+<div class="container">
+	<!--顶部标题栏-->
+	<div class="header" id="header">
+	</div>
+
+	<div class="TreeWrap">
+		<div class="MenuBox" id="Menu_0">
+			<div class="titBox"><h3 class="Fst"><a href="javascript:showMenu(0);">门户管理</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a href="/student/zNews">资讯管理</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_1">
+			<div class="titBox"><h3><a href="javascript:showMenu(1);">系统管理</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a href="#">教师管理</a></li>
+					<li><a href="#">学生管理</a></li>
+					<li><a href="#">课程管理</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_2">
+			<div class="titBox"><h3><a href="javascript:showMenu(2);">交流监管</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a >话题锁定与删除</a></li>
+					<li><a >全文搜索</a></li>
+					<li><a >敏感词设置</a></li>
+					<li><a >图片浏览/删除</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_3">
+			<div class="titBox"><h3><a href="javascript:showMenu(3);">实训动态</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a href="putTraining.html">发布实训</a></li>
+					<li><a href="trainingData.html">实训数据汇总</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_4">
+			<div class="titBox"><h3><a href="javascript:showMenu(4);">数据分析</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a href="/student/zData">数据分析</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_5">
+			<div class="titBox"><h3><a href="javascript:showMenu(5);">实时数据</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a>实时数据</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+	</div>
+	    <div id="newsEdit">
+		    <div class="newsContent1" id="news">
+		    </div>
+		    <div class="buttonStyle">
+               <button type="button" id="startnewsBtn">新建资讯</button>
+		    </div>
+	    </div>
+	    <div id="newsEdit1">
+	    	<p>请输入资讯：</p>
+		    <input type="text" id="name"/>
+		    <div class="buttonStyle">
+               <button type="button" class="sure" id="sure" onclick="newN()">确定</button>
+				<button type="button" class="sure" id="cancel" onclick="goThere()">取消</button>
+		    </div>
+	    </div>
+	    <!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+			</div>
+			
+			
+	    </div>
+	    </div>
+	    <script type="text/javascript">
+function ExChgClsName(Obj,NameA,NameB){
+ var Obj=document.getElementById(Obj)?document.getElementById(Obj):Obj;
+ Obj.className=Obj.className==NameA?NameB:NameA;
+ }
+ function showMenu(iNo){
+ ExChgClsName("Menu_"+iNo,"MenuBox","MenuBox2");
+ }
+ document.getElementById('newsEdit1').style.display='none';
+ var btn1 = document.getElementById("startnewsBtn");  
+        btn1.onclick =function(){  
+            document.getElementById('newsEdit').style.display='none';
+            document.getElementById('newsEdit1').style.display='block';
+        }
+	    </script>
+	</body>
+</html>

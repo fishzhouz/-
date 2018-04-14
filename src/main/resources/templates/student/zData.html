@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+<script>
+var schoolID=getCookie("schoolID");
+		window.onload=function(){
+		document.getElementById('course').style.display='none';
+		getCourseList(schoolID);
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+     function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   if(getCookie("identification")==1)
+   window.location.href="/student/teacherClass";
+   if(getCookie("identification")==2)
+   window.location.href="/student/myStudy";
+   if(getCookie("identification")==3)
+   window.location.href="/student/zSchoolIndex";
+   }
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
+<script>
+		function getCourseList(id)
+	{
+	       $.ajax({
+        type:"GET", //请求方式
+        url: "/school/"+id+"/course" ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         str="";
+         sum=0;
+         $.each(data,function(i,item){
+         sum=sum+1;
+			                          });
+		$.each(data,function(i,item){
+         if(i%5==0)
+         {
+         if(i==0)  str=str+"<div class=\"class-row1\">";
+         else   str=str+"<div class=\"class-row2\">";
+         }
+         str=str+"<a onclick=\"login('"+item.course_name+"',"+item.course_id+")\" class=\"class"+(i%5+1)+"\"><img class=\"classPicture\" src="+item.picture+"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></a>";
+	    	if(i==sum-1)
+	    	{
+	    	str=str+"</div>";
+	    	}
+	    	else if(i%5==4)
+	    	{
+	    	str=str+"</div>";
+	    	}
+			                          });
+	     $("#newsContent1").html(str);
+         },
+         error:function(data){
+         }
+         });
+	}
+	function login(id,id1)
+	{
+	document.getElementById('start').style.display='none';
+	document.getElementById('course').style.display='block';
+		document.getElementById('grade').style.display='none';
+	document.getElementById('join').style.display='none';
+	document.getElementById('ability').style.display='none';
+	$("#f2").html(id+"   课程数据分析:");
+	str="";
+	    $.ajax({
+        type:"GET", //请求方式
+        url: "/data/courseStudent/"+id1,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        sum=0;
+        $.each(data,function(i,item){
+        sum=sum+1;
+         $.ajax({
+        type:"GET", //请求方式
+        url: "/ability1/"+id1+"/"+item.id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data1){
+        str=str+"<div class=\"taskPanel\"><div class=\"deTitle\"><h2 id=\"name\">"+"课程名称： "+id+"</h2><p id=\"type\">"+"学生： "+item.name+"的能力档案"+"</p></div><textarea class=\"de\" id=\"de\" readOnly>"+data1.comment+"</textarea></div>";
+	           }
+              });
+			           });
+			     if(sum==0)
+        str=str+"<div class=\"mystudyMissionPe\">"+"还没有学生选课哦~"+"</div>";
+	           }
+              });
+       $("#ability").html(str);
+	}
+</script>
+<script>
+	function goBack()
+	{
+	window.location.href="/student/zData";
+	}
+	function f1()
+	{
+	document.getElementById('ability').style.display='none';
+	document.getElementById('join').style.display='none';
+	document.getElementById('grade').style.display='block';
+	}
+	function f2()
+	{
+	document.getElementById('grade').style.display='none';
+	document.getElementById('ability').style.display='none';
+	document.getElementById('join').style.display='block';
+	}
+	function f3()
+	{
+	document.getElementById('grade').style.display='none';
+	document.getElementById('join').style.display='none';
+	document.getElementById('ability').style.display='block';
+	}
+</script>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="/manager/css/schoolIndex.css" />
+	<title>数据分析</title>
+</head>
+<body>
+<div class="container">
+	<!--顶部标题栏-->
+	<div class="header" id="header">
+	</div>
+
+	<div class="TreeWrap">
+		<div class="MenuBox" id="Menu_0">
+			<div class="titBox"><h3 class="Fst"><a href="javascript:showMenu(0);">门户管理</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a href="/student/zNews">资讯管理</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_1">
+			<div class="titBox"><h3><a href="javascript:showMenu(1);">系统管理</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a href="#">教师管理</a></li>
+					<li><a href="#">学生管理</a></li>
+					<li><a href="#">课程管理</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_2">
+			<div class="titBox"><h3><a href="javascript:showMenu(2);">交流监管</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a >话题锁定与删除</a></li>
+					<li><a >全文搜索</a></li>
+					<li><a >敏感词设置</a></li>
+					<li><a >图片浏览/删除</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_3">
+			<div class="titBox"><h3><a href="javascript:showMenu(3);">实训动态</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a href="putTraining.html">发布实训</a></li>
+					<li><a href="trainingData.html">实训数据汇总</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_4">
+			<div class="titBox"><h3><a href="javascript:showMenu(4);">数据分析</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a href="/student/zData">数据分析</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_5">
+			<div class="titBox"><h3><a href="javascript:showMenu(5);">实时数据</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a>实时数据</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+	</div>
+	    <div id="newsEdit">
+			<div id="start">
+			<p id="fl">     数据分析---（进入课程可看详情）</p>
+         <div class="newsContent1" id="newsContent1">
+	    </div>
+			</div>
+			<div id="course">
+				<p id="f2"></p>
+				<button class="data" onclick="f1()">学生成绩查询</button>
+				<button class="data" onclick="f2()">参与度分析</button>
+				<button class="data" onclick="f3()">学生能力档案</button>
+				<button class="data" onclick="goBack()">返回全部课程</button>
+				<div class="newsContent1" id="newsContent2">
+					<div id="grade"></div>
+					<div id="join"></div>
+					<div id="ability">
+					</div>
+				</div>
+			</div>
+     </div>
+
+	    <!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+		</div>
+			
+			
+	    </div>
+	    </div>
+	    <script type="text/javascript">
+function ExChgClsName(Obj,NameA,NameB){
+ var Obj=document.getElementById(Obj)?document.getElementById(Obj):Obj;
+ Obj.className=Obj.className==NameA?NameB:NameA;
+ }
+ function showMenu(iNo){
+ ExChgClsName("Menu_"+iNo,"MenuBox","MenuBox2");
+ }
+	    </script>
+	</body>
+</html>

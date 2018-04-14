@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/cookie3.js"></script>
+<script>
+var schoolID=getCookie("schoolID");
+		window.onload=function(){
+		getSchoolInfo(schoolID);
+		str="";
+		if(getCookie("identification")==1)
+		{str2="我的课程";}
+		else if(getCookie("identification")==3)
+		{str2="我的学校";}
+		else
+		{str2="我的学习";}
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+        $("#header").html(str);
+    }
+    function exituser()
+    {
+     delCookie("name");
+     delCookie("userID");
+     delCookie("sex");
+     delCookie("schoolID");
+     delCookie("identification");
+     window.location.href="/student/login";
+    }
+     function joinStudy()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   if(getCookie("identification")==1)
+   window.location.href="/student/teacherClass";
+   if(getCookie("identification")==2)
+   window.location.href="/student/myStudy";
+   if(getCookie("identification")==3)
+   window.location.href="/student/zSchoolIndex";
+   }
+   }
+      function joinMessage()
+   {
+   var userID=getCookie("userID");
+   if(userID==null){alert("请先登录!");}
+   else
+   {
+   window.location.href="/student/message";}
+   }
+	</script>
+<script>
+	function getSchoolInfo(id)
+	{
+$.ajax({
+        type:"GET", //请求方式
+        url: "/school/"+id ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        $("#school").html(data.name);
+        str="";
+        str=str+"<p class=\"deTitle\">"+data.city+"</p>";
+        $("#schoolIntro").html(str);
+        document.getElementById("picture").src=data.picture;
+        }
+        });
+	}
+</script>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="/manager/css/schoolIndex.css" />
+	<title>我的学校</title>
+</head>
+<body>
+<div class="container">
+	<!--顶部标题栏-->
+	<div class="header" id="header">
+	</div>
+
+	<div class="TreeWrap">
+		<div class="MenuBox" id="Menu_0">
+			<div class="titBox"><h3 class="Fst"><a href="javascript:showMenu(0);">门户管理</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a href="/student/zNews">资讯管理</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_1">
+			<div class="titBox"><h3><a href="javascript:showMenu(1);">系统管理</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a href="#">教师管理</a></li>
+					<li><a href="#">学生管理</a></li>
+					<li><a href="#">课程管理</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_2">
+			<div class="titBox"><h3><a href="javascript:showMenu(2);">交流监管</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a >话题锁定与删除</a></li>
+					<li><a >全文搜索</a></li>
+					<li><a >敏感词设置</a></li>
+					<li><a >图片浏览/删除</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_3">
+			<div class="titBox"><h3><a href="javascript:showMenu(3);">实训动态</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a href="putTraining.html">发布实训</a></li>
+					<li><a href="trainingData.html">实训数据汇总</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_4">
+			<div class="titBox"><h3><a href="javascript:showMenu(4);">数据分析</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a href="/student/zData">数据分析</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+		<div class="MenuBox2" id="Menu_5">
+			<div class="titBox"><h3><a href="javascript:showMenu(5);">实时数据</a></h3></div>
+			<div class="txtBox">
+				<ul>
+					<li><a>实时数据</a></li>
+				</ul>
+			</div>
+		</div><!--MenuBox-->
+	</div>
+		
+		<!--学校背景图-->
+	<div class="schoolB" ><img class="schoolBg" src="/img/background.jpg"/></div>
+	<!--学校校徽-->
+	<img class="schoolBedge" id="picture"/><a id="school"></a>
+	<!--学校简介-->
+	<div class="schoolIntro" id="schoolIntro">
+	</div>
+		<!--分隔符-->
+		</div>
+	    <!--页脚-->
+	    <div class="footer">
+	    	<img class="img-logo" src="/img/logo.png" />
+			<img class="head" src="/img/字体设计.png" />
+			<div class="introduction">
+				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
+			</div>
+	    </div>
+	    </div>
+	    <script type="text/javascript">
+	    	/*更多按钮 */   	
+	var btn = document.getElementById('moreBtn');
+    var obj = document.getElementById('classViewPanel');
+    var total_height =  obj.scrollHeight;//文章总高度
+    var show_height = 400;//定义原始显示高度
+    if(total_height>show_height){
+    btn.style.display = 'block';
+    btn.onclick = function(){
+    obj.style.height = total_height + 'px';
+    /*btn.style.display = 'none';*/
+    }
+    
+    }
+function ExChgClsName(Obj,NameA,NameB){
+ var Obj=document.getElementById(Obj)?document.getElementById(Obj):Obj;
+ Obj.className=Obj.className==NameA?NameB:NameA;
+ }
+ function showMenu(iNo){
+ ExChgClsName("Menu_"+iNo,"MenuBox","MenuBox2");
+ }
+          var btn1 = document.getElementById("schoolCarousel");  
+        btn1.onclick =function(){  
+            window.open('Carousel.html');
+        }
+        var btn2 = document.getElementById("newsbutton");  
+        btn2.onclick =function(){  
+            window.open('news.html');
+        }
+	    </script>
+	</body>
+</html>
