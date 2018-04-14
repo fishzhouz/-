@@ -33,6 +33,8 @@ public class StudentController {
     public String zNews() { return "student/zNews"; }
     @RequestMapping(value="/zData")
     public String zData() { return "student/zData"; }
+    @RequestMapping(value="/zPutTraining")
+    public String zPutTraining() { return "student/zPutTraining"; }
 
     @RequestMapping(value="/index")
     public String index() { return "student/index"; }

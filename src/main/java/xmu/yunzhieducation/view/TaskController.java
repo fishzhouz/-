@@ -5,14 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import xmu.yunzhieducation.entity.Question;
-import xmu.yunzhieducation.entity.Student_question;
-import xmu.yunzhieducation.entity.Student_task;
-import xmu.yunzhieducation.entity.Task;
+import xmu.yunzhieducation.entity.*;
+import xmu.yunzhieducation.mapper.DateMapper;
+import xmu.yunzhieducation.mapper.PeriodMapper;
 import xmu.yunzhieducation.mapper.TaskMapper;
 import xmu.yunzhieducation.service.TaskService;
-import xmu.yunzhieducation.vo.Task2Vo;
 import xmu.yunzhieducation.vo.WrongQuestionVo;
+import xmu.yunzhieducation.vo.CerVo;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -29,6 +28,11 @@ public class TaskController {
 
 @Autowired
 private TaskMapper taskMapper;
+
+@Autowired
+private PeriodMapper periodMapper;
+@Autowired
+private DateMapper dateMapper;
 
 
 
@@ -80,7 +84,34 @@ private TaskMapper taskMapper;
         else
             return true;
     }
+    @JsonIgnoreProperties
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value = "/task1/{class_id}",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Task> taskClass(@PathVariable("class_id")BigInteger class_id){
+        List<Period> periods=periodMapper.selectPeriodByClassID(class_id); //找到班级下的所有课时
 
+        List<Task> tasks=new ArrayList<>();
+        for(int i=0;i<periods.size();i++)
+            tasks.addAll(taskMapper.selectTaskByperiodID(periods.get(i).getId()));//找到每个课时下的所有练习
+        return tasks;
+    }
+    @JsonIgnoreProperties
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value = "/task1/{class_id}/{task_id}",method = RequestMethod.GET)
+    @ResponseBody
+    public CerVo taskClass(@PathVariable("class_id")BigInteger class_id, @PathVariable("task_id")BigInteger task_id){
+        List<Class_student> users=dateMapper.listClassStudentByClassId(class_id);
+        CerVo cerVo=new CerVo();
+        cerVo.setSum(users.size());
+        Integer sum=0;
+        for(Class_student c:users){
+            if(taskMapper.selectStudenttaskByID(c.getStudent_id(),task_id)!=null)
+                sum++;
+        }
+        cerVo.setJoin(sum);
+        return cerVo;
+    }
     @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/task/{task_id}/own",method = RequestMethod.GET)
@@ -165,5 +196,7 @@ private TaskMapper taskMapper;
     public void deleteQuestion(@PathVariable("question_id")BigInteger question_id){
         taskService.deleteQuestion(question_id);
     }
+
+
 
 }

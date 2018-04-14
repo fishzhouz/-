@@ -128,6 +128,121 @@ var schoolID=getCookie("schoolID");
 	           }
               });
        $("#ability").html(str);
+       str="";
+               $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+id1+"/class?type=0" ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+        str=str+"<span>选择班级查询成绩：   </span></p><select id=\"sex\" class=\"sex1\">";
+        $.each(data,function(i,item){
+        if(i==0)
+				str=str+"<option id=\""+item.id+"\" selected>"+item.class_name+"</option>";
+				else
+				str=str+"<option id=\""+item.id+"\">"+item.class_name+"</option>";
+         });
+         str=str+"</select><button class=\"data\" onclick=\"score()\">查询</button>";
+         $("#grade1").html(str);
+        }
+        });
+        str="";
+               $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+id1+"/class?type=0" ,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str="";
+        str=str+"<span>选择班级分析任务参与度：   </span></p><select id=\"sex2\" class=\"sex1\">";
+        $.each(data,function(i,item){
+        if(i==0)
+				str=str+"<option id=\""+item.id+"\" selected>"+item.class_name+"</option>";
+				else
+				str=str+"<option id=\""+item.id+"\">"+item.class_name+"</option>";
+         });
+         str=str+"</select><button class=\"data\" onclick=\"cer()\">查询</button>";
+         $("#join1").html(str);
+        }
+        });
+	}
+	function score()
+	{
+	var obj=document.getElementById("sex");
+	id=obj.options[obj.selectedIndex].id;
+	str="";
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/data/student/"+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str=str+"<p>"+"班级学生:"+"</p>";
+        sum=0;
+        $.each(data,function(i,item){
+        sum=sum+1;
+               str=str+"<div class=\"mystudyMissionPe\">"+"*******学生："+item.name+"</div>";
+                $.ajax({
+        type:"GET", //请求方式
+        url: "/grade/"+item.id+"/"+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data1){
+        if(data1!=-1)
+            str=str+"<span>"+"课程得分： "+data1+"分"+"</span></div>"
+            else
+            str=str+"<span>"+"课程得分:    未评分"+"</span></div>"
+	           }
+              });
+			           });
+	           },
+	           error:function(data)
+	           {
+	           str=str+"<div class=\"mystudyMissionPe\">"+"还没有学生选课哦~"+"</div>";
+	           }
+              });
+         $("#grade2").html(str);
+	}
+	function cer()
+	{
+        var obj=document.getElementById("sex2");
+	id=obj.options[obj.selectedIndex].id;
+	str="";
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/task1/"+id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str=str+"<p>"+"班级任务:"+"</p>";
+        sum=0;
+        $.each(data,function(i,item){
+        sum=sum+1;
+               str=str+"<div class=\"mystudyMissionPe1\">"+"*******任务："+item.name;
+               	$.ajax({
+        type:"GET", //请求方式
+        url: "/task1/"+id+"/"+item.id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        str=str+"     任务参与人数："+data.join+"  班级人数：  "+data.sum+"   参与度："+(data.join/data.sum)+"</div>"
+	           }
+              });
+			           });
+	           }
+              });
+              $("#join2").html(str);
 	}
 </script>
 <script>
@@ -200,7 +315,7 @@ var schoolID=getCookie("schoolID");
 			<div class="titBox"><h3><a href="javascript:showMenu(3);">实训动态</a></h3></div>
 			<div class="txtBox">
 				<ul>
-					<li><a href="putTraining.html">发布实训</a></li>
+					<li><a href="/student/zPutTraining">发布实训</a></li>
 					<li><a href="trainingData.html">实训数据汇总</a></li>
 				</ul>
 			</div>
@@ -235,8 +350,14 @@ var schoolID=getCookie("schoolID");
 				<button class="data" onclick="f3()">学生能力档案</button>
 				<button class="data" onclick="goBack()">返回全部课程</button>
 				<div class="newsContent1" id="newsContent2">
-					<div id="grade"></div>
-					<div id="join"></div>
+					<div id="grade">
+						<div id="grade1"></div>
+						<div id="grade2"></div>
+					</div>
+					<div id="join">
+						<div id="join1"></div>
+						<div id="join2"></div>
+					</div>
 					<div id="ability">
 					</div>
 				</div>
