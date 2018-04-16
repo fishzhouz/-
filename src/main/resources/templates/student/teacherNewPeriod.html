@@ -56,7 +56,7 @@
 <script>
 	function newP()
 	{
-	var bind={
+    	var bind={
 "class_id": classID ,
     "ppt":$('#ppt').val(),
     "knowledge_point":$('#name').val(),
@@ -96,11 +96,9 @@ $.ajax({
              	<p class="upclassP1">请输入课时名称：</p>
              	<input type="text" class="classname" id="name"/>
              	<p class="upclassP">请上传课时课件:</p>
-				 <input type="text" class="classname1"  id="ppt"/>
-             	<button type="button" class="chooseFolder">选择文件</button>
+             	<input type="file" class="classname1" id="ppt">
 				 <p class="upclassP">请上传课时视频:</p>
-				 <input type="text" class="classname1" id="video"/>
-				 <button type="button" class="chooseFolder">选择文件</button>
+				 <input type="file" class="classname1" id="video">
              </div>
 	    </div>
 	    

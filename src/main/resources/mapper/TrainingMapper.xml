@@ -3,7 +3,7 @@
 <!--命名空间应该是对应接口的包名+类名 -->
 <mapper namespace="xmu.yunzhieducation.mapper.TrainingMapper">
     <insert id="insertTraining" parameterType="xmu.yunzhieducation.entity.Trainging" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO Training
+        INSERT INTO training
         (traing_introduction,start_time,end_time,student_num,course_id)
         VALUES(#{traing_introduction},#{start_time},#{end_time},#{student_num},#{course_id})
     </insert>

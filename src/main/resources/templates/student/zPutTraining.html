@@ -67,15 +67,43 @@ function getCourse(id)
         str=str+"<span>选择课程发布实训：   </span><select id=\"sex2\" class=\"sex1\">";
         $.each(data,function(i,item){
         if(i==0)
-				str=str+"<option id=\""+item.id+"\" selected>"+item.course_name+"</option>";
+				str=str+"<option id=\""+item.course_id+"\" selected>"+item.course_name+"</option>";
 				else
-				str=str+"<option id=\""+item.id+"\">"+item.course_name+"</option>";
+				str=str+"<option id=\""+item.course_id+"\">"+item.course_name+"</option>";
          });
          str=str+"</select>";
          $("#se").html(str);
         }
         });
         }
+</script>
+<script>
+    function go()
+    {
+     var obj=document.getElementById("sex2");
+	id=obj.options[obj.selectedIndex].id;
+    var bind={
+"traing_introduction": $('#name').val() ,
+    "start_time":$('#start').val(),
+    "end_time":$('#end').val(),
+    "student_num":0,
+    "course_id":id
+    }
+$.ajax({
+        type:"POST", //请求方式
+        url: "/training",
+        contentType :"application/json",
+        data:JSON.stringify(bind),
+        dataType: 'json',   //返回值类型
+         success:function(data){
+         alert("发布实训成功！");
+         window.location.href="/student/zPutTraining";
+         },
+          error:function(data){
+          alert(111);
+         }
+         });
+    }
 </script>
 <html>
 <head>
@@ -124,7 +152,7 @@ function getCourse(id)
             <div class="txtBox">
                 <ul>
                     <li><a href="/student/zPutTraining">发布实训</a></li>
-                    <li><a href="trainingData.html">实训数据汇总</a></li>
+                    <li><a href="/student/zTrainingData">实训数据汇总</a></li>
                 </ul>
             </div>
         </div><!--MenuBox-->
@@ -145,15 +173,15 @@ function getCourse(id)
             </div>
         </div><!--MenuBox-->
     </div>
-       <div id="newsEdit1">
+       <div id="newsEdit2">
 	    <div class="newsContent1">
             <div id="se"></div>
-                <span>开始时间： </span><input type="date" class="ins">
-            <span>结束时间： </span><input type="date" class="ins">
-                <button  class="sure" type="button" id="put">发布实训</button>
+                <p class="ins1">开始时间： <input type="date" class="ins" id="start"></p>
+            <p class="ins1">结束时间： <input type="date" class="ins" id="end"></p>
+            <p class="ins1">实训名称： <input type="text" class="ins2" id="name"></p>
+                <button  class="sure" type="button" id="put" onclick="go()">发布实训</button>
 	    </div>
 	    </div>
-
 	    <!--页脚-->
 	    <div class="footer">
 	    	<img class="img-logo" src="/img/logo.png" />

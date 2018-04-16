@@ -298,6 +298,7 @@ button {
 
 .bedge1{
 	margin: 0px auto;
+	width:150px;
 	height: 100px;
 	float: left;
 	margin-top: 30px;
@@ -307,7 +308,8 @@ button {
 .pCenter{
 	position: relative;
 	top: 30px;
-	left: -80px;
+	width:150px;
+	margin-left: -50px;
 	/*border: solid #000000 1px;*/
 }
 
@@ -319,6 +321,7 @@ button {
 
 .bedge2{
 	height: 100px;
+	width:150px;
 	float: left;
 	margin-left: 50px;
 	margin-top: 30px;
@@ -326,27 +329,31 @@ button {
 
 .bedge3{
 	height: 100px;
+	width:150px;
 	float: left;
 	margin-left: 50px;
 	margin-top: 30px;
 }
 
 .bedge4{
-    height: 100px;  
+    height: 100px;
+     width:150px;
     margin-top: 30px;
     margin-left: 50px;
     float: left;
 }
 
 .bedge5{
-    height: 100px;  
+    height: 100px;
+    width:150px;
     margin-top: 30px;
     margin-left: 50px;
     float: left;
 }
 
 .bedge6{
-    height: 100px;  
+    height: 100px;
+    width:150px;
     margin-top: 30px;
     margin-left: 50px;
     float: left;

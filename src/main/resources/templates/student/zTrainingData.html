@@ -5,10 +5,13 @@
 <script src="/js/jquery.isotope.min.js"></script>
 <script src="/js/jquery.inview.min.js"></script>
 <script src="/js/cookie3.js"></script>
+<script type="text/javascript" src="/js/echarts.simple.min.js"></script>
 <script>
 var schoolID=getCookie("schoolID");
 		window.onload=function(){
-		getInfo(schoolID);
+		document.getElementById('xx').style.display='none';
+		document.getElementById('df').style.display='block';
+		getMyTraining(schoolID);
 		str="";
 		if(getCookie("identification")==1)
 		{str2="我的课程";}
@@ -54,70 +57,91 @@ var schoolID=getCookie("schoolID");
    }
 	</script>
 <script>
-		function getInfo(id)
+	function getMyTraining(id)
 	{
-$.ajax({
-        type:"GET", //请求方式
-        url: "/school/"+id+"/information" ,
-        cache: false,   //如果使用缓存
-        contentType : "application/json",
-        dataType: 'json',   //返回值类型
-        success:function(data){
-        str=" ";
-        str=str+"<p>"+"学校资讯》》》"+"</p>"
-         $.each(data,function(i,item){
-                 str=str+"<div class=\"sd\"><span>"+"      ...."+item.content+"</span><button type=\"button\" class=\"delete\" onclick=\"deleteNews("+item.id+")\">删除</button></div>"
-			                          });
-        $("#news").html(str);
-        }
-        });
-	}
-	function deleteNews(id)
-	{
+	var str="";
+	str=str+"<p>实训效果分析</p>";
 	$.ajax({
-        type:"DELETE", //请求方式
-        url: "/school/"+id+"/information" ,
+        type:"GET", //请求方式
+        url:  "/school/"+id+"/course",
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        $.each(data,function(i,item){
+        str=str+"<div class=\"mystudyMissionP\"><div class=\"class1\"><img class=\"classPicture\" src=\""+item.picture+"\"><div class=\"classHeader\"><span class=\"classHeader\">"+item.course_name+"</span></div><div class=\"subHeader\"><span class=\"subHeader\">"+item.teacher_name+"</span></div></div><div class=\"mystudyMissionPa\">";
+    $.ajax({
+        type:"GET", //请求方式
+        url: "/training/course/"+item.course_id,
+        cache: false,   //如果使用缓存
+        async:false,
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data1){
+        $.each(data1,function(i1,item1){
+               str=str+"<div onclick=\"goTraining("+item1.id+")\" class=\"mystudyMissionPe\">"+"实训"+(i1+1)+"   "+item1.traing_introduction+"</div>";
+			           });
+	           }
+              });
+        str=str+"</div></div>";
+        });
+        $("#df").html(str);
+	    }
+	    });
+	}
+	function goTraining(id)
+	{
+	document.getElementById('df').style.display='none';
+	document.getElementById('xx').style.display='block';
+	$.ajax({
+        type:"GET", //请求方式
+        url: "/training2/"+id ,
         cache: false,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
         success:function(data){
+         $("#name").html(data.name+"  实训效果分析");
+          $("#start").html("开始时间： "+data.start_time);
+          $("#end").html("结束时间： "+data.end_time);
+          $("#num").html("已有"+data.num+"人提交报告");
+          	   var option = {
+            title:{
+                text:'ECharts 数据统计'
+            },
+            tooltip:{},
+            legend:{
+                data:['用户来源']
+            },
+            xAxis:{
+                data:["60分以下","60-69分","70-79分","80-89分","90分及其以上"]
+            },
+            yAxis:{
+
+            },
+            series:[{
+                name:'访问量',
+                type:'bar',
+                data:[data.g1,data.g2,data.g3,data.g4,data.g5]
+            }]
+        };
+	 //初始化echarts实例
+        var myChart = echarts.init(document.getElementById('bar'));
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(option);
         }
         });
-        alert("删除成功！");
-        window.location.href="/student/zNews";
 	}
-</script>
-<script>
-	function goThere()
+	function goBack()
 	{
-	window.location.href="/student/zNews";
-	}
-	function newN()
-	{
-	var bind={
-"school_id":schoolID,
-    "content":$('#name').val(),
-    "type":0
-    }
-		$.ajax({
-        type:"POST", //请求方式
-        url: "/school/"+schoolID+"/information" ,
-        cache: false,   //如果使用缓存
-        data:JSON.stringify(bind),
-        contentType : "application/json",
-        dataType: 'json',   //返回值类型
-        success:function(data){
-        }
-        });
-        alert("新增成功！");
-        window.location.href="/student/zNews";
+	window.location.href="/student/zTrainingData";
 	}
 </script>
 <html>
 <head>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="/manager/css/schoolIndex.css" />
-	<title>资讯管理</title>
+	<title>实训分析</title>
 </head>
 <body>
 <div class="container">
@@ -182,27 +206,27 @@ $.ajax({
 		</div><!--MenuBox-->
 	</div>
 	    <div id="newsEdit">
-		    <div class="newsContent1" id="news">
-		    </div>
-		    <div class="buttonStyle">
-               <button type="button" id="startnewsBtn">新建资讯</button>
-		    </div>
+         <div style=" border:1px solid #adcd3c;background:#f2fddb" class="newsContent1">
+			 <div id="df"></div>
+			 <div id="xx">
+				 <p class="textq" id="name"></p>
+				 <p class="textq" id="start"></p>
+				 <p class="textq" id="end"></p>
+				 <p class="textq" id="num"></p>
+				 <p class="textq"></p>
+				 <div id="bar" style="width:600px; height: 400px;"></div>
+				 <button class="ins" onclick="goBack()">返回实训首页</button>
+			 </div>
 	    </div>
-	    <div id="newsEdit1">
-	    	<p>请输入资讯：</p>
-		    <input type="text" id="name"/>
-		    <div class="buttonStyle">
-               <button type="button" class="sure" id="sure" onclick="newN()">确定</button>
-				<button type="button" class="sure" id="cancel" onclick="goThere()">取消</button>
-		    </div>
-	    </div>
+     </div>
+
 	    <!--页脚-->
 	    <div class="footer">
 	    	<img class="img-logo" src="/img/logo.png" />
 			<img class="head" src="/img/字体设计.png" />
 			<div class="introduction">
 				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
-			</div>
+		</div>
 			
 			
 	    </div>
@@ -214,13 +238,8 @@ function ExChgClsName(Obj,NameA,NameB){
  }
  function showMenu(iNo){
  ExChgClsName("Menu_"+iNo,"MenuBox","MenuBox2");
- }
- document.getElementById('newsEdit1').style.display='none';
- var btn1 = document.getElementById("startnewsBtn");  
-        btn1.onclick =function(){  
-            document.getElementById('newsEdit').style.display='none';
-            document.getElementById('newsEdit1').style.display='block';
-        }
+ } 
+ 
 	    </script>
 	</body>
 </html>
