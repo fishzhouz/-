@@ -34,7 +34,6 @@
     var account=document.getElementById("account1").value;
     var password=document.getElementById("password1").value;
     var md5Value=hex_md5(password+"fjl");
-    alert("加密后的值为："+md5Value);
       $.ajax({
         type:"POST", //请求方式
         url:"/login1?account="+account+"&password="+md5Value ,
