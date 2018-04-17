@@ -18,9 +18,9 @@
 		{str2="我的学校";}
 		else
 		{str2="我的学习";}
-		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/字体设计.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
-		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/头像.png\" />";
-        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/头像1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
+		str=str+"<img class=\"img-logo\" src=\"/img/logo.png\" /> <a href=\"/student/index\"><img class=\"head\" src=\"/img/name.png\" /></a><a  onclick=\"joinStudy()\" class=\"nav1\">"+str2+"</a><a onclick=\"joinMessage()\" class=\"nav2\">消息</a>";
+		 if(getCookie("userID")==null)  str=str+"<a href=\"/student/login\" class=\"nav3\">登录/注册</a><img id=\"icon\" src=\"/img/head.png\" />";
+        else        str=str+"<a class=\"nav3\">"+getCookie("name")+"</a><img id=\"icon\" src=\"/img/head1.png\" /><a onclick=\"exituser()\" class=\"nav3\">退出登录</a>";
         $("#header").html(str);
     }
     function exituser()
@@ -83,9 +83,9 @@ $.ajax({
         dataType: 'json',   //返回值类型
         success:function(data){
         str="";
-        str=str+"<img src=\"/img/帖子.png\" class=\"img1\" /><button type=\"button\" id=\"card\" onclick=\"putTopic()\">发帖</button><button type=\"button\" id=\"card1\" onclick=\"goBack()\">返回上一页</button>";
+        str=str+"<img src=\"/img/topic.png\" class=\"img1\" /><button type=\"button\" id=\"card\" onclick=\"putTopic()\">发帖</button><button type=\"button\" id=\"card1\" onclick=\"goBack()\">返回上一页</button>";
          $.each(data,function(i,item){
-        str=str+"<hr class=\"hr1\"><div class=\"box1\"><div class=\"circle\"><p class=\"circleNum\">"+item.no+"</p></div><a onclick=\"goTopic("+item.topic_id+",'"+item.heading+"','"+item.content+"','"+item.name+"')\" class=\"cicleTitle\">"+item.heading+"</a><div class=\"cicleContent\"><p>"+item.content+"</p></div><div class=\"date\"><p>"+item.time+"</p></div><a onclick=\"goComment("+item.topic_id+")\"><img src=\"/img/消息.png\" class=\"img2\"></a><div class=\"num\"><p>"+item.comment_num+"人"+"</p></div><div class=\"num1\"><p>帖子发起人:"+item.name+"</p></div></div>";
+        str=str+"<hr class=\"hr1\"><div class=\"box1\"><div class=\"circle\"><p class=\"circleNum\">"+item.no+"</p></div><a onclick=\"goTopic("+item.topic_id+",'"+item.heading+"','"+item.content+"','"+item.name+"')\" class=\"cicleTitle\">"+item.heading+"</a><div class=\"cicleContent\"><p>"+item.content+"</p></div><div class=\"date\"><p>"+item.time+"</p></div><a onclick=\"goComment("+item.topic_id+")\"><img src=\"/img/comment.png\" class=\"img2\"></a><div class=\"num\"><p>"+item.comment_num+"人"+"</p></div><div class=\"num1\"><p>帖子发起人:"+item.name+"</p></div></div>";
 			                          });
 		str=str+"<hr class=\"hr1\">";
 	     $("#view").html(str);
@@ -156,7 +156,7 @@ $.ajax({
 		<!--页脚-->
 	    <div class="footer">
 	    	<img class="img-logo" src="/img/logo.png" />
-			<img class="head" src="/img/字体设计.png" />
+			<img class="head" src="/img/name.png" />
 			<div class="introduction">
 				<p>文思海辉技术有限公司旗下实用技能学习平台。与专业机构、院校合作。为您提供海量优质课堂，以及创新的在线学习体验，帮助您获得全新的个人发展和能力提升。</p>
 			</div>
